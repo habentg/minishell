@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/03 05:02:19 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/06 02:10:43 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,23 @@
 
 enum e_tokenType
 {
-	STR_L,
-	OPRATOR,
+	CMD_OPT,
+	PIPE,
+	APPEND,
+	TRUNC,
+	INPUT_REDIR,
+	HERE_DOC,
 	VAR
 };
 
 typedef struct s_token
 {
-	enum e_tokenType	type;
-	char				*text;
-	void				*next;
-	void				*prev;
+	enum e_tokenType	type; //type of this piece
+	char				*value; //the text by it self
+	void				*next; // gonna be pointing to the next node
+	void				*prev; // as well as the previous one
 }	t_token;
 
-char	*readline(const char *prompt);
-
+// input sanitization
+int check_input_cmd(char **av);
 #endif

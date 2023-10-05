@@ -6,7 +6,7 @@
 #    By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/03 01:59:13 by hatesfam          #+#    #+#              #
-#    Updated: 2023/10/03 05:40:34 by hatesfam         ###   ########.fr        #
+#    Updated: 2023/10/06 02:38:34 by hatesfam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CC = cc
 CFALGS = -Wall -Werror -Wextra -g3
 RM = rm -rf
 
-SRC_FILES = src/minishell.c
+SRC_FILES = src/minishell.c src/check_input_cmd.c
 OBJ_FILES = $(SRC_FILES:.c=.o)
 INC = ../includes
 RDLINE_L = -lreadline
@@ -42,4 +42,9 @@ fclean: clean
 	
 re: fclean all
 
-.PHONY: all clean fclean re
+push: fclean
+	git add .
+	git commit -m "Updated on $(shell date +'%Y-%m-%d %H:%M:%S') by $(shell whoami) final"
+	git push -u origin master
+
+.PHONY: all clean fclean re push
