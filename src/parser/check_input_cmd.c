@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 02:05:18 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/09 05:13:55 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/09 09:25:49 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,36 +61,37 @@ int	possible_error(char *input)
 	return (0);
 }
 
-int	check_input_cmd(char *input)
+int	check_input_cmd(t_cmd **cmd_list, char *input)
 {
-	// int		i;
-	// int		start;
-	// char	*cmd;
-	t_cmd	**cmd_list;
-	// t_token	*token;
-    // i = ft_white_spaces(input, &i);
-	// start = 0;
-	// cmd = NULL;
-	cmd_list = (t_cmd **)ft_calloc(1, sizeof(t_cmd *));
+	int		i;
+	int		start;
+	char	*cmd;
+
+	(void)cmd_list;
+	start = 0;
+	i = 0;
+	cmd = NULL;
 	if (possible_error(input))
 		return (1);
-	// while (input[i])
-	// {
-	// 	if (input[i] == "|")
-	// 	{
-	// 		// clip the word untill the pipe - dont forget to free
-	// 		cmd = ft_substr(input, start, (i-start));
-	// 		// if there is nothing after the pipe -- error
-	// 		// if (possible_error(cmd, input, &i))
-
-	// 		// tokenize this sub (inc the pipe) create a simple comand node and linked list
-	// 		ft_tokenize(cmd_list, cmd);
+	i = ft_whitespaces(input, &i);
+	while (input[i])
+	{
+		if (input[i] == '|')
+		{
+			// clip the word untill the pipe - dont forget to free
+			cmd = ft_substr(input, start, (i - start + 1));
+			printf("%s\n", cmd);
+			// tokenize this sub (inc the pipe) create a simple comand node and linked list
+			parse(cmd_list, cmd);
 			
-	// 		// put a pipe as one node
-	// 		start = i;
-	// 	}
-			
-	// 	i++;
-    // }
+			// put a pipe as one node
+			free(cmd);
+			start = i + 1;
+		}
+		i++;
+    }
+	cmd = ft_substr(input, start, (i-start));
+	printf("%s\n", cmd);
+	free(cmd);
     return (0);
 }

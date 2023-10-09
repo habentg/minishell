@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 03:56:14 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/03 03:56:16 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/09 08:45:11 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,10 @@ char	*ft_strtrim(char const *s1, char const *set)
 
 // int	main(void)
 // {
-// 	char const	s1[] = "1234Haben123321";
-// 	char const	set[] = "123";
-// 	printf("%d\n", getfirst(s1, set));
-// 	printf("%d\n", getlast(s1, set));
+// 	char const	s1[] = ">ls -al>a.txt";
+// 	char const	set[] = ">";
+// 	// printf("%d\n", getfirst(s1, set));
+// 	// printf("%d\n", getlast(s1, set));
 // 	char *p = ft_strtrim(s1, set);
 // 	printf("%s\n", p);
 // }

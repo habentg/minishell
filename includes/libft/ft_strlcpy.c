@@ -30,9 +30,9 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 	return (src_len);
 }
 
-// int	main(void)
-// {
-// 	char dest[20];
-// 	// char src[] = "01234556789";
-// 	printf("%lu\n", ft_strlcpy(dest, NULL, 0));
-// }
+int	main(void)
+{
+	char dest[20];
+	char src[] = "01234556789";
+	printf("%lu\n", ft_strlcpy(dest, src, 0));
+}
