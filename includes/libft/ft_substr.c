@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 03:56:05 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/03 03:56:07 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/09 03:35:10 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,12 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (ret);
 }
 
-// int	main()
-// {
-// 	const char	s[] = "01234567";
+int	main()
+{
+	const char	s[] = "01234567";
 
-// 	// printf("%d\n", check_size(s, 7, 7));
-//     char *k;
-// 	k = ft_substr(s, 7, 9);
-
-//     for (int i = 0; i < 20; i++)
-// 	{
-// 		printf("%c\n", k[i]);
-// 	}
-//     return 0;
-// }
+    char *k;
+	k = ft_substr(s, 2, 6);
+	printf("%s\n", k);
+    return 0;
+}

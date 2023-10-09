@@ -1,32 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/03 01:57:10 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/09 02:30:28 by hatesfam         ###   ########.fr       */
+/*   Created: 2023/10/09 03:52:52 by hatesfam          #+#    #+#             */
+/*   Updated: 2023/10/09 05:17:15 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-int	main(int ac, char **av)
+void	ft_clean(t_cmd **lst)
 {
-	char	*input;
+	t_cmd	*tmp;
+	t_cmd	*tmp2;
 
-	input = NULL;
-	(void)av; /// think about it later
-	if (ac != 1)
-		return (1);
-	while (1)
+	tmp = *lst;
+	while (tmp)
 	{
-		input = readline("Haben-🌹~> ");
-		if (check_input_cmd(input))
-			return (1);
-		if (strlen(input) > 0)
-			add_history(input);
+		tmp2 = tmp->next;
+		free(tmp);
+		tmp = tmp2;
 	}
-	return (0);
+}
+
+void	ft_error(char *err_msg, t_cmd **cmd_list)
+{
+	ft_putendl_fd(err_msg, 1);
+	if (cmd_list)
+		ft_clean(cmd_list);
+	free(cmd_list);
 }

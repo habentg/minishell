@@ -1,0 +1,23 @@
+########################## PARSING ###########################
+<--------- Accepting the user input -------->
+-> the readline() function will help us to get the input from the STDIN as a string without the final '\n'
+
+<---------  Input Sanitization -------->
+Posible input errors -- so far understood
+ >> opened but unclosed quotes
+ >> pipe at the end
+ >> redirections at the end
+ >> double Operator i.e '||', '> >', '<< >' kind of things 
+
+<---------  Lexical Analysis -------->
+### Delimeters
+-> our seperators for the time bieng are the:
+    *  whitespaces,
+    *  redirections and
+    *  pipe.
+
+-> So, I am gonna loop though the user input untill I find a pipe,
+then I will consider this as a one "command" to be run togather.
+
+########################## Execution ###########################
+...

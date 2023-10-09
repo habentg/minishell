@@ -6,7 +6,7 @@
 #    By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/03 01:59:13 by hatesfam          #+#    #+#              #
-#    Updated: 2023/10/06 02:38:34 by hatesfam         ###   ########.fr        #
+#    Updated: 2023/10/09 07:11:11 by hatesfam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,11 @@ CC = cc
 CFALGS = -Wall -Werror -Wextra -g3
 RM = rm -rf
 
-SRC_FILES = src/minishell.c src/check_input_cmd.c
+PARSE_DIR = ./src/parser
+
+SRC_FILES = src/minishell.c $(PARSE_DIR)/check_input_cmd.c $(PARSE_DIR)/dl_lst.c \
+			$(PARSE_DIR)/ft_error.c $(PARSE_DIR)/ft_tokenize.c $(PARSE_DIR)/ft_whitespaces.c
+
 OBJ_FILES = $(SRC_FILES:.c=.o)
 INC = ../includes
 RDLINE_L = -lreadline
@@ -44,7 +48,7 @@ re: fclean all
 
 push: fclean
 	git add .
-	git commit -m "Updated on $(shell date +'%Y-%m-%d %H:%M:%S') by $(shell whoami) final"
+	git commit -m "Updated on $(shell date +'%Y-%m-%d %H:%M:%S') by $(shell whoami)"
 	git push -u origin master
 
 .PHONY: all clean fclean re push

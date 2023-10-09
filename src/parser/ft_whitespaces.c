@@ -1,19 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_input_cmd.c                                  :+:      :+:    :+:   */
+/*   ft_whitespaces.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/06 02:05:18 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/06 02:11:29 by hatesfam         ###   ########.fr       */
+/*   Created: 2023/10/09 03:03:59 by hatesfam          #+#    #+#             */
+/*   Updated: 2023/10/09 03:45:22 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-int check_input_cmd(char **av)
+int	ft_whitespaces(char *str, int *index)
 {
-    (void)av;
-    return (0);
+	int	i;
+
+    i = *index;
+	while (str[i])
+	{
+		if (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'
+			|| str[i] == '\v' || str[i] == '\f' || str[i] == '\r')
+			i++;
+		else
+			break ;
+	}
+	return (i);
 }
