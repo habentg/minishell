@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 02:05:18 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/10 06:40:29 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/10 09:34:14 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,6 @@ int	open_qoute_err(char *input, t_cmd **cmd_list)
 
 int	possible_error(char *input, t_cmd **cmd_list)
 {
-	int	i;
-
-	i = ft_whitespaces(input, &i, 'f');
 	if (operator_end_err(input, cmd_list))
 		return (1);
 	if (open_qoute_err(input, cmd_list))
@@ -66,13 +63,13 @@ int	check_input_cmd(t_cmd **cmd_list, char *input)
 	int		end;
 	char	*cmd;
 
-	i = 0;
+	i = -1;
 	i = ft_whitespaces(input, &i, 'f');
 	if (possible_error(input, cmd_list))
 		return (1);
 	start = i;
 	end = start;
-	while (input[i])
+	while (1)
 	{
 		if (input[i] == '|')
 		{
@@ -82,15 +79,26 @@ int	check_input_cmd(t_cmd **cmd_list, char *input)
 			// tokenize this sub (inc the pipe) create a simple comand node and linked list
 			tokenize_cmd(cmd_list, cmd);
 			// put a this cmd as a as one node
+			printf("->%s\n", "|");
 			// tokenize_pipe(cmd_list, "|");
 			// put a pipe as one node
-			start = ft_whitespaces(cmd, &i, 'f') + 2;
+			i = ft_whitespaces(cmd, &i, 'f');
+			start = i;
 			free(cmd);
 		}
+		if (i == ((int)ft_strlen(input)))
+			break ;
 		i++;
-    }
+	}
+	i = ft_whitespaces(cmd, &i, 'b');
 	cmd = ft_substr(input, start, (i - start + 1));
 	tokenize_cmd(cmd_list, cmd);
 	free(cmd);
-    return (0);
+	return (0);
 }
+
+
+// "  abcde   |"
+// "0123456789"
+
+//6 - 2 + 1

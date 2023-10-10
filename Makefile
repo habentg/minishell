@@ -6,7 +6,7 @@
 #    By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/03 01:59:13 by hatesfam          #+#    #+#              #
-#    Updated: 2023/10/10 06:10:40 by hatesfam         ###   ########.fr        #
+#    Updated: 2023/10/10 09:47:04 by hatesfam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,12 +48,14 @@ re: fclean all
 
 go: re
 	./minishell
-co: all
+#<------- delete later------>
+s: all
 	./minishell
 
-push: fclean
+p: fclean
 	git add .
 	git commit -m "Updated on $(shell date +'%Y-%m-%d %H:%M:%S') by $(shell whoami)"
 	git push -u origin master
+#<------- delete later------>
 
-.PHONY: all clean fclean re push
+.PHONY: all clean fclean re

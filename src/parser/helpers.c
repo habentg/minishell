@@ -6,11 +6,11 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 09:02:58 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/10 06:20:29 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/10 08:50:59 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+// #include "../../includes/minishell.h"
 #include <stdio.h>
 
 int	is_whitespace(char c)
@@ -35,21 +35,17 @@ int	ft_whitespaces(char *str, int *index, char c)
 	i = *index;
 	if (c == 'f')
 	{
-		while (str[i])
+		while (str[++i])
 		{
-			if (is_whitespace(str[i]))
-				i++;
-			else
+			if (!is_whitespace(str[i]))
 				break ;
 		}
 	}
 	else if (c == 'b')
 	{
-		while (i >= 0)
+		while (--i >= 0)
 		{
-			if (is_whitespace(str[i]))
-				i--;
-			else
+			if (!is_whitespace(str[i]))
 				break ;
 		}	
 	}
@@ -58,6 +54,6 @@ int	ft_whitespaces(char *str, int *index, char c)
 
 // int main(void)
 // {
-// 	int i = 19;
-// 	printf("->%d\n", ft_whitespaces("		     haben        ", &i, 'b'));
+// 	int i = -1;
+// 	printf("->%d\n", ft_whitespaces("k   haben        f", &i, 'f'));
 // }

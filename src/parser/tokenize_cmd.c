@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 02:57:50 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/10 06:11:12 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/10 09:39:14 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,33 +56,45 @@ void	tokenize_cmd(t_cmd **cmd_lst, char *cmd)
 {
 	int	i = 0;
 	int start = 0;
+	// int end = 0;
 	t_token	*token;
 	// t_cmd	*node;
 	char *str;
 
 	token = 0;
 	(void)cmd_lst;
-	str = 0;
 	printf("--------\n");
 	printf("%s\n", cmd);
-	while (cmd[i])
+	i = -1;
+	i = ft_whitespaces(cmd, &i, 'f');
+	start = i;
+	while (1)
 	{
 		if (is_whitespace(cmd[i]) || is_operator(cmd[i]))
 		{
-			str = ft_substr(cmd, start, (i - start + 1));
-			printf("->%s\n", str);
+			// if (is_operator(cmd[i]))
+				// tokenize_redir()
+			str = ft_substr(cmd, start, (i - start));
+			printf("->'");
+			printf("%s", str);
+			printf("'\n");
 			// token = ft_tokenize(str);
 			// node = ft_newnode(token, str);
 			// ft_addnode_back(cmd_lst, node);
 			// // if ()
-			free(str);
 			i = ft_whitespaces(cmd, &i, 'f');
 			start = i;
+			free(str);
 		}
+		if (i == ((int)ft_strlen(cmd)))
+			break ;
 		i++;
 	}
+	i = ft_whitespaces(cmd, &i, 'b');
 	str = ft_substr(cmd, start, (i - start + 1));
-	printf("->%s\n", str);
+	printf("->'");
+	printf("%s", str);
+	printf("'\n");
 	free(str);
 	printf("--------\n");
 }

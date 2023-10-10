@@ -7,17 +7,22 @@ Posible input errors -- so far understood
  >> opened but unclosed quotes
  >> pipe at the end
  >> redirections at the end
- >> double Operator i.e '||', '> >', '<< >' kind of things 
+ >> double Operator i.e '||', '> >', '<< >' kind of things --- not implemented yet
 
 <---------  Lexical Analysis -------->
 ### Delimeters
 -> our seperators for the time bieng are the:
-    *  whitespaces,
-    *  redirections and
-    *  pipe.
+    *  pipe. @@@ command seperator
+    *  whitespaces & redirections @@ these once for tokenization
 
 -> So, I am gonna loop though the user input untill I find a pipe,
-then I will consider this as a one "command" to be run togather.
+then I will consider this as a one "command" to be run togather and send it to
+the 'Tokenizer' for recognition and labeling according to the pre-set token types in my header.
+
+after that, the plan is to put it in a D-linked list as one node. === yet to be figured out!!!
+.
+.
+.
 
 ########################## Execution ###########################
 ...
