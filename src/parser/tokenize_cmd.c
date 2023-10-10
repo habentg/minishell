@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   tokenize_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 02:57:50 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/09 11:18:45 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/10 06:11:12 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ t_token	*ft_tokenize(char *cmd)
 {
 	t_token	*token;
 
+	token = 0;
 	if (cmd[0] == '|' && cmd[1] == '\0')
 	{
 		token->type = PIPE;
@@ -51,25 +52,37 @@ t_token	*ft_tokenize(char *cmd)
 	return (token);
 }
 
-void	parse(t_cmd **cmd_lst, char *cmd)
+void	tokenize_cmd(t_cmd **cmd_lst, char *cmd)
 {
-	int	i = -1;
+	int	i = 0;
 	int start = 0;
 	t_token	*token;
-	t_cmd	*node;
+	// t_cmd	*node;
+	char *str;
 
 	token = 0;
-	while (cmd[++i])
+	(void)cmd_lst;
+	str = 0;
+	printf("--------\n");
+	printf("%s\n", cmd);
+	while (cmd[i])
 	{
 		if (is_whitespace(cmd[i]) || is_operator(cmd[i]))
 		{
-			cmd = ft_substr(cmd, start, (i - start));
-			token = ft_tokenize(cmd);
-			node = ft_newnode(token, cmd);
-			ft_addnode_back(cmd_lst, node);
-			// if ()
-			free(cmd);
-			start = i + 1;
+			str = ft_substr(cmd, start, (i - start + 1));
+			printf("->%s\n", str);
+			// token = ft_tokenize(str);
+			// node = ft_newnode(token, str);
+			// ft_addnode_back(cmd_lst, node);
+			// // if ()
+			free(str);
+			i = ft_whitespaces(cmd, &i, 'f');
+			start = i;
 		}
+		i++;
 	}
+	str = ft_substr(cmd, start, (i - start + 1));
+	printf("->%s\n", str);
+	free(str);
+	printf("--------\n");
 }

@@ -6,7 +6,7 @@
 #    By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/03 01:59:13 by hatesfam          #+#    #+#              #
-#    Updated: 2023/10/09 11:18:24 by hatesfam         ###   ########.fr        #
+#    Updated: 2023/10/10 06:10:40 by hatesfam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ RM = rm -rf
 PARSE_DIR = ./src/parser
 
 SRC_FILES = src/minishell.c $(PARSE_DIR)/check_input_cmd.c $(PARSE_DIR)/dl_lst.c \
-			$(PARSE_DIR)/ft_error.c $(PARSE_DIR)/parse.c $(PARSE_DIR)/helpers.c
+			$(PARSE_DIR)/ft_error.c $(PARSE_DIR)/tokenize_cmd.c $(PARSE_DIR)/helpers.c
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 INC = ../includes
@@ -47,6 +47,8 @@ fclean: clean
 re: fclean all
 
 go: re
+	./minishell
+co: all
 	./minishell
 
 push: fclean

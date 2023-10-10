@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/09 09:57:21 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/10 05:53:21 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ typedef enum s_qt_state
 
 typedef struct s_token
 {
-	t_tokenType	*type;
-	t_qt_state	*state;
+	t_tokenType	type;
+	t_qt_state	state;
 	int			len;
 }				t_token;
 
@@ -65,13 +65,18 @@ typedef struct s_cmd
 int					check_input_cmd(t_cmd **cmd_lst, char *input);
 int					is_whitespace(char c);
 int					is_operator(char c);
-int					ft_whitespaces(char *str, int *index);
-int					possible_error(char *input);
+int					ft_whitespaces(char *str, int *index, char c);
+int					possible_error(char *input, t_cmd **cmd_list);
 void				ft_error(char *err_msg, t_cmd **cmd_list);
 
-//lexical analysis, parsing and doubly-linked link funcs
-void				parse(t_cmd **cmd_lst, char *cmd);
+//lexical analysis && parsing funcs
+void				tokenize_cmd(t_cmd **cmd_lst, char *cmd);
+void				tokenize_cmd(t_cmd **cmd_lst, char *pipe);
 t_cmd				*ft_newnode(t_token *token, char *txt);
+
+// doubly-linked link funcs
 t_cmd				*ft_lstlast(t_cmd *lst);
 void				ft_addnode_back(t_cmd **lst, t_cmd *node);
+void				ft_clean_dl(t_cmd **dl);
+int					ft_dlsize(t_cmd *lst);
 #endif
