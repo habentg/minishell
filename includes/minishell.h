@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/11 18:45:11 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/12 02:41:50 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <readline/history.h>
 
 # include "libft/libft.h"
-// error defs
+
 # define PIPE_AT_END "Error: pipe at the end"
 # define REDIR_AT_END "Error: redirection at the end"
 # define UNCLOSED_QOUTE "Error: unclosed quote"
@@ -39,17 +39,9 @@ typedef enum e_tokenType
 	F_FILE
 }			t_tokenType;
 
-typedef enum s_qt_state
-{
-	IN_S_QOUTES,
-	IN_D_QOUTES,
-	NORMAL
-}			t_qt_state;
-
 typedef struct s_token
 {
 	t_tokenType	type;
-	t_qt_state	state;
 	int			len;
 }				t_token;
 

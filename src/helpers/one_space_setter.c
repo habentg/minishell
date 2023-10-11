@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 20:25:50 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/11 18:44:34 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/12 00:17:45 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,3 @@ char	*one_space_setter(char *str)
 		return (NULL);
 	return (sett(str, res, start, end));
 }
-
-// int	main(void)
-// {
-// 	printf("%s\n", one_space_setter("   >> a.txt |habe k   haben>     <<	   f"));
-// }
