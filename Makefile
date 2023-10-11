@@ -6,7 +6,7 @@
 #    By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/03 01:59:13 by hatesfam          #+#    #+#              #
-#    Updated: 2023/10/10 09:47:04 by hatesfam         ###   ########.fr        #
+#    Updated: 2023/10/11 21:43:07 by hatesfam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,10 +18,11 @@ CC = cc
 CFALGS = -Wall -Werror -Wextra -g3
 RM = rm -rf
 
-PARSE_DIR = ./src/parser
+PARSER_DIR = ./src/parser
+HELPER_DIR = ./src/helpers
 
 SRC_FILES = src/minishell.c $(PARSE_DIR)/check_input_cmd.c $(PARSE_DIR)/dl_lst.c \
-			$(PARSE_DIR)/ft_error.c $(PARSE_DIR)/tokenize_cmd.c $(PARSE_DIR)/helpers.c
+			$(PARSE_DIR)/tokenize_cmd.c $(HELPER_DIR)/ft_error.c $(HELPER_DIR)/helpers.c
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 INC = ../includes
@@ -38,10 +39,11 @@ $(NAME): $(OBJ_FILES)
 	$(CC) $(CFALGS) $^ $(LIBFT) $(RDLINE_L) -o $@ -I$(INC)
 	
 clean:
-	@$(MAKE) -C ./includes/libft fclean
+	@$(MAKE) -C ./includes/libft clean
 	$(RM) $(OBJ_FILES)
 	
 fclean: clean
+	@$(MAKE) -C ./includes/libft fclean
 	$(RM) $(NAME)
 	
 re: fclean all

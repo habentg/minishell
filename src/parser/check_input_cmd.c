@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 02:05:18 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/10 09:34:14 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/11 18:50:46 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	check_input_cmd(t_cmd **cmd_list, char *input)
 
 	i = -1;
 	i = ft_whitespaces(input, &i, 'f');
+	// remove extra whitespaces (insert one if there is none) between  
 	if (possible_error(input, cmd_list))
 		return (1);
 	start = i;
