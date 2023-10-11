@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 02:57:50 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/10 09:39:14 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/11 18:50:15 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,11 @@ void	tokenize_cmd(t_cmd **cmd_lst, char *cmd)
 	int	i = 0;
 	int start = 0;
 	// int end = 0;
-	t_token	*token;
+	// t_token	*token;
 	// t_cmd	*node;
 	char *str;
 
-	token = 0;
+	// token = 0;
 	(void)cmd_lst;
 	printf("--------\n");
 	printf("%s\n", cmd);

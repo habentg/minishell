@@ -6,65 +6,20 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 20:25:50 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/11 21:29:27 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/11 18:44:34 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
+#include "../../includes/minishell.h"
 
-int	is_whitespace(char c)
+int	is_heredoc_append(char *str, int i, char c)
 {
-	if (c == ' ' || c == '\t' || c == '\n' || c == '\v'\
-		|| c == '\f' || c == '\r')
+	if (str[i + 1] == c)
 		return (1);
 	return (0);
 }
 
-int	is_operator(char c)
-{
-	if (c == '>' || c == '<' || c == '|')
-		return (1);
-	return (0);
-}
-
-int	ft_whitespaces(char *str, int *index, char c)
-{
-	int	i;
-
-	i = *index;
-	if (c == 'f')
-	{
-		while (str[++i])
-		{
-			if (!is_whitespace(str[i]))
-				break ;
-		}
-	}
-	else if (c == 'b')
-	{
-		while (--i >= 0)
-		{
-			if (!is_whitespace(str[i]))
-				break ;
-		}	
-	}
-	return (i);
-}
-
-size_t	ft_strlen(const char *str)
-{
-	size_t	count;
-
-	count = 0;
-	while (str[count] != '\0')
-		count++;
-	return (count);
-}
-
-char	*sett(char *str, char *res, int start, int end)
+static char	*sett(char *str, char *res, int start, int end)
 {
 	int	i;
 
@@ -78,10 +33,11 @@ char	*sett(char *str, char *res, int start, int end)
 		}
 		else if (is_operator(str[start]))
 		{
-			if (start != 0)
+			if (i != -1 && !is_operator(res[i]) && !is_whitespace(res[i]))
 				res[++i] = ' ';
-			if (is_heredoc(str, start) || is_append(str, start))
 			res[++i] = str[start];
+			if (is_heredoc_append(str, start, str[start]))
+				res[++i] = str[start++];
 			res[++i] = ' ';
 			start = ft_whitespaces(str, &start, 'f');
 		}
@@ -113,7 +69,7 @@ char	*one_space_setter(char *str)
 	return (sett(str, res, start, end));
 }
 
-int	main(void)
-{
-	printf("%s\n", one_space_setter(">> a.txt |habe k   haben>        f"));
-}
+// int	main(void)
+// {
+// 	printf("%s\n", one_space_setter("   >> a.txt |habe k   haben>     <<	   f"));
+// }

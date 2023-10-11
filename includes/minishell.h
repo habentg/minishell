@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/10 05:53:21 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/11 18:45:11 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_cmd
 
 // input sanitization & helper funcs
 int					check_input_cmd(t_cmd **cmd_lst, char *input);
+char				*one_space_setter(char *str);
 int					is_whitespace(char c);
 int					is_operator(char c);
 int					ft_whitespaces(char *str, int *index, char c);

@@ -6,12 +6,11 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 09:02:58 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/10 08:50:59 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/11 18:40:32 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "../../includes/minishell.h"
-#include <stdio.h>
+#include "../../includes/minishell.h"
 
 int	is_whitespace(char c)
 {

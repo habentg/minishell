@@ -6,7 +6,7 @@
 #    By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/03 01:59:13 by hatesfam          #+#    #+#              #
-#    Updated: 2023/10/11 21:43:07 by hatesfam         ###   ########.fr        #
+#    Updated: 2023/10/11 18:51:14 by hatesfam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,9 @@ RM = rm -rf
 PARSER_DIR = ./src/parser
 HELPER_DIR = ./src/helpers
 
-SRC_FILES = src/minishell.c $(PARSE_DIR)/check_input_cmd.c $(PARSE_DIR)/dl_lst.c \
-			$(PARSE_DIR)/tokenize_cmd.c $(HELPER_DIR)/ft_error.c $(HELPER_DIR)/helpers.c
+SRC_FILES = src/minishell.c $(PARSER_DIR)/check_input_cmd.c $(PARSER_DIR)/dl_lst.c \
+			$(PARSER_DIR)/tokenize_cmd.c $(HELPER_DIR)/ft_error.c $(HELPER_DIR)/helpers.c \
+			$(HELPER_DIR)/one_space_setter.c
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 INC = ../includes
