@@ -36,11 +36,11 @@ char	*ft_strchr(const char *str, int c)
 	return (0);
 }
 
-// int main()
-// {
-// 	char a[50] = "helloWorld!@abudhabi.com1";
-// 	char c = '@';
+int main()
+{
+	char a[50] = "helloWorld!@abudhabi.com1@this";
+	char c = '@';
 
-// 	printf("%s\n", ft_strchr(NULL, c));
-// 	printf("\n %s\n", strchr(NULL, c));
-// }
+	printf("%s\n", ft_strchr(a, c));
+	printf("\n %s\n", strchr(a, c));
+}

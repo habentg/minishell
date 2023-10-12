@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 20:25:50 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/12 00:17:45 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:18:35 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,17 @@ int	is_heredoc_append(char *str, int i, char c)
 	return (0);
 }
 
+int	is_qoute(char c)
+{
+	if (c == 34 || c == 39)
+		return (1);
+	return (0);
+}
+
 static char	*sett(char *str, char *res, int start, int end)
 {
 	int	i;
+	int	q;
 
 	i = -1;
 	while (start <= (end + 1))
@@ -30,6 +38,14 @@ static char	*sett(char *str, char *res, int start, int end)
 		{
 			res[++i] = ' ';
 			start = ft_whitespaces(str, &start, 'f');
+		}
+		if (is_qoute(str[start]))
+		{
+			q = start;
+			res[++i] = str[q];
+			while (str[++q] != str[start])
+				res[++i] = str[q];
+			start = q;
 		}
 		else if (is_operator(str[start]))
 		{

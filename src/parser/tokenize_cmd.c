@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 02:57:50 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/12 02:32:14 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:25:54 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,29 @@ t_token	*ft_tokenize(char *cmd)
 	return (token);
 }
 
-void	tokenize_cmd(t_cmd **cmd_lst, char *cmd)
+void	tokenize_cmd(t_token **token_dlist, char *cmd)
 {
 	char	**arr;
-	int		c;
+	int		i;
+	int		k;
+	t_token	*tok;
+	int c = 0;
+	char	*member;
 
-	(void)cmd_lst;
-	c = 0;
-	printf("ONE COMMAND: [%s]\n", cmd);
-	arr = ft_split(cmd, 32);
-	while (arr[c])
-		printf ("->'%s'\n", arr[c++]);
+	i = 0;
+	k = 0;
+	member = (char *)malloc(sizeof(char) * 100);
+	while (cmd[i])
+	{
+		if (is_whitespace(cmd[i]))
+			i++;
+		if (is_qoute(cmd[i]))
+		{
+			c = i;
+			member[k++] = cmd[i++];
+			while (cmd[c] != cmd[i])
+				member[i] = str[q];
+			start = q;
+		}
+	}
 }
