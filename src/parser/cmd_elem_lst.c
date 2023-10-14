@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 02:46:29 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/14 18:47:36 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/14 19:19:52 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_tokenType	t_type(char *cmd, int end_code)
 	}
 	else if (cmd[0] == '|' && cmd[1] == '\0')
 		type = PIPE;
-	else if ((cmd[0] == '>' || cmd[0] == '<') && cmd[1] == '\0')
+	else if ((cmd[0] == '>' || cmd[0] == '<'))
 	{
 		type = INPUT_REDIR;
 		if (cmd[0] == '>')

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 02:57:50 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/14 18:54:54 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/14 21:38:55 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,8 @@ void	tokenize_cmd(t_token **token_lst, char *cmd)
 	t_token	*token;
 
 	i = -1;
-	printf("incoming full cmd~>%s\n", cmd);
+	printf("~>[%s]\n", cmd);
 	mem_arr = get_members(cmd);
-	while (mem_arr[++i] != NULL)
-		printf("^^^^^^^^^^~>%s\n", mem_arr[i]);
 	i = -1;
 	arr_size = arr_length(mem_arr);
 	while (mem_arr[++i] != NULL)
