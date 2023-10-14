@@ -6,25 +6,11 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 20:25:50 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/12 13:18:35 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/14 18:31:46 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	is_heredoc_append(char *str, int i, char c)
-{
-	if (str[i + 1] == c)
-		return (1);
-	return (0);
-}
-
-int	is_qoute(char c)
-{
-	if (c == 34 || c == 39)
-		return (1);
-	return (0);
-}
 
 static char	*sett(char *str, char *res, int start, int end)
 {
@@ -43,7 +29,7 @@ static char	*sett(char *str, char *res, int start, int end)
 		{
 			q = start;
 			res[++i] = str[q];
-			while (str[++q] != str[start])
+			while (str[q] != '\0' && str[++q] != str[start])
 				res[++i] = str[q];
 			start = q;
 		}
@@ -52,7 +38,7 @@ static char	*sett(char *str, char *res, int start, int end)
 			if (i != -1 && !is_operator(res[i]) && !is_whitespace(res[i]))
 				res[++i] = ' ';
 			res[++i] = str[start];
-			if (is_heredoc_append(str, start, str[start]))
+			if (is_heredoc_append(str, start, str[start]) != 0)
 				res[++i] = str[start++];
 			res[++i] = ' ';
 			start = ft_whitespaces(str, &start, 'f');
@@ -79,8 +65,9 @@ char	*one_space_setter(char *str)
 	res = NULL;
 	if (!str)
 		return (NULL);
-	res = (char *)malloc(sizeof(char) * (end - start + 1));
+	res = (char *)malloc(sizeof(char) * (end - start + 2));
 	if (!res)
 		return (NULL);
-	return (sett(str, res, start, end));
+	sett(str, res, start, end);
+	return (res);
 }

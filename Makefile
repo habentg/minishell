@@ -6,7 +6,7 @@
 #    By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/03 01:59:13 by hatesfam          #+#    #+#              #
-#    Updated: 2023/10/12 05:52:19 by hatesfam         ###   ########.fr        #
+#    Updated: 2023/10/14 18:30:48 by hatesfam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,20 +15,21 @@
 NAME = minishell
 
 CC = cc
-CFALGS = -Wall -Werror -Wextra
+sanitizer = -fsanitize=address -g3 -fno-omit-frame-pointer
+INC = ./includes
+RDLINE_L = -lreadline -L/usr/local/opt/readline/lib
+LIBFT = ./includes/libft/libft.a
+CFALGS = -Wall -Werror -Wextra -I$(INC) $(sanitizer)
 RM = rm -rf
 
 PARSER_DIR = ./src/parser
 HELPER_DIR = ./src/helpers
 
 SRC_FILES = src/minishell.c $(PARSER_DIR)/check_input_cmd.c $(PARSER_DIR)/dl_lst.c \
-			$(PARSER_DIR)/tokenize_cmd.c $(HELPER_DIR)/helpers.c $(HELPER_DIR)/ft_error.c\
-			$(HELPER_DIR)/one_space_setter.c
+			$(PARSER_DIR)/tokenize_cmd.c $(PARSER_DIR)/cmd_elem_lst.c $(HELPER_DIR)/is_funcs.c $(HELPER_DIR)/ft_error.c\
+			$(HELPER_DIR)/one_space_setter.c $(HELPER_DIR)/ft_clean_arr.c
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
-INC = ../includes
-RDLINE_L = -lreadline
-LIBFT = ./includes/libft/libft.a
 
 #Colors:
 GREEN		=	\e[92;5;118m
@@ -62,11 +63,16 @@ fclean: clean
 	@printf "$(RED)    - Executable & Archives removed.$(RESET)\n"
 	
 re: fclean all
+	clear
 
 go: re
 	./minishell
 #<------- delete later------>
 s: all
+	clear
+	./minishell
+f: re
+	clear
 	./minishell
 
 p: fclean

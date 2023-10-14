@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 01:30:41 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/12 02:31:44 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/14 19:13:50 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,17 @@
 
 static int	operator_end_err(char *input, t_cmd **cmd_list)
 {
-	size_t	i;
+	int	i;
 
-	i = ft_strlen(input) - 1;
-	while (input[i] == ' ' || input[i] == '\t')
-		i--;
+	i = (int)(ft_strlen(input) - 1);
+	if (i <= 0)
+		return (0);
+	i = ft_whitespaces(input, &i, 'b');
+	if (i <= 0)
+		return (0);
+	while (is_whitespace(input[i]))
+		if (i == 0)
+			return (0);
 	if (input[i] == '|')
 		return (ft_error(PIPE_AT_END, cmd_list), 1);
 	else if (input[i] == '>' || input[i] == '<')
@@ -54,4 +60,11 @@ int	possible_error(char *input, t_cmd **cmd_list)
 	if (open_qoute_err(input, cmd_list))
 		return (1);
 	return (0);
+}
+
+void	ft_error(char *err_msg, t_cmd **cmd_list)
+{
+	ft_putendl_fd(err_msg, 1);
+	if (cmd_list)
+		ft_clean_dl(cmd_list);
 }

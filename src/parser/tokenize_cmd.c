@@ -6,77 +6,86 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 02:57:50 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/12 13:25:54 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/14 18:54:54 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	is_operator(char c)
+char	*clip_qouted(char *str, int *i)
 {
-	if (c == '>' || c == '<' || c == '|')
-		return (1);
-	return (0);
+	char	c;
+	int		k;
+	int		j;
+	char	*s;
+	int		r;
+
+	k = *i;
+	r = -1;
+	j = k;
+	c = str[k++];
+	s = (char *)malloc(sizeof(char) * ft_strlen(str) + 1);
+	s[++r] = c;
+	while (c != str[k] && str[k] != '\0')
+		s[++r] = str[k++];
+	s[++r] = str[k];
+	s[++r] = c;
+	s[r] = '\0';
+	*i = k;
+	return (s);
 }
 
-t_token	*ft_tokenize(char *cmd)
+char	**get_members(char *cmd)
 {
-	t_token	*token;
-
-	token = 0;
-	if (cmd[0] == '|' && cmd[1] == '\0')
-	{
-		token->type = PIPE;
-		token->len = 1;
-	}
-	else if ((cmd[0] == '>' || cmd[0] == '<') && cmd[1] == '\0')
-	{
-		token->type = INPUT_REDIR;
-		if (cmd[0] == '>')
-			token->type = TRUNC;
-		token->len = 1;
-	}
-	else if (cmd[0] == '>' && cmd[1] == '>' && cmd[2] == '\0')
-	{
-		token->type = APPEND;
-		token->len = 2;
-	}
-	else if (cmd[0] == '<' && cmd[1] == '<' && cmd[2] == '\0')
-	{
-		token->type = HERE_DOC;
-		token->len = 2;
-	}
-	else
-	{
-		token->type = WRD;
-		token->len = ft_strlen(cmd);
-	}
-	return (token);
-}
-
-void	tokenize_cmd(t_token **token_dlist, char *cmd)
-{
-	char	**arr;
+	char	**res;
 	int		i;
 	int		k;
-	t_token	*tok;
-	int c = 0;
-	char	*member;
+	int		z;
 
+	z = -1;
 	i = 0;
 	k = 0;
-	member = (char *)malloc(sizeof(char) * 100);
+	res = (char **)ft_calloc(sizeof(char *), 100);
 	while (cmd[i])
 	{
-		if (is_whitespace(cmd[i]))
+		while (cmd[i] == ' ' && cmd[i] != '\0')
 			i++;
 		if (is_qoute(cmd[i]))
 		{
-			c = i;
-			member[k++] = cmd[i++];
-			while (cmd[c] != cmd[i])
-				member[i] = str[q];
-			start = q;
+			res[++z] = clip_qouted(cmd, &i);
+			i++;
 		}
+		else
+		{
+			k = i;
+			while (cmd[i] != ' ' && cmd[i] != '\0')
+				i++;
+			res[++z] = ft_substr(cmd, k, (i - k + 1));
+		}
+	}
+	return (res);
+}
+
+void	tokenize_cmd(t_token **token_lst, char *cmd)
+{
+	char	**mem_arr;
+	int		i;
+	int		arr_size;
+	t_token	*token;
+
+	i = -1;
+	printf("incoming full cmd~>%s\n", cmd);
+	mem_arr = get_members(cmd);
+	while (mem_arr[++i] != NULL)
+		printf("^^^^^^^^^^~>%s\n", mem_arr[i]);
+	i = -1;
+	arr_size = arr_length(mem_arr);
+	while (mem_arr[++i] != NULL)
+	{
+		token = tokenize_mem(mem_arr[i], 0);
+		free(mem_arr[i]);
+		printf("    ~>token: %s, type: %u\n", token->str, token->type);
+		if (add_tok_back(token_lst, token, 0))
+			break ;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/12 13:18:50 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/14 16:02:18 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ typedef struct s_token
 {
 	char			*str;
 	t_tokenType		type;
-	int				len;
 	struct s_token	*prev;
 	struct s_token	*next;
 }				t_token;
@@ -57,6 +56,14 @@ typedef struct s_iofds
 	int		stdin_backup;
 	int		stdout_backup;
 }			t_iofds;
+
+typedef struct s_cmd
+{
+	char			*value;
+	t_token			*token;
+	struct s_cmd	*next;
+	struct s_cmd	*prev;
+}	t_cmd;
 
 typedef struct s_cmds
 {
@@ -75,28 +82,25 @@ typedef struct s_data
 	char	**env;
 }	t_data;
 
-typedef struct s_cmd
-{
-	char			*value;
-	t_token			*token;
-	struct s_cmd	*next;
-	struct s_cmd	*prev;
-}	t_cmd;
-
 // input sanitization & helper funcs
 int					check_input_cmd(t_cmd **cmd_lst, char *input);
 char				*one_space_setter(char *str);
+int					is_heredoc_append(char *str, int i, char c);
 int					is_whitespace(char c);
 int					is_operator(char c);
 int					is_qoute(char c);
+int					arr_length(char **arr);
 int					ft_whitespaces(char *str, int *index, char c);
 int					possible_error(char *input, t_cmd **cmd_list);
 void				ft_error(char *err_msg, t_cmd **cmd_list);
+void				ft_clean_arr(char **argv);
 
 //lexical analysis && parsing funcs
-void				tokenize_cmd(t_token **token_dlist, char *cmd);
-void				tokenize_cmd(t_cmd **cmd_lst, char *pipe);
-t_cmd				*ft_newnode(t_token *token, char *txt);
+void				tokenize_cmd(t_token **lst, char *cmd);
+int					add_tok_back(t_token **lst, t_token *token, int end_code);
+t_token				*tokenize_mem(char *mem, int end_code);
+char				**get_members(char *cmd);
+void				ft_clean_tok_dl(t_token **dl);
 
 // doubly-linked link funcs
 t_cmd				*ft_lstlast(t_cmd *lst);
