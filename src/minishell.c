@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:57:10 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/14 06:31:02 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/16 18:16:15 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int ac, char **av)
 	cmd_list = (t_cmd **)ft_calloc(1, sizeof(t_cmd *));
 	while (1)
 	{
-		input = readline("Minishell[:)$ ");
+		input = readline("\e[1;32mMinishell~$ \e[0m");
 		if (check_input_cmd(cmd_list, input))
 			return (1);
 		if (strlen(input) > 0)

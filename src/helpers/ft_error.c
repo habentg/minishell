@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 01:30:41 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/14 19:13:50 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/16 17:59:40 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	operator_end_err(char *input, t_cmd **cmd_list)
 {
 	int	i;
 
-	i = (int)(ft_strlen(input) - 1);
+	i = (int)(ft_strlen(input));
 	if (i <= 0)
 		return (0);
 	i = ft_whitespaces(input, &i, 'b');

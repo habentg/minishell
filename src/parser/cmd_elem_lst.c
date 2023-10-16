@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 02:46:29 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/14 19:19:52 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/16 17:46:38 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,20 @@ int	add_tok_back(t_token **lst, t_token *token, int end_code)
 	return (0);
 }
 
+int	ft_tokendl_size(t_token **lst)
+{
+	int		i;
+	t_token	*temp_node;
+
+	temp_node = *lst;
+	i = 0;
+	while (temp_node != NULL)
+	{
+		temp_node = temp_node->next;
+		i++;
+	}
+	return (i);
+}
 // int main(void)
 // {
 //     t_token **dl;

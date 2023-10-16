@@ -5,49 +5,60 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/11 20:25:50 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/14 18:31:46 by hatesfam         ###   ########.fr       */
+/*   Created: 2023/10/16 11:57:18 by hatesfam          #+#    #+#             */
+/*   Updated: 2023/10/16 12:23:34 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static char	*sett(char *str, char *res, int start, int end)
+void	handle_qouted(char *str, int *j, char **res, int *res_i)
 {
-	int	i;
-	int	q;
+	int	qoute_type;
 
-	i = -1;
-	while (start <= (end + 1))
+	qoute_type = str[*j];
+	(*res)[(*res_i)++] = str[*j];
+	(*j)++;
+	while (str[*j] && str[*j] != qoute_type)
+		(*res)[(*res_i)++] = str[(*j)++];
+	if (str[*j])
+		(*res)[(*res_i)++] = str[(*j)++];
+}
+
+void	handle_operator(char *str, int *j, char **res, int *res_i)
+{
+	char	operator_type;
+
+	operator_type = str[*j];
+	(*res)[(*res_i)++] = ' ';
+	(*res)[(*res_i)++] = str[*j];
+	(*j)++;
+	if (operator_type == str[*j])
+		(*res)[(*res_i)++] = str[(*j)++];
+	(*res)[(*res_i)++] = ' ';
+}
+
+static void	sett(char *str, char **res, int j, int k)
+{
+	int	res_i;
+
+	res_i = 0;
+	while (j < (k + 1))
 	{
-		if (is_whitespace(str[start]))
+		if (is_whitespace(str[j]))
 		{
-			res[++i] = ' ';
-			start = ft_whitespaces(str, &start, 'f');
+			(*res)[res_i++] = ' ';
+			while (is_whitespace(str[j]))
+				j++;
 		}
-		if (is_qoute(str[start]))
-		{
-			q = start;
-			res[++i] = str[q];
-			while (str[q] != '\0' && str[++q] != str[start])
-				res[++i] = str[q];
-			start = q;
-		}
-		else if (is_operator(str[start]))
-		{
-			if (i != -1 && !is_operator(res[i]) && !is_whitespace(res[i]))
-				res[++i] = ' ';
-			res[++i] = str[start];
-			if (is_heredoc_append(str, start, str[start]) != 0)
-				res[++i] = str[start++];
-			res[++i] = ' ';
-			start = ft_whitespaces(str, &start, 'f');
-		}
+		if (is_qoute(str[j]))
+			handle_qouted(str, &j, res, &res_i);
+		if (is_operator(str[j]))
+			handle_operator(str, &j, res, &res_i);
 		else
-			res[++i] = str[start++];
+			(*res)[res_i++] = str[j++];
 	}
-	res[i] = '\0';
-	return (res);
+	(*res)[res_i] = '\0';
 }
 
 char	*one_space_setter(char *str)
@@ -65,9 +76,9 @@ char	*one_space_setter(char *str)
 	res = NULL;
 	if (!str)
 		return (NULL);
-	res = (char *)malloc(sizeof(char) * (end - start + 2));
+	res = (char *)malloc(sizeof(char) * 200);
 	if (!res)
 		return (NULL);
-	sett(str, res, start, end);
+	sett(str, &res, start, end);
 	return (res);
 }

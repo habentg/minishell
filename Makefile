@@ -6,7 +6,7 @@
 #    By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/03 01:59:13 by hatesfam          #+#    #+#              #
-#    Updated: 2023/10/14 18:30:48 by hatesfam         ###   ########.fr        #
+#    Updated: 2023/10/16 18:18:28 by hatesfam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,18 +55,18 @@ clean:
 	@$(RM) $(OBJ_FILES)
 	@printf "$(CURSIVE)$(GRAY)	- Removing object files ... $(RESET)\n"
 	@printf "$(RED)    - Object files removed.$(RESET)\n"
+	clear
 	
 fclean: clean
 	@$(MAKE) -C ./includes/libft fclean
 	@$(RM) $(NAME)
 	@printf "$(CURSIVE)$(GRAY)	- Removing $(NAME)... $(RESET)\n"
 	@printf "$(RED)    - Executable & Archives removed.$(RESET)\n"
+	clear
 	
 re: fclean all
 	clear
 
-go: re
-	./minishell
 #<------- delete later------>
 s: all
 	clear

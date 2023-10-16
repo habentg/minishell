@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/14 16:02:18 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/16 17:46:19 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef enum e_tokenType
 	END
 }			t_tokenType;
 
+// done
 typedef struct s_token
 {
 	char			*str;
@@ -101,6 +102,7 @@ int					add_tok_back(t_token **lst, t_token *token, int end_code);
 t_token				*tokenize_mem(char *mem, int end_code);
 char				**get_members(char *cmd);
 void				ft_clean_tok_dl(t_token **dl);
+int	ft_tokendl_size(t_token **lst);
 
 // doubly-linked link funcs
 t_cmd				*ft_lstlast(t_cmd *lst);

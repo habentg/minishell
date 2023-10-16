@@ -20,9 +20,6 @@ then I will consider this as a one "command" to be run togather and send it to
 the 'Tokenizer' for recognition and labeling according to the pre-set token types in my header.
 
 after that, the plan is to put it in a D-linked list as one node. === yet to be figured out!!!
-.
-.
-.
 
 ########################## Execution ###########################
 ..

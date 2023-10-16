@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 02:05:18 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/14 18:19:50 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/16 12:00:45 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	check_input_cmd(t_cmd **cmd_list, char *input)
 	i = -1;
 	if (possible_error(input, cmd_list))
 		return (1);
+	input = one_space_setter(input);
 	cmd_arr = ft_split(input, 124);
 	arr_size = arr_length(cmd_arr);
 	token_lst = (t_token **)ft_calloc(1, sizeof(t_token *));
