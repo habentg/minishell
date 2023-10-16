@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 02:57:50 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/14 21:38:55 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/16 10:37:25 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,16 @@ char	*clip_qouted(char *str, int *i)
 	return (s);
 }
 
+char	*clip_normal(char *cmd, int *i)
+{
+	int	k;
+
+	k = *i;
+	while (cmd[*i] != ' ' && cmd[*i] != '\0')
+		(*i)++;
+	return (ft_substr(cmd, k, ((*i) - k + 1)));
+}
+
 char	**get_members(char *cmd)
 {
 	char	**res;
@@ -45,7 +55,7 @@ char	**get_members(char *cmd)
 	z = -1;
 	i = 0;
 	k = 0;
-	res = (char **)ft_calloc(sizeof(char *), 100);
+	res = (char **)ft_calloc(sizeof(char *), ft_strlen(cmd) + 1);
 	while (cmd[i])
 	{
 		while (cmd[i] == ' ' && cmd[i] != '\0')
@@ -56,13 +66,9 @@ char	**get_members(char *cmd)
 			i++;
 		}
 		else
-		{
-			k = i;
-			while (cmd[i] != ' ' && cmd[i] != '\0')
-				i++;
-			res[++z] = ft_substr(cmd, k, (i - k + 1));
-		}
+			res[++z] = clip_normal(cmd, &i);
 	}
+	res[++z] = NULL;
 	return (res);
 }
 
