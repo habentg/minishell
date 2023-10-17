@@ -23,9 +23,7 @@ after that, the plan is to put it in a D-linked list as one node. === yet to be 
 
 <---------  Expansion of VAR -------->
 
-
 <---------  Parsing and Constructing a Command -------->
-
 
 ########################## Execution ###########################
 ..

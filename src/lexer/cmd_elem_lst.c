@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 02:46:29 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/17 12:27:30 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/17 18:48:41 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_tokenType	t_type(char *cmd, int end_code)
 	else if (cmd[0] == '$')
 		type = VAR;
 	else
-		type = WRD;
+		type = WORD;
 	return (type);
 }
 
@@ -109,28 +109,3 @@ int	ft_tokendl_size(t_token **lst)
 	}
 	return (i);
 }
-
-// int main(void)
-// {
-//     t_token **dl;
-//     t_token *node;
-//     char *arr[] = {"H", "A", "B", "E", "N", "0123456789", "END"};
-//     dl = (t_token **)malloc(sizeof(t_token *));
-//     *dl = NULL;
-//    	int i = -1;
-// 	while (arr[++i])
-// 		add_tok_back(dl, arr[i], 0);
-// 	node = *dl;
-//     while (node)
-// 	{
-// 		if (node != *dl)
-//         	printf("prev: %s <- ", node->prev->str);
-//         printf("curr: %s -> ", node->str);
-// 		if (node != last_mem(*dl))
-//         	printf("next: %s", node->next->str);
-// 		node = node->next;
-// 		printf("\n--------------\n");
-// 	}
-// 	ft_clean_tok_dl(dl);
-//     return 0;
-// }

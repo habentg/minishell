@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/17 16:09:51 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/17 19:27:33 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef enum e_quoteType
 // token type struct
 typedef enum e_tokenType
 {
-	WRD,
+	WORD,
 	PIPE,
 	APPEND,
 	TRUNC,
@@ -80,7 +80,7 @@ typedef struct s_cmd
 
 typedef struct s_cmds
 {
-	char			*cmd;
+	char			*cmds;
 	char			**cmdarg;
 	t_iofds			*iofd;
 	struct s_cmds	*next;
@@ -90,8 +90,8 @@ typedef struct s_cmds
 typedef struct s_data
 {
 	char	*input;
-	t_cmds	*cmds;
-	t_token	*token; //is this the whole linked list of token nodes?
+	t_cmd	*cmds;
+	t_token	*token;
 	char	**envi;
 }			t_data;
 
@@ -116,18 +116,22 @@ void				ft_clean_arr(char **argv);
 void				ft_clean_data(t_data **data);
 
 // launch funcs
-int					start_program(t_data *data, char *input, char **envp);
+int					start_program(t_data *data, char *input);
 
 //lexical analysis funcs
-int					start_lexing(t_data *data, char *input, char **envp);
+int					start_lexing(t_data *data, char *input);
 void				tokenize_cmd(t_token **lst, char *cmd);
+t_token				*last_mem(t_token *lst);
 int					add_tok_back(t_token **lst, t_token *token, int end_code);
 t_token				*tokenize_mem(char *mem, int end_code);
 void				ft_clean_tok_dl(t_token **dl);
 int					ft_tokendl_size(t_token **lst);
 
+
 // expansion funcs
-int					start_expansion(t_data *data, char **envp);
+int					start_expansion(t_data *data);
+
+void 	print_token(t_token *token);
 
 // parsing funcs
 

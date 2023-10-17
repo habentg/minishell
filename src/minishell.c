@@ -6,20 +6,20 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:57:10 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/17 16:38:26 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/17 19:08:23 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 // init minishell
-int	start_program(t_data *data, char *input, char **envp)
+int	start_program(t_data *data, char *input)
 {
 	if (possible_error(input))
 		return (1);
-	if (start_lexing(data, input, envp))
+	if (start_lexing(data, input))
 		return (1);
-	if (start_expansion(data, envp))
+	if (start_expansion(data))
 		return (1);
 	return (0);
 }
@@ -33,12 +33,11 @@ int	init_data(t_data **data, char *input, char **envp)
 	(*data)->input = input;
 	(*data)->cmds = NULL;
 	(*data)->token = NULL;
-	(*data)->envi = (char **)malloc((sizeof(char *) * 1) * arr_length(envp));
+	(*data)->envi = (char **)malloc((sizeof(char *)) * arr_length(envp));
 	if (!(*data)->envi)
 		return (1);
 	while (envp[++i])
 		(*data)->envi[i] = ft_strdup(envp[i]);
-	// (*data)->envi[i] = NULL;
 	return (0);
 }
 
@@ -52,7 +51,6 @@ int	main(int ac, char **av, char **envp)
 	input = NULL;
 	if (ac != 1)
 		return (1);
-	printf("ENV: %s\n", envp[0]);
 	data = (t_data *)ft_calloc(1, sizeof(t_data));
 	while (1)
 	{
@@ -67,7 +65,7 @@ int	main(int ac, char **av, char **envp)
 		}
 		if (init_data(&data, input, envp))
 			return (ft_clean_data(&data), 1);
-		if (start_program(data, input, envp))
+		if (start_program(data, input))
 			return (ft_clean_data(&data), 1);
 		if (ft_strlen(input) > 0)
 			add_history(input);
