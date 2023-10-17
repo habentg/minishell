@@ -6,15 +6,16 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:57:10 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/16 18:16:15 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/17 11:07:35 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 // program entry
-int	main(int ac, char **av)
+int	main(int ac, char **av, char **envp)
 {
 	char	*input;
+	// t_data	*data;
 	t_cmd	**cmd_list;
 
 	(void)av;
@@ -25,10 +26,10 @@ int	main(int ac, char **av)
 	cmd_list = (t_cmd **)ft_calloc(1, sizeof(t_cmd *));
 	while (1)
 	{
-		input = readline("\e[1;32mMinishell~$ \e[0m");
-		if (check_input_cmd(cmd_list, input))
+		input = readline(PROMPT);
+		if (check_input_cmd(cmd_list, input, envp))
 			return (1);
-		if (strlen(input) > 0)
+		if (ft_strlen(input) > 0)
 			add_history(input);
 	}
 	return (0);

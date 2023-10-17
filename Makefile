@@ -6,7 +6,7 @@
 #    By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/03 01:59:13 by hatesfam          #+#    #+#              #
-#    Updated: 2023/10/16 18:18:28 by hatesfam         ###   ########.fr        #
+#    Updated: 2023/10/17 10:32:55 by hatesfam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,11 +23,12 @@ CFALGS = -Wall -Werror -Wextra -I$(INC) $(sanitizer)
 RM = rm -rf
 
 PARSER_DIR = ./src/parser
+LEXER_DIR = ./src/lexer
 HELPER_DIR = ./src/helpers
 
-SRC_FILES = src/minishell.c $(PARSER_DIR)/check_input_cmd.c $(PARSER_DIR)/dl_lst.c \
-			$(PARSER_DIR)/tokenize_cmd.c $(PARSER_DIR)/cmd_elem_lst.c $(HELPER_DIR)/is_funcs.c $(HELPER_DIR)/ft_error.c\
-			$(HELPER_DIR)/one_space_setter.c $(HELPER_DIR)/ft_clean_arr.c
+SRC_FILES = src/minishell.c $(LEXER_DIR)/tokenize_input.c $(LEXER_DIR)/dl_lst.c $(LEXER_DIR)/cmd_elem_lst.c \
+			$(HELPER_DIR)/is_funcs.c $(HELPER_DIR)/ft_error.c $(HELPER_DIR)/one_space_setter.c \
+			$(HELPER_DIR)/ft_clean_arr.c $(HELPER_DIR)/splitter.c
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 

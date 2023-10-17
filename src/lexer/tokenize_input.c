@@ -1,18 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_input_cmd.c                                  :+:      :+:    :+:   */
+/*   tokenize_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 02:05:18 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/16 12:00:45 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/17 11:06:32 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	check_input_cmd(t_cmd **cmd_list, char *input)
+void	tokenize_cmd(t_token **token_lst, char *cmd)
+{
+	char	**mem_arr;
+	int		i;
+	t_token	*token;
+
+	i = -1;
+	printf("cmd: [%s]\n", cmd);
+	mem_arr = splitter(cmd);
+	i = -1;
+	while (mem_arr[++i] != NULL)
+	{
+		token = tokenize_mem(mem_arr[i], 0);
+		if (mem_arr[i])
+			free(mem_arr[i]);
+		printf("    ~>token: %s, type: %u\n", token->str, token->type);
+		if (add_tok_back(token_lst, token, 0))
+			break ;
+	}
+	free(mem_arr);
+}
+
+int	check_input_cmd(t_cmd **cmd_list, char *input, char **envp)
 {
 	int		i;
 	char	**cmd_arr;
@@ -20,6 +42,7 @@ int	check_input_cmd(t_cmd **cmd_list, char *input)
 	int		arr_size;
 
 	i = -1;
+	(void)envp;
 	if (possible_error(input, cmd_list))
 		return (1);
 	input = one_space_setter(input);

@@ -21,5 +21,9 @@ the 'Tokenizer' for recognition and labeling according to the pre-set token type
 
 after that, the plan is to put it in a D-linked list as one node. === yet to be figured out!!!
 
+<---------  Expansion of VAR -------->
+
+<---------  Parsing and Constructing a Command -------->
+
 ########################## Execution ###########################
 ..

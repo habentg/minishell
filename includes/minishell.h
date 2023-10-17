@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/16 17:46:19 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/17 11:06:57 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,22 @@
 
 # include "libft/libft.h"
 
+# define PROMPT "\e[1;32mMinishell~$ \e[0m"
+
+// error messages
 # define PIPE_AT_END "Error: pipe at the end"
 # define REDIR_AT_END "Error: redirection at the end"
 # define UNCLOSED_QOUTE "Error: unclosed quote"
 
+// qoute state struct
+typedef enum e_quoteType
+{
+	NONE,
+	SINGLE,
+	DOUBLE
+}			t_quoteType;
+
+// token type struct
 typedef enum e_tokenType
 {
 	WRD,
@@ -38,7 +50,7 @@ typedef enum e_tokenType
 	END
 }			t_tokenType;
 
-// done
+// token node struct
 typedef struct s_token
 {
 	char			*str;
@@ -81,10 +93,9 @@ typedef struct s_data
 	t_cmds	*cmds;
 	t_token	*token;
 	char	**env;
-}	t_data;
+}			t_data;
 
-// input sanitization & helper funcs
-int					check_input_cmd(t_cmd **cmd_lst, char *input);
+// clean, error && other helper funcs
 char				*one_space_setter(char *str);
 int					is_heredoc_append(char *str, int i, char c);
 int					is_whitespace(char c);
@@ -95,18 +106,26 @@ int					ft_whitespaces(char *str, int *index, char c);
 int					possible_error(char *input, t_cmd **cmd_list);
 void				ft_error(char *err_msg, t_cmd **cmd_list);
 void				ft_clean_arr(char **argv);
+char				**splitter(char *str);
 
-//lexical analysis && parsing funcs
-void				tokenize_cmd(t_token **lst, char *cmd);
-int					add_tok_back(t_token **lst, t_token *token, int end_code);
-t_token				*tokenize_mem(char *mem, int end_code);
-char				**get_members(char *cmd);
-void				ft_clean_tok_dl(t_token **dl);
-int	ft_tokendl_size(t_token **lst);
-
-// doubly-linked link funcs
+// Double-linked list funcs
 t_cmd				*ft_lstlast(t_cmd *lst);
 void				ft_addnode_back(t_cmd **lst, t_cmd *node);
 void				ft_clean_dl(t_cmd **dl);
 int					ft_dlsize(t_cmd *lst);
+
+//lexical analysis funcs
+int					check_input_cmd(t_cmd **cmd_lst, char *input, char **envp);
+void				tokenize_cmd(t_token **lst, char *cmd);
+int					add_tok_back(t_token **lst, t_token *token, int end_code);
+t_token				*tokenize_mem(char *mem, int end_code);
+void				ft_clean_tok_dl(t_token **dl);
+int					ft_tokendl_size(t_token **lst);
+
+// expansion funcs
+
+// parsing funcs
+
+// execution funcs
+
 #endif
