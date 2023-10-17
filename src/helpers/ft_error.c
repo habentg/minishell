@@ -6,13 +6,13 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 01:30:41 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/17 11:07:10 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/17 16:05:07 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	operator_end_err(char *input, t_cmd **cmd_list)
+static int	operator_end_err(char *input)
 {
 	int	i;
 
@@ -26,13 +26,13 @@ static int	operator_end_err(char *input, t_cmd **cmd_list)
 		if (i == 0)
 			return (0);
 	if (input[i] == '|')
-		return (ft_error(PIPE_AT_END, cmd_list), 1);
+		return (ft_error(PIPE_AT_END, NULL), 1);
 	else if (input[i] == '>' || input[i] == '<')
-		return (ft_error(REDIR_AT_END, cmd_list), 1);
+		return (ft_error(REDIR_AT_END, NULL), 1);
 	return (0);
 }
 
-static int	open_qoute_err(char *input, t_cmd **cmd_list)
+static int	open_qoute_err(char *input)
 {
 	bool	flag_s;
 	bool	flag_d;
@@ -49,22 +49,22 @@ static int	open_qoute_err(char *input, t_cmd **cmd_list)
 			flag_d = !flag_d;
 	}
 	if (flag_s || flag_d)
-		ft_error(UNCLOSED_QOUTE, cmd_list);
-	return (flag_s || flag_d);
+		return (ft_error(UNCLOSED_QOUTE, NULL), 1);
+	return (0);
 }
 
-int	possible_error(char *input, t_cmd **cmd_list)
+int	possible_error(char *input)
 {
-	if (operator_end_err(input, cmd_list))
+	if (operator_end_err(input))
 		return (1);
-	if (open_qoute_err(input, cmd_list))
+	if (open_qoute_err(input))
 		return (1);
 	return (0);
 }
 
-void	ft_error(char *err_msg, t_cmd **cmd_list)
+void	ft_error(char *err_msg, t_data **data)
 {
 	ft_putendl_fd(err_msg, 1);
-	if (cmd_list)
-		ft_clean_dl(cmd_list);
+	if (data)
+		ft_clean_data(data);
 }

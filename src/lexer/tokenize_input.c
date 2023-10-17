@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 02:05:18 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/17 11:06:32 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/17 16:06:23 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,31 +31,41 @@ void	tokenize_cmd(t_token **token_lst, char *cmd)
 		if (add_tok_back(token_lst, token, 0))
 			break ;
 	}
+	// add these token linked list to cmd linked list
+	
+	// free token linked list
+	// ft_clean_tok_dl(token_lst);
+	// *token_lst = NULL;
 	free(mem_arr);
 }
 
-int	check_input_cmd(t_cmd **cmd_list, char *input, char **envp)
+int	start_lexing(t_data *data, char *input, char **envp)
 {
 	int		i;
-	char	**cmd_arr;
+	// char	**cmd_arr;
 	t_token	**token_lst;
-	int		arr_size;
+	// int		arr_size;
 
 	i = -1;
 	(void)envp;
-	if (possible_error(input, cmd_list))
-		return (1);
 	input = one_space_setter(input);
-	cmd_arr = ft_split(input, 124);
-	arr_size = arr_length(cmd_arr);
+	if (!input)
+		return (1);
+	// cmd_arr = ft_split(input, 124);
+	// arr_size = arr_length(cmd_arr);
 	token_lst = (t_token **)ft_calloc(1, sizeof(t_token *));
+	if (!token_lst)
+		return (1);
 	*token_lst = NULL;
-	while (cmd_arr[++i])
-	{
-		if (i != 0 && i < arr_size)
-			tokenize_cmd(token_lst, "|");
-		tokenize_cmd(token_lst, cmd_arr[i]);
-	}
-	ft_clean_arr(cmd_arr);
+	tokenize_cmd(token_lst, input);
+	// while (cmd_arr[++i])
+	// {
+	// 	if (i != 0 && i < arr_size)
+	// 		tokenize_cmd(token_lst, "|");
+	// 	tokenize_cmd(token_lst, cmd_arr[i]);
+	// }
+	// free(input);
+	// ft_clean_arr(cmd_arr);
+	data->token = *token_lst;
 	return (0);
 }

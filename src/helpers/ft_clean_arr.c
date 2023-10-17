@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 05:08:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/16 23:08:30 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/17 16:02:59 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_clean_tok_dl(t_token **dl)
 		free(current);
 		current = next;
 	}
-	free(dl);
+	// free(dl);
 }
 
 int	arr_length(char **arr)
@@ -52,4 +52,15 @@ int	arr_length(char **arr)
 	while (arr[i])
 		i++;
 	return (i);
+}
+
+void	ft_clean_data(t_data **data)
+{
+	(void)data;
+	// you gonna have to free
+			// data->input
+			// data->cmd_lst
+			// data->envi
+			// data->token
+	// free(data);
 }
