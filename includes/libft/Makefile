@@ -49,7 +49,6 @@ SRCS	=	ft_atoi.c \
 			ft_toupper.c 
 
 OBJS	= $(SRCS:.c=.o)
-OBJS_B	= $(SRCS_B:.c=.o)
 RM		= rm -f
 LIBC	= ar -rcs
 FLAGS	= -Wall -Wextra -Werror
@@ -60,18 +59,17 @@ INCS	= .
 
 $(NAME): ${OBJS}
 	${LIBC} $(NAME) $(OBJS)
+	$(RM) -f $(OBJS)
 
 all: $(NAME)
 
-bonus: $(NAME) $(OBJS_B)
-	${LIBC} $(NAME) $(OBJS_B)
-    
 clean: 
-	$(RM) -f $(OBJS) $(OBJS_B)
+	$(RM) -f $(OBJS)
 
 fclean: clean
-	$(RM) $(NAME) $(bonus)
+	$(RM) $(NAME)
     
 re: fclean all
+	$(RM) -f $(OBJS)
 
-.PHONY: all bonus clean fclean re .c.o
+.PHONY: all clean fclean re .c.o

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/17 19:27:33 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/18 21:15:37 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@
 # define PIPE_AT_END "Error: pipe at the end"
 # define REDIR_AT_END "Error: redirection at the end"
 # define UNCLOSED_QOUTE "Error: unclosed quote"
+
+// exit status
+# define EXIT_SUCCESS 0
 
 // qoute state struct
 typedef enum e_quoteType
@@ -61,14 +64,14 @@ typedef struct s_token
 
 typedef struct s_iofds
 {
-	char	*infile;
-	char	*outfile;
-	char	*here_delemiter;
-	int		fdin;
-	int		fdout;
-	int		stdin_backup;
-	int		stdout_backup;
-}			t_iofds;
+	char			*infile;
+	char			*outfile;
+	char			*here_delemiter;
+	int				fdin;
+	int				fdout;
+	int				stdin_backup;
+	int				stdout_backup;
+}					t_iofds;
 
 typedef struct s_cmd
 {
@@ -89,11 +92,11 @@ typedef struct s_cmds
 
 typedef struct s_data
 {
-	char	*input;
-	t_cmd	*cmds;
-	t_token	*token;
-	char	**envi;
-}			t_data;
+	char			*input;
+	t_cmd			*cmds;
+	t_token			*token;
+	char			**envi;
+}					t_data;
 
 // Error && other helper funcs
 int					possible_error(char *input);
@@ -105,6 +108,7 @@ int					is_operator(char c);
 int					is_qoute(char c);
 int					ft_whitespaces(char *str, int *index, char c);
 char				**splitter(char *str);
+void				print_token(t_token *token);
 
 // Double-linked list && Array funcs funcs
 t_cmd				*ft_lstlast(t_cmd *lst);
@@ -127,11 +131,11 @@ t_token				*tokenize_mem(char *mem, int end_code);
 void				ft_clean_tok_dl(t_token **dl);
 int					ft_tokendl_size(t_token **lst);
 
-
 // expansion funcs
 int					start_expansion(t_data *data);
-
-void 	print_token(t_token *token);
+int					is_expansion_possible(t_data *data, char *str);
+t_quoteType			get_q_state(char *str, int end);
+void				remove_quotes(t_token *token);
 
 // parsing funcs
 

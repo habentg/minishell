@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 05:08:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/17 18:42:17 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/18 20:59:38 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	ft_clean_tok_dl(t_token **dl)
 	while (current != NULL)
 	{
 		next = current->next;
-		if (current->str)
-			free(current->str);
+		// if (current->str)
+		free(current->str);
 		free(current);
 		current = next;
 	}
@@ -64,5 +64,5 @@ void	ft_clean_data(t_data **data)
 		ft_clean_tok_dl(&(*data)->token);
 	if ((*data)->envi)
 		ft_clean_arr((*data)->envi);
-	free(data);
+	// free(data);
 }

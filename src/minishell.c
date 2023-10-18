@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:57:10 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/17 19:08:23 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/18 16:40:38 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,14 @@ int	start_program(t_data *data, char *input)
 	return (0);
 }
 
+void	print_arr(char **arr)
+{
+	int	i;
+
+	i = -1;
+	while (arr[++i])
+		printf("arr[%d]: %s\n", i, arr[i]);
+}
 // initialize my data
 int	init_data(t_data **data, char *input, char **envp)
 {
@@ -33,11 +41,13 @@ int	init_data(t_data **data, char *input, char **envp)
 	(*data)->input = input;
 	(*data)->cmds = NULL;
 	(*data)->token = NULL;
-	(*data)->envi = (char **)malloc((sizeof(char *)) * arr_length(envp));
+	(*data)->envi = (char **)malloc((sizeof(char *)) * (arr_length(envp) + 1));
 	if (!(*data)->envi)
 		return (1);
 	while (envp[++i])
 		(*data)->envi[i] = ft_strdup(envp[i]);
+	(*data)->envi[i] = NULL;
+	// print_arr((*data)->envi);
 	return (0);
 }
 
