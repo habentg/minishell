@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/18 21:15:37 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/19 13:50:03 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int					ft_tokendl_size(t_token **lst);
 int					start_expansion(t_data *data);
 int					is_expansion_possible(t_data *data, char *str);
 t_quoteType			get_q_state(char *str, int end);
-void				remove_quotes(t_token *token);
+void				remove_quotes(t_data *data);
 
 // parsing funcs
 

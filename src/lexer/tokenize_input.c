@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 02:05:18 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/17 19:24:50 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/19 14:35:28 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	print_dl(t_token **dl)
 
 	node = *dl;
 	printf("\n--------------\n");
-    while (node)
+	while (node)
 	{
 		if (node != *dl)
         	printf("prev: %s, type: %u <- ", node->prev->str, node->prev->type);

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:12:27 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/18 21:10:03 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/19 04:05:50 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 // str len - var_len + envp_len(after equal) + 1 (for null termi) -> malloc this one (free the old one first)
 // our final token->str == characters before $ + envp_len(after equal) + characters after var_name + '\0'
+
+// void	search_n_replace()
+// {
+
+// }
 
 int	replace_var(t_data *data, t_token *token, char *var_name, int var_len, int *index)
 {
@@ -130,7 +135,7 @@ int	start_expansion(t_data *data)
 	check_for_var(&data->token);
 	if (init_var_expansion(data))
 		return (1);
+	remove_quotes(data);
 	print_token(data->token);
-	remove_quotes(data->token);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:57:10 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/18 16:40:38 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/19 14:32:39 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	print_arr(char **arr)
 	while (arr[++i])
 		printf("arr[%d]: %s\n", i, arr[i]);
 }
+
 // initialize my data
 int	init_data(t_data **data, char *input, char **envp)
 {
@@ -47,7 +48,6 @@ int	init_data(t_data **data, char *input, char **envp)
 	while (envp[++i])
 		(*data)->envi[i] = ft_strdup(envp[i]);
 	(*data)->envi[i] = NULL;
-	// print_arr((*data)->envi);
 	return (0);
 }
 

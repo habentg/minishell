@@ -6,7 +6,7 @@
 #    By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/03 01:59:13 by hatesfam          #+#    #+#              #
-#    Updated: 2023/10/18 21:12:54 by hatesfam         ###   ########.fr        #
+#    Updated: 2023/10/19 04:17:46 by hatesfam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,7 @@ $(NAME): $(OBJ_FILES)
 	@printf "$(CURSIVE)$(GRAY) 	- Compiling $(NAME)... $(RESET)\n"
 	@$(CC) $(CFALGS) $^ $(LIBFT) $(RDLINE_L) -o $@ -I$(INC)
 	@printf "$(GREEN)    - Minishell Executable ready.\n$(RESET)"
+	@$(RM) $(OBJ_FILES)
 
 # Rule for cleaning object files:	
 clean:

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:49:37 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/18 20:35:42 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/19 14:33:05 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_quoteType	get_q_state(char *str, int end)
 			quote = SINGLE;
 		else if (quote == NONE && str[i] == '\"')
 			quote = DOUBLE;
-        i++;
+		i++;
 	}
 	return (quote);
 }
