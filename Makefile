@@ -6,7 +6,7 @@
 #    By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/03 01:59:13 by hatesfam          #+#    #+#              #
-#    Updated: 2023/10/19 04:17:46 by hatesfam         ###   ########.fr        #
+#    Updated: 2023/10/19 17:54:33 by hatesfam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,12 +32,15 @@ LEXER_DIR = ./src/lexer
 PARSER_DIR = ./src/parser
 EXPANDER_DIR = ./src/expander
 HELPER_DIR = ./src/helpers
+EXTRACT_DIR = ./src/cmd_extractor
 
 # Source files:
 SRC_FILES = src/minishell.c \
 			$(LEXER_DIR)/tokenize_input.c $(LEXER_DIR)/dl_lst.c $(LEXER_DIR)/cmd_elem_lst.c \
 			$(EXPANDER_DIR)/var_expander.c $(EXPANDER_DIR)/expand_utils.c $(EXPANDER_DIR)/remove_qoutes.c\
-			$(HELPER_DIR)/is_funcs.c $(HELPER_DIR)/ft_error.c $(HELPER_DIR)/one_space_setter.c $(HELPER_DIR)/ft_clean_arr.c $(HELPER_DIR)/splitter.c $(HELPER_DIR)/randos.c
+			$(EXTRACT_DIR)/extract_cmd.c $(EXTRACT_DIR)/extract_cmd_utils.c \
+			$(HELPER_DIR)/is_funcs.c $(HELPER_DIR)/ft_error.c $(HELPER_DIR)/one_space_setter.c $(HELPER_DIR)/ft_clean_arr.c \
+			$(HELPER_DIR)/splitter.c $(HELPER_DIR)/printer.c $(HELPER_DIR)/combination_error.c
 
 # Object files:
 OBJ_FILES = $(SRC_FILES:.c=.o)

@@ -6,31 +6,24 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:57:10 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/19 14:32:39 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/19 17:37:20 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-// init minishell
-int	start_program(t_data *data, char *input)
+// init minishell program
+int	init_program(t_data *data, char *input)
 {
 	if (possible_error(input))
 		return (1);
 	if (start_lexing(data, input))
 		return (1);
-	if (start_expansion(data))
+	if (operator_pipe_error(data))
 		return (1);
+	// if (start_expansion(data))
+	// 	return (1);
 	return (0);
-}
-
-void	print_arr(char **arr)
-{
-	int	i;
-
-	i = -1;
-	while (arr[++i])
-		printf("arr[%d]: %s\n", i, arr[i]);
 }
 
 // initialize my data
@@ -51,17 +44,12 @@ int	init_data(t_data **data, char *input, char **envp)
 	return (0);
 }
 
-// program entry
-int	main(int ac, char **av, char **envp)
+// launch minishell
+int	launch_minishell(t_data *data, char **envp)
 {
 	char	*input;
-	t_data	*data;
 
-	(void)av;
 	input = NULL;
-	if (ac != 1)
-		return (1);
-	data = (t_data *)ft_calloc(1, sizeof(t_data));
 	while (1)
 	{
 		input = readline(PROMPT);
@@ -75,10 +63,24 @@ int	main(int ac, char **av, char **envp)
 		}
 		if (init_data(&data, input, envp))
 			return (ft_clean_data(&data), 1);
-		if (start_program(data, input))
+		if (init_program(data, input))
 			return (ft_clean_data(&data), 1);
 		if (ft_strlen(input) > 0)
 			add_history(input);
 	}
+	return (0);
+}
+
+// program entry
+int	main(int ac, char **av, char **envp)
+{
+	t_data	*data;
+
+	(void)av;
+	if (ac != 1)
+		return (1);
+	data = (t_data *)ft_calloc(1, sizeof(t_data));
+	if (launch_minishell(data, envp))
+		return (1);
 	return (0);
 }

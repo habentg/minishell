@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/19 13:50:03 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/19 17:38:30 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # define PIPE_AT_END "Error: pipe at the end"
 # define REDIR_AT_END "Error: redirection at the end"
 # define UNCLOSED_QOUTE "Error: unclosed quote"
+
+# define OPERATOR_PIPE_ERROR "Error: syntax error near unexpected token '|'"
 
 // exit status
 # define EXIT_SUCCESS 0
@@ -73,14 +75,6 @@ typedef struct s_iofds
 	int				stdout_backup;
 }					t_iofds;
 
-typedef struct s_cmd
-{
-	char			*value;
-	t_token			*token;
-	struct s_cmd	*next;
-	struct s_cmd	*prev;
-}	t_cmd;
-
 typedef struct s_cmds
 {
 	char			*cmds;
@@ -93,13 +87,14 @@ typedef struct s_cmds
 typedef struct s_data
 {
 	char			*input;
-	t_cmd			*cmds;
+	t_cmds			*cmds;
 	t_token			*token;
 	char			**envi;
 }					t_data;
 
 // Error && other helper funcs
 int					possible_error(char *input);
+int					operator_pipe_error(t_data *data);
 void				ft_error(char *err_msg, t_data **data);
 char				*one_space_setter(char *str);
 int					is_heredoc_append(char *str, int i, char c);
@@ -111,16 +106,14 @@ char				**splitter(char *str);
 void				print_token(t_token *token);
 
 // Double-linked list && Array funcs funcs
-t_cmd				*ft_lstlast(t_cmd *lst);
-void				ft_addnode_back(t_cmd **lst, t_cmd *node);
-void				ft_clean_dl(t_cmd **dl);
-int					ft_dlsize(t_cmd *lst);
 int					arr_length(char **arr);
 void				ft_clean_arr(char **argv);
 void				ft_clean_data(t_data **data);
 
 // launch funcs
-int					start_program(t_data *data, char *input);
+int					launch_minishell(t_data *data, char **envp);
+int					init_program(t_data *data, char *input);
+int					init_data(t_data **data, char *input, char **envp);
 
 //lexical analysis funcs
 int					start_lexing(t_data *data, char *input);
@@ -137,7 +130,13 @@ int					is_expansion_possible(t_data *data, char *str);
 t_quoteType			get_q_state(char *str, int end);
 void				remove_quotes(t_data *data);
 
-// parsing funcs
+// cmd extraction funcs
+t_cmds				*ft_lstlast(t_cmds *lst);
+void				ft_addnode_back(t_cmds **lst, t_cmds *node);
+void				ft_clean_dl(t_cmds **dl);
+int					ft_dlsize(t_cmds *lst);
+t_cmds				*ft_newnode(char *txt);
+int					extract_cmds(t_data *data);
 
 // execution funcs
 

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 11:57:18 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/17 08:37:11 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/19 17:30:07 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ void	handle_operator(char *str, int *j, char **res, int *res_i)
 	(*res)[(*res_i)++] = ' ';
 	(*res)[(*res_i)++] = str[*j];
 	(*j)++;
-	if (operator_type == str[*j])
+	if (operator_type == '|')
+		(*res)[(*res_i)++] = ' ';
+	else if (operator_type == str[*j])
 		(*res)[(*res_i)++] = str[(*j)++];
 	(*res)[(*res_i)++] = ' ';
 }

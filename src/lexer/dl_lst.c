@@ -6,33 +6,33 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 02:41:46 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/17 16:02:39 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/19 17:31:28 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_clean_dl(t_cmd **dl)
+void	ft_clean_dl(t_cmds **dl)
 {
-	t_cmd	*current;
-	t_cmd	*next;
+	t_cmds	*current;
+	t_cmds	*next;
 
 	current = *dl;
 	next = NULL;
 	while (current != NULL)
 	{
 		next = current->next;
-		free(current->value);
+		// free(current->value);
 		free(current);
 		current = next;
 	}
 	free(dl);
 }
 
-int	ft_dlsize(t_cmd *lst)
+int	ft_dlsize(t_cmds *lst)
 {
 	int		i;
-	t_cmd	*temp_node;
+	t_cmds	*temp_node;
 
 	temp_node = lst;
 	i = 0;
@@ -44,26 +44,27 @@ int	ft_dlsize(t_cmd *lst)
 	return (i);
 }
 
-t_cmd	*ft_newnode(t_token *token, char *txt)
+t_cmds	*ft_newnode(char *txt)
 {
-	t_cmd	*node;
+	t_cmds	*node;
 
-	node = (t_cmd *)malloc(sizeof(t_cmd));
+	node = (t_cmds *)malloc(sizeof(t_cmds));
 	if (!node)
 		return (NULL);
-	node->value = ft_strdup(txt);
-	if (!node->value)
+	node->cmds = ft_strdup(txt);
+	if (!node->cmds)
 	{
 		free(node);
 		return (NULL);
 	}
-	node->token = token;
+	node->cmdarg = NULL;
+	node->iofd = NULL;
 	node->prev = NULL;
 	node->next = NULL;
 	return (node);
 }
 
-t_cmd	*ft_lstlast(t_cmd *lst)
+t_cmds	*ft_lstlast(t_cmds *lst)
 {
 	if (!lst)
 		return (NULL);
@@ -74,9 +75,9 @@ t_cmd	*ft_lstlast(t_cmd *lst)
 	return (lst);
 }
 
-void	ft_addnode_back(t_cmd **lst, t_cmd *node)
+void	ft_addnode_back(t_cmds **lst, t_cmds *node)
 {
-	t_cmd	*last;
+	t_cmds	*last;
 
 	if (!node)
 		return ;

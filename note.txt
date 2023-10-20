@@ -21,9 +21,18 @@ the 'Tokenizer' for recognition and labeling according to the pre-set token type
 
 after that, the plan is to put it in a D-linked list as one node. === yet to be figured out!!!
 
+<---------  further possible_error -------->
+    * > | respectively is an error.
+    * < | respectively is an error.
+    * << | respectively is an error.
+    * >> | respectively is an error.
+        NOTE: all the other operator - pipe combination should work
+
 <---------  Expansion of VAR -------->
+    # 
 
 <---------  Parsing and Constructing a Command -------->
+
 
 ########################## Execution ###########################
 ...
