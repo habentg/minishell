@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 21:04:14 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/19 14:33:19 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/20 10:46:14 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,9 @@ void	remove_quotes(t_data *data)
 {
 	char		*tmp;
 	t_token		*token;
-	t_quoteType	quote;
 	int			len;
 
 	token = data->token;
-	quote = NONE;
 	while (token)
 	{
 		len = count_len(token->str);

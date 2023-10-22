@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 02:05:18 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/19 17:54:16 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/20 10:45:26 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,8 @@ void	tokenize_cmd(t_token **token_lst, char *cmd)
 
 int	start_lexing(t_data *data, char *input)
 {
-	int		i;
 	t_token	**token_lst;
 
-	i = -1;
 	input = one_space_setter(input);
 	if (!input)
 		return (1);
