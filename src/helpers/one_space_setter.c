@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 11:57:18 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/19 17:30:07 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/22 12:52:03 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	*one_space_setter(char *str)
 	res = NULL;
 	if (!str)
 		return (NULL);
-	res = (char *)malloc(sizeof(char) * 200);
+	res = (char *)malloc(sizeof(char) * ft_strlen(str) * 2);
 	if (!res)
 		return (NULL);
 	sett(str, &res, start, end);

@@ -6,19 +6,18 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 02:46:29 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/19 16:34:49 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/22 12:32:39 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_tokenType	t_type(char *cmd, int end_code)
+t_tokenType	t_type(char *cmd)
 {
 	t_tokenType	type;
 
-	if (end_code == 1)
-		return (END);
-	else if (cmd[0] == '|' && cmd[1] == '\0')
+
+	if (cmd[0] == '|' && cmd[1] == '\0')
 		type = PIPE;
 	else if ((cmd[0] == '>' || cmd[0] == '<'))
 	{
@@ -39,22 +38,20 @@ t_tokenType	t_type(char *cmd, int end_code)
 	return (type);
 }
 
-t_token	*tokenize_mem(char *mem, int end_code)
+t_token	*tokenize_mem(char *mem)
 {
 	t_token	*token;
 
 	token = (t_token *)malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);
-	if (end_code == 1)
-		token->str = NULL;
 	token->str = ft_strdup(mem);
 	if (!token->str)
 	{
 		free(token);
 		return (NULL);
 	}
-	token->type = t_type(mem, end_code);
+	token->type = t_type(mem);
 	token->next = NULL;
 	token->prev = NULL;
 	return (token);
@@ -71,7 +68,7 @@ t_token	*last_mem(t_token *lst)
 	return (lst);
 }
 
-int	add_tok_back(t_token **lst, t_token *token, int end_code)
+int	add_tok_back(t_token **lst, t_token *token)
 {
 	t_token	*last;
 
@@ -86,11 +83,6 @@ int	add_tok_back(t_token **lst, t_token *token, int end_code)
 		last = last_mem(*lst);
 		last->next = token;
 		token->prev = last;
-	}
-	if (end_code == 1)
-	{
-		printf("end of cmd\n");
-		return (1);
 	}
 	return (0);
 }

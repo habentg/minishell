@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 01:30:41 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/17 16:05:07 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/22 12:23:46 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,3 +68,23 @@ void	ft_error(char *err_msg, t_data **data)
 	if (data)
 		ft_clean_data(data);
 }
+
+
+int	operator_pipe_error(t_data *data)
+{
+	t_token	*token;
+
+	token = data->token;
+	while (token)
+	{
+		if (token->type == PIPE && token->prev->type == PIPE)
+			return (ft_error(OPERATOR_PIPE_ERROR, &data), 1);
+		else if (token->type == PIPE && is_operator(token->prev->str[0]))
+			return (ft_error(OPERATOR_ERROR, &data), 1);
+		else if (is_operator(token->str[0]) && is_operator(token->prev->str[0]))
+			return (ft_error(OPERATOR_ERROR, &data), 1);
+		token = token->next;
+	}
+	return (0);
+}
+			

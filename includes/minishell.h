@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/19 17:38:30 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/22 12:32:55 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,16 @@
 
 # define PROMPT "\e[1;32mMinishell~$ \e[0m"
 
+//allocation error messages
+# define ALLOC_FAIL "Error: Failed allocation"
+
 // error messages
+# define TOKENIZE_FAIL "Error: Tokenization failure"
 # define PIPE_AT_END "Error: pipe at the end"
 # define REDIR_AT_END "Error: redirection at the end"
 # define UNCLOSED_QOUTE "Error: unclosed quote"
-
 # define OPERATOR_PIPE_ERROR "Error: syntax error near unexpected token '|'"
+# define OPERATOR_ERROR "Error: syntax error near unexpected token '>'"
 
 // exit status
 # define EXIT_SUCCESS 0
@@ -51,8 +55,7 @@ typedef enum e_tokenType
 	TRUNC,
 	INPUT_REDIR,
 	HERE_DOC,
-	VAR,
-	END
+	VAR
 }			t_tokenType;
 
 // token node struct
@@ -112,15 +115,15 @@ void				ft_clean_data(t_data **data);
 
 // launch funcs
 int					launch_minishell(t_data *data, char **envp);
-int					init_program(t_data *data, char *input);
+int					init_program(t_data *data);
 int					init_data(t_data **data, char *input, char **envp);
 
 //lexical analysis funcs
-int					start_lexing(t_data *data, char *input);
-void				tokenize_cmd(t_token **lst, char *cmd);
+int					start_lexing(t_data *data);
+int					tokenize_cmd(t_token **lst, char *cmd);
 t_token				*last_mem(t_token *lst);
-int					add_tok_back(t_token **lst, t_token *token, int end_code);
-t_token				*tokenize_mem(char *mem, int end_code);
+int					add_tok_back(t_token **lst, t_token *token);
+t_token				*tokenize_mem(char *mem);
 void				ft_clean_tok_dl(t_token **dl);
 int					ft_tokendl_size(t_token **lst);
 
@@ -131,12 +134,13 @@ t_quoteType			get_q_state(char *str, int end);
 void				remove_quotes(t_data *data);
 
 // cmd extraction funcs
+int					start_cmd_extraction(t_data *data);
+int					extract_cmds(t_data *data);
+t_cmds				*ft_newnode(char *txt);
 t_cmds				*ft_lstlast(t_cmds *lst);
 void				ft_addnode_back(t_cmds **lst, t_cmds *node);
 void				ft_clean_dl(t_cmds **dl);
 int					ft_dlsize(t_cmds *lst);
-t_cmds				*ft_newnode(char *txt);
-int					extract_cmds(t_data *data);
 
 // execution funcs
 

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 05:08:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/22 10:19:25 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/22 13:23:57 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,5 @@ void	ft_clean_data(t_data **data)
 		ft_clean_tok_dl(&(*data)->token);
 	if ((*data)->envi)
 		ft_clean_arr((*data)->envi);
-	// free(data);
+	free(data);
 }

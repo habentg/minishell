@@ -6,7 +6,7 @@
 #    By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/03 01:59:13 by hatesfam          #+#    #+#              #
-#    Updated: 2023/10/19 17:54:33 by hatesfam         ###   ########.fr        #
+#    Updated: 2023/10/22 13:11:15 by hatesfam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ sanitizer = -fsanitize=address -g3 -fno-omit-frame-pointer
 INC = ./includes
 RDLINE_L = -L/Users/$(USER)/.brew/opt/readline/lib -lreadline
 LIBFT = ./includes/libft/libft.a
-CFALGS = -Wall -Werror -Wextra -I$(INC) $(sanitizer)
+CFALGS = -Wall -Werror -Wextra -I$(INC)
 RM = rm -rf
 
 # Source file directories:
@@ -40,7 +40,7 @@ SRC_FILES = src/minishell.c \
 			$(EXPANDER_DIR)/var_expander.c $(EXPANDER_DIR)/expand_utils.c $(EXPANDER_DIR)/remove_qoutes.c\
 			$(EXTRACT_DIR)/extract_cmd.c $(EXTRACT_DIR)/extract_cmd_utils.c \
 			$(HELPER_DIR)/is_funcs.c $(HELPER_DIR)/ft_error.c $(HELPER_DIR)/one_space_setter.c $(HELPER_DIR)/ft_clean_arr.c \
-			$(HELPER_DIR)/splitter.c $(HELPER_DIR)/printer.c $(HELPER_DIR)/combination_error.c
+			$(HELPER_DIR)/splitter.c $(HELPER_DIR)/printer.c
 
 # Object files:
 OBJ_FILES = $(SRC_FILES:.c=.o)

@@ -6,13 +6,13 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 02:05:18 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/20 10:45:26 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/22 12:53:39 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	tokenize_cmd(t_token **token_lst, char *cmd)
+int	tokenize_cmd(t_token **token_lst, char *cmd)
 {
 	char	**mem_arr;
 	int		i;
@@ -20,31 +20,35 @@ void	tokenize_cmd(t_token **token_lst, char *cmd)
 
 	i = -1;
 	mem_arr = splitter(cmd);
+	if (!mem_arr)
+		return (1);
 	i = -1;
 	while (mem_arr[++i] != NULL)
 	{
-		token = tokenize_mem(mem_arr[i], 0);
-		if (mem_arr[i])
-			free(mem_arr[i]);
-		if (add_tok_back(token_lst, token, 0))
+		token = tokenize_mem(mem_arr[i]);
+		if (add_tok_back(token_lst, token))
 			break ;
 	}
-	free(mem_arr);
+	ft_clean_arr(mem_arr);
+	return (0);
 }
 
-int	start_lexing(t_data *data, char *input)
+int	start_lexing(t_data *data)
 {
-	t_token	**token_lst;
+	t_token	*token_lst;
+	char *inp;
 
-	input = one_space_setter(input);
-	if (!input)
-		return (1);
-	token_lst = (t_token **)ft_calloc(1, sizeof(t_token *));
+	inp = one_space_setter(data->input);
+	if (!inp)
+		return(ft_error(ALLOC_FAIL, &data), 1);
+	free(data->input);
+	data->input = inp;
+	token_lst = (t_token *)malloc(sizeof(t_token));
 	if (!token_lst)
-		return (1);
-	*token_lst = NULL;
-	tokenize_cmd(token_lst, input);
-	data->token = *token_lst;
-	// print_token(data->token);
+		return(ft_error(ALLOC_FAIL, &data), 1);
+	token_lst = NULL;
+	if (tokenize_cmd(&token_lst, data->input))
+		return(ft_error(TOKENIZE_FAIL, &data), 1);
+	data->token = token_lst;
 	return (0);
 }
