@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 02:46:29 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/22 12:32:39 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/22 17:52:05 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 t_tokenType	t_type(char *cmd)
 {
 	t_tokenType	type;
-
 
 	if (cmd[0] == '|' && cmd[1] == '\0')
 		type = PIPE;

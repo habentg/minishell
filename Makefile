@@ -6,7 +6,7 @@
 #    By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/03 01:59:13 by hatesfam          #+#    #+#              #
-#    Updated: 2023/10/22 13:11:15 by hatesfam         ###   ########.fr        #
+#    Updated: 2023/10/22 17:34:29 by hatesfam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ sanitizer = -fsanitize=address -g3 -fno-omit-frame-pointer
 INC = ./includes
 RDLINE_L = -L/Users/$(USER)/.brew/opt/readline/lib -lreadline
 LIBFT = ./includes/libft/libft.a
-CFALGS = -Wall -Werror -Wextra -I$(INC)
+CFALGS = -Wall -Werror -Wextra -I$(INC) $(sanitizer)
 RM = rm -rf
 
 # Source file directories:

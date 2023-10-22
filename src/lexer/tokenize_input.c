@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 02:05:18 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/22 12:53:39 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/22 19:38:45 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,19 @@ int	tokenize_cmd(t_token **token_lst, char *cmd)
 int	start_lexing(t_data *data)
 {
 	t_token	*token_lst;
-	char *inp;
+	char	*inp;
 
 	inp = one_space_setter(data->input);
 	if (!inp)
-		return(ft_error(ALLOC_FAIL, &data), 1);
+		return (ft_error(ALLOC_FAIL), 1);
 	free(data->input);
 	data->input = inp;
 	token_lst = (t_token *)malloc(sizeof(t_token));
 	if (!token_lst)
-		return(ft_error(ALLOC_FAIL, &data), 1);
+		return (ft_error(ALLOC_FAIL), 1);
 	token_lst = NULL;
 	if (tokenize_cmd(&token_lst, data->input))
-		return(ft_error(TOKENIZE_FAIL, &data), 1);
+		return (ft_error(TOKENIZE_FAIL), 1);
 	data->token = token_lst;
 	return (0);
 }

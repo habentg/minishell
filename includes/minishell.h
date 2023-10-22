@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/22 12:32:55 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/22 19:43:00 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,9 @@ typedef struct s_data
 }					t_data;
 
 // Error && other helper funcs
-int					possible_error(char *input);
+int					possible_error(t_data **data);
 int					operator_pipe_error(t_data *data);
-void				ft_error(char *err_msg, t_data **data);
+void				ft_error(char *err_msg);
 char				*one_space_setter(char *str);
 int					is_heredoc_append(char *str, int i, char c);
 int					is_whitespace(char c);

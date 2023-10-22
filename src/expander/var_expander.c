@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:12:27 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/19 04:05:50 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/22 19:49:25 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,13 @@ static void	expand_variable(t_data *data, t_token *token)
 			k = ++i;
 			if (!token->str[i])
 				break ;
-			while (token->str[i] && !is_whitespace(token->str[i]) \
-				&& token->str[i] != '$' && !is_operator(token->str[i]) \
+			while (token->str[i] && !is_whitespace(token->str[i]) && \
+				token->str[i] != '$' && !is_operator(token->str[i]) \
 				&& !is_qoute(token->str[i]))	
 				i++;
 			if ((i - k) > 0)
 			{
 				var_name = ft_substr(token->str, k, i - k);
-				printf("var_name: %s\n", var_name);
 				i = replace_var(data, token, var_name, i - k, &i);
 				free(var_name);
 			}

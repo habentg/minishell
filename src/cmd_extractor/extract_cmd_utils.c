@@ -6,9 +6,8 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 17:51:34 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/19 17:51:45 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/22 19:15:47 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-

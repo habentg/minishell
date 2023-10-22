@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:49:37 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/19 14:33:05 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/22 19:39:39 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	is_expansion_possible(t_data *data, char *str)
 		if (str[i] == '$')
 		{
 			if (str[i + 1] && str[i + 1] == '$')
-				return (ft_error("Error: Double $", &data), 2);
+				return (ft_error("Error: Double $"), 2);
 			quote = get_q_state(str, i);
 			if (quote != SINGLE)
 				return (1);
