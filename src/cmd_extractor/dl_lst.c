@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 02:41:46 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/22 23:51:15 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/23 05:38:48 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,7 @@ void	add_cmdnode_back(t_cmd **lst, t_cmd *node)
 	if (!node)
 		return ;
 	if (*lst == NULL)
-	{
 		*lst = node;
-	}
 	else
 	{
 		last = ft_lstlast(*lst);

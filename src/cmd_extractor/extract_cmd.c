@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 16:49:08 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/23 04:48:29 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/23 05:54:49 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,36 @@ void	print_cmd(t_cmd *cmd)
 	}
 }
 
+int	extact_operator_node(t_token **token, t_cmd **cmd_lst)
+{
+	if ((*token)->type == PIPE)
+	{
+		if (extract_pipe(token, cmd_lst))
+			return (1);
+	}
+	// else if ((*token)->type == TRUNC)
+	// {
+	// 	if (extract_trunc(&token, cmd_lst))
+	// 		return (1);
+	// }
+	// else if ((*token)->type == APPEND)
+	// {
+	// 	if (extract_append(&token, cmd_lst))
+	// 		return (1);
+	// }
+	// else if ((*token)->type == INPUT_REDIR)
+	// {
+	// 	if (extract_input_redir(&token, cmd_lst))
+	// 		return (1);
+	// }
+	// else if ((*token) ->type == HERE_DOC)
+	// {
+	// 	if (extract_here_doc(&token, cmd_lst))
+	// 		return (1);
+	// }
+	return (0);
+}
+
 int	start_cmd_extraction(t_data *data)
 {
 	t_cmd	**cmd_lst;
@@ -123,43 +153,17 @@ int	start_cmd_extraction(t_data *data)
 			if (extract_word(&token, cmd_lst))
 				return (1);
 		}
+		else if (extact_operator_node(&token, cmd_lst))
+			return (1);
+		// else if (token->type == VAR)
+		// 	if (extract_var(&token, cmd_lst))
+		// 		return (1);
 		if (!token)
 			break ;
 		token = token->next;
 	}
-	printf("DONE\n");
 	data->cmd = *cmd_lst;
 	print_cmd(*cmd_lst);
 	return (0);
 }
 
-		// else if (token->type == PIPE)
-		// {
-		// 	if (extract_pipe(&token, cmd_lst))
-		// 		return (1);
-		// }
-		// else if (token->type == TRUNC)
-		// {
-		// 	if (extract_trunc(&token, cmd_lst))
-		// 		return (1);
-		// }
-		// else if (token->type == APPEND)
-		// {
-		// 	if (extract_append(&token, cmd_lst))
-		// 		return (1);
-		// }
-		// else if (token->type == INPUT_REDIR)
-		// {
-		// 	if (extract_input_redir(&token, cmd_lst))
-		// 		return (1);
-		// }
-		// else if (token->type == HERE_DOC)
-		// {
-		// 	if (extract_here_doc(&token, cmd_lst))
-		// 		return (1);
-		// }
-		// else if (token->type == VAR)
-		// {
-		// 	if (extract_var(&token, cmd_lst))
-		// 		return (1);
-		// }
