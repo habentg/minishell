@@ -1,41 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printer.c                                          :+:      :+:    :+:   */
+/*   init_iofds.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 19:45:08 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/23 18:43:39 by hatesfam         ###   ########.fr       */
+/*   Created: 2023/10/23 17:45:43 by hatesfam          #+#    #+#             */
+/*   Updated: 2023/10/23 17:53:45 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	print_token(t_token *token)
+t_iofds	*new_iofds(void)
 {
-	t_token	*tmp;
+	t_iofds	*iofds;
 
-	tmp = token;
-	while (tmp)
-	{
-		printf("token->str: %s, token->type: %u\n", tmp->str, tmp->type);
-		tmp = tmp->next;
-	}
-}
-
-void	print_cmd(t_cmd *cmd)
-{
-	int	i;
-
-	i = 0;
-	printf("we have: %d nodes\n", ft_dlsize(cmd));
-	while (cmd)
-	{
-		printf("##cmd: %s, pipeout: %d\n", cmd->cmd, cmd->pipeout);
-		while (cmd->cmdarg[i])
-			printf("-cmdarg: %s\n", cmd->cmdarg[i++]);
-		i = 0;
-		cmd = cmd->next;
-	}
+	iofds = (t_iofds *)malloc(sizeof(t_iofds));
+	if (!iofds)
+		return (NULL);
+	iofds->infile = NULL;
+	iofds->outfile = NULL;
+	iofds->fdin = -1;
+	iofds->fdout = -1;
+	iofds->here_delemiter = NULL;
+	iofds->stdin_backup = -1;
+	iofds->stdout_backup = -1;
+	return (iofds);
 }

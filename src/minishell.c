@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:57:10 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/22 20:06:06 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/23 18:22:10 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ int	launch_minishell(t_data *data, char **envp)
 			return (ft_error("exit"), 1);
 		if (init_data(&data, input, envp))
 			return (1);
-		if (init_program(data))
-			return (1);
 		if (ft_strlen(data->input) > 0)
 			add_history(data->input);
+		if (init_program(data))
+			return (1);
 	}
 	return (0);
 }

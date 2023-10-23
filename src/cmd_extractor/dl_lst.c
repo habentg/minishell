@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 02:41:46 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/23 05:38:48 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/23 19:14:14 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,16 @@ t_cmd	*new_cmd(char *str)
 	t_cmd	*cmd_node;
 
 	cmd_node = (t_cmd *)malloc(sizeof(t_cmd));
-	cmd_node->cmd = ft_strdup(str);
+	if (!cmd_node)
+		return (NULL);
+	if (str)
+		cmd_node->cmd = ft_strdup(str);
 	if (!cmd_node->cmd)
 		return (ft_error(CMD_ALLOC_FAIL), NULL);
+	cmd_node->cmd = NULL;
 	cmd_node->cmdarg = NULL;
-	cmd_node->iofd = NULL;
+	cmd_node->pipeout = 0;
+	cmd_node->iofd = new_iofds();
 	cmd_node->next = NULL;
 	cmd_node->prev = NULL;
 	return (cmd_node);

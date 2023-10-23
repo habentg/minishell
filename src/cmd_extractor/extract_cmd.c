@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 16:49:08 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/23 05:54:49 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/23 22:49:27 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int	extract_cmdargs(t_token **token, t_cmd **cmd_node)
 		(*cmd_node)->cmdarg[i] = ft_strdup((*token)->str);
 		if (!(*cmd_node)->cmdarg[i++])
 			return (ft_error(FAILED_TO_DUPLICATE), 1);
+		if ((*token)->type == END)
+			return (0);
 		(*token) = (*token)->next;
 	}
 	(*cmd_node)->cmdarg[count] = NULL;
@@ -77,7 +79,7 @@ iterate through the token list
 		# cmd cases
 			-> if its the 1st word type
 			-> if its the 1s word type after a pipe
-			-> .....
+			-> last cmd is null
  		#cmd args cases
 			* from the 'cmd' all the word type until an operator
 		THEN add_back to the cmd_list.
@@ -90,49 +92,26 @@ iterate through the token list
 		-> var
 */
 
-void	print_cmd(t_cmd *cmd)
-{
-	int	i;
-
-	i = 0;
-	printf("we have: %d nodes\n", ft_dlsize(cmd));
-	while (cmd)
-	{
-		printf("##cmd: %s\n", cmd->cmd);
-		while (cmd->cmdarg[i])
-			printf("-cmdarg: %s\n", cmd->cmdarg[i++]);
-		i = 0;
-		cmd = cmd->next;
-	}
-}
-
 int	extact_operator_node(t_token **token, t_cmd **cmd_lst)
 {
-	if ((*token)->type == PIPE)
+	t_token *temp;
+
+	temp = *token;
+	if ((*token)->type == TRUNC)
 	{
-		if (extract_pipe(token, cmd_lst))
+		if (extract_trunc(token, cmd_lst))
+			return (1);
+		printf("we have: %s token\n", (*token)->str);
+	}
+	if ((*token)->type == TRUNC)
+	{
+		if (extract_trunc(token, cmd_lst))
 			return (1);
 	}
-	// else if ((*token)->type == TRUNC)
-	// {
-	// 	if (extract_trunc(&token, cmd_lst))
-	// 		return (1);
-	// }
-	// else if ((*token)->type == APPEND)
-	// {
-	// 	if (extract_append(&token, cmd_lst))
-	// 		return (1);
-	// }
-	// else if ((*token)->type == INPUT_REDIR)
-	// {
-	// 	if (extract_input_redir(&token, cmd_lst))
-	// 		return (1);
-	// }
-	// else if ((*token) ->type == HERE_DOC)
-	// {
-	// 	if (extract_here_doc(&token, cmd_lst))
-	// 		return (1);
-	// }
+	if ((*token)->type == END)
+		return (0);
+	if (temp != *token)
+		*token = (*token)->next;
 	return (0);
 }
 
@@ -140,7 +119,12 @@ int	start_cmd_extraction(t_data *data)
 {
 	t_cmd	**cmd_lst;
 	t_token	*token;
+	t_token	*end_node;
 
+	end_node = tokenize_mem("end");
+	end_node->type = END;
+	add_tok_back(&data->token, end_node);
+	// print_token(data->token);
 	cmd_lst = (t_cmd **)malloc(sizeof(t_cmd *));
 	if (!cmd_lst)
 		return (1);
@@ -149,21 +133,32 @@ int	start_cmd_extraction(t_data *data)
 	while (token)
 	{
 		if (token->type == WORD)
-		{
 			if (extract_word(&token, cmd_lst))
 				return (1);
-		}
-		else if (extact_operator_node(&token, cmd_lst))
+		printf("token: %s\n", token->str);
+		if (token->type == PIPE)
+			if (extract_pipe(&token, cmd_lst))
+				return (1);
+		if (extact_operator_node(&token, cmd_lst))
 			return (1);
-		// else if (token->type == VAR)
-		// 	if (extract_var(&token, cmd_lst))
-		// 		return (1);
-		if (!token)
+		if (token->type == END)
 			break ;
 		token = token->next;
 	}
 	data->cmd = *cmd_lst;
-	print_cmd(*cmd_lst);
+	// print_cmd(*cmd_lst);
 	return (0);
 }
 
+// implemet a recursive function that will handle the cmd extraction until pipe
+// int	start_cmd_extraction(t_data *data)
+// {
+// 	while (data->token->type != PIPE)
+// 	{
+// 		// do your thing
+// 		if (token->type == END)
+// 			break ;
+// 		token = token->next;
+// 	}
+	
+// }

@@ -6,7 +6,7 @@
 #    By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/03 01:59:13 by hatesfam          #+#    #+#              #
-#    Updated: 2023/10/23 01:16:42 by hatesfam         ###   ########.fr        #
+#    Updated: 2023/10/23 18:36:14 by hatesfam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ EXTRACT_DIR = ./src/cmd_extractor
 SRC_FILES = src/minishell.c \
 			$(LEXER_DIR)/tokenize_input.c $(LEXER_DIR)/cmd_elem_lst.c \
 			$(EXPANDER_DIR)/var_expander.c $(EXPANDER_DIR)/expand_utils.c $(EXPANDER_DIR)/remove_qoutes.c\
-			$(EXTRACT_DIR)/extract_cmd.c $(EXTRACT_DIR)/extract_cmd_utils.c $(EXTRACT_DIR)/dl_lst.c \
+			$(EXTRACT_DIR)/extract_cmd.c $(EXTRACT_DIR)/extract_cmd_utils.c $(EXTRACT_DIR)/dl_lst.c $(EXTRACT_DIR)/init_iofds.c \
 			$(HELPER_DIR)/is_funcs.c $(HELPER_DIR)/ft_error.c $(HELPER_DIR)/one_space_setter.c $(HELPER_DIR)/ft_clean_arr.c \
 			$(HELPER_DIR)/splitter.c $(HELPER_DIR)/printer.c
 
