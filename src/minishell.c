@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:57:10 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/22 19:45:06 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/22 20:06:06 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	init_data(t_data **data, char *input, char **envp)
 
 	i = -1;
 	(*data)->input = input;
-	(*data)->cmds = NULL;
+	(*data)->cmd = NULL;
 	(*data)->token = NULL;
 	(*data)->envi = (char **)malloc((sizeof(char *)) * (arr_length(envp) + 1));
 	if (!(*data)->envi)

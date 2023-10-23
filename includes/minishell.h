@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/22 19:43:00 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/23 04:06:19 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@
 # define PROMPT "\e[1;32mMinishell~$ \e[0m"
 
 //allocation error messages
-# define ALLOC_FAIL "Error: Failed allocation"
+# define ONESPACE_ALLOC_FAIL "Error: One space allocation failed"
+# define TOKENDL_ALLOC_FAIL "Error: Token DL allocation failed"
+# define CMD_ALLOC_FAIL "Error: CMD allocation failed"
+# define FAILED_TO_DUPLICATE "Error: duplication failed in extract_cmdargs"
 
 // error messages
 # define TOKENIZE_FAIL "Error: Tokenization failure"
@@ -78,19 +81,19 @@ typedef struct s_iofds
 	int				stdout_backup;
 }					t_iofds;
 
-typedef struct s_cmds
+typedef struct s_cmd
 {
-	char			*cmds;
+	char			*cmd;
 	char			**cmdarg;
 	t_iofds			*iofd;
-	struct s_cmds	*next;
-	struct s_cmds	*prev;
-}					t_cmds;
+	struct s_cmd	*next;
+	struct s_cmd	*prev;
+}					t_cmd;
 
 typedef struct s_data
 {
 	char			*input;
-	t_cmds			*cmds;
+	t_cmd			*cmd;
 	t_token			*token;
 	char			**envi;
 }					t_data;
@@ -135,12 +138,14 @@ void				remove_quotes(t_data *data);
 
 // cmd extraction funcs
 int					start_cmd_extraction(t_data *data);
-int					extract_cmds(t_data *data);
-t_cmds				*ft_newnode(char *txt);
-t_cmds				*ft_lstlast(t_cmds *lst);
-void				ft_addnode_back(t_cmds **lst, t_cmds *node);
-void				ft_clean_dl(t_cmds **dl);
-int					ft_dlsize(t_cmds *lst);
+int					extract_word(t_token **token, t_cmd **cmd_lst);
+int					extract_pipe(t_token **token, t_cmd **cmd_lst);
+
+t_cmd				*new_cmd(char *str);
+t_cmd				*ft_lstlast(t_cmd *lst);
+void				add_cmdnode_back(t_cmd **lst, t_cmd *node);
+void				ft_clean_dl(t_cmd **dl);
+int					ft_dlsize(t_cmd *lst);
 
 // execution funcs
 

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:12:27 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/22 19:49:25 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/23 00:40:58 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,6 @@ int	start_expansion(t_data *data)
 	if (init_var_expansion(data))
 		return (1);
 	remove_quotes(data);
-	print_token(data->token);
+	// print_token(data->token);
 	return (0);
 }

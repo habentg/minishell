@@ -6,16 +6,16 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 02:41:46 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/19 17:31:28 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/22 23:51:15 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_clean_dl(t_cmds **dl)
+void	ft_clean_dl(t_cmd **dl)
 {
-	t_cmds	*current;
-	t_cmds	*next;
+	t_cmd	*current;
+	t_cmd	*next;
 
 	current = *dl;
 	next = NULL;
@@ -29,10 +29,10 @@ void	ft_clean_dl(t_cmds **dl)
 	free(dl);
 }
 
-int	ft_dlsize(t_cmds *lst)
+int	ft_dlsize(t_cmd *lst)
 {
 	int		i;
-	t_cmds	*temp_node;
+	t_cmd	*temp_node;
 
 	temp_node = lst;
 	i = 0;
@@ -44,27 +44,22 @@ int	ft_dlsize(t_cmds *lst)
 	return (i);
 }
 
-t_cmds	*ft_newnode(char *txt)
+t_cmd	*new_cmd(char *str)
 {
-	t_cmds	*node;
+	t_cmd	*cmd_node;
 
-	node = (t_cmds *)malloc(sizeof(t_cmds));
-	if (!node)
-		return (NULL);
-	node->cmds = ft_strdup(txt);
-	if (!node->cmds)
-	{
-		free(node);
-		return (NULL);
-	}
-	node->cmdarg = NULL;
-	node->iofd = NULL;
-	node->prev = NULL;
-	node->next = NULL;
-	return (node);
+	cmd_node = (t_cmd *)malloc(sizeof(t_cmd));
+	cmd_node->cmd = ft_strdup(str);
+	if (!cmd_node->cmd)
+		return (ft_error(CMD_ALLOC_FAIL), NULL);
+	cmd_node->cmdarg = NULL;
+	cmd_node->iofd = NULL;
+	cmd_node->next = NULL;
+	cmd_node->prev = NULL;
+	return (cmd_node);
 }
 
-t_cmds	*ft_lstlast(t_cmds *lst)
+t_cmd	*ft_lstlast(t_cmd *lst)
 {
 	if (!lst)
 		return (NULL);
@@ -75,9 +70,9 @@ t_cmds	*ft_lstlast(t_cmds *lst)
 	return (lst);
 }
 
-void	ft_addnode_back(t_cmds **lst, t_cmds *node)
+void	add_cmdnode_back(t_cmd **lst, t_cmd *node)
 {
-	t_cmds	*last;
+	t_cmd	*last;
 
 	if (!node)
 		return ;

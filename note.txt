@@ -40,7 +40,9 @@ after we successfully initialize our general data, we will:
 
 <---------  Lexical Analysis -------->
 
+
 <---------  Expansion of VAR -------->
+
 
 <---------  Parsing and Constructing a Command -------->
 
