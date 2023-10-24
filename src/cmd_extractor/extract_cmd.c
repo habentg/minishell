@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 16:49:08 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/24 18:53:41 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/24 21:03:50 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 int	extract_one_cmd(t_token **token, t_cmd **cmd_lst)
 {
 	t_cmd	*cmd_node;
+	int		add_flag;
 
 	cmd_node = new_cmd();
+	add_flag = 0;
 	while ((*token)->type != PIPE && (*token)->type != END)
 	{
 		if ((*token)->type == WORD)
@@ -24,8 +26,13 @@ int	extract_one_cmd(t_token **token, t_cmd **cmd_lst)
 				return (1);
 		if ((*token)->type == TRUNC)
 			extract_trunc(token, &cmd_node);
+		if ((*token)->type == INPUT_REDIR)
+			add_flag = extract_input_redir(token, &cmd_node);
 	}
-	add_cmdnode_back(cmd_lst, cmd_node);
+	if (add_flag == -1)
+		free_cmdnode(cmd_node);
+	else
+		add_cmdnode_back(cmd_lst, cmd_node);
 	return (0);
 }
 
@@ -60,7 +67,6 @@ int	start_cmd_extraction(t_data *data)
 	if (cmd_node_construction(&data->token, cmd_lst))
 		return (1);
 	data->cmd = *cmd_lst;
-	printf("we have: %d nodes\n", ft_dlsize(data->cmd));
 	print_cmd(data->cmd);
 	return (0);
 }

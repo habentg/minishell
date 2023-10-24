@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/24 19:42:27 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/25 02:32:50 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,16 @@
 // error messages
 # define TOKENIZE_FAIL "Error: Tokenization failure"
 # define PIPE_AT_END "Error: pipe at the end"
-# define REDIR_AT_END "Error: redirection at the end"
+# define REDIR_AT_END "Error: syntax error near unexpected token `newline'"
 # define UNCLOSED_QOUTE "Error: unclosed quote"
 # define OPERATOR_PIPE_ERROR "Error: syntax error near unexpected token '|'"
-# define OPERATOR_ERROR "Error: syntax error near unexpected token '>'"
+# define OPERATOR_ERROR_TRU "Error: syntax error near unexpected token '>'"
+# define OPERATOR_ERROR_INP "Error: syntax error near unexpected token '<'"
+# define OPERATOR_ERROR_APP "Error: syntax error near unexpected token '>>'"
+# define OPERATOR_ERROR_HD "Error: syntax error near unexpected token '<<'"
+
+// FILE DESCRIPTORS & FILE ACCESS ERRORS
+# define FAILED_TO_OPEN_INPUT_FILE "Error: failed to find/open input file"
 
 // exit status
 // # define EXIT_SUCCESS 0
@@ -122,6 +128,7 @@ void				ft_clean_arr(char **argv);
 void				ft_clean_data(t_data **data);
 void				ft_clean_cmd_dl(t_cmd **dl);
 void				ft_clean_data_exit(t_data **data);
+void				free_cmdnode(t_cmd *cmd);
 
 // launch funcs
 int					launch_minishell(t_data *data, char **envp);
@@ -151,6 +158,7 @@ int					extract_word(t_token **token, t_cmd **cmd_node);
 int					extract_cmdargs(t_token **token, t_cmd **cmd_node);
 void				extract_pipe(t_token **token, t_cmd **cmd_lst);
 void				extract_trunc(t_token **token, t_cmd **cmd_node);
+int					extract_input_redir(t_token **token, t_cmd **cmd_node);
 // int	extract_append(t_token **token, t_cmd **cmd_lst);
 // int	extract_input_redir(t_token **token, t_cmd **cmd_lst);
 // int	extract_here_doc(t_token **token, t_cmd **cmd_lst);

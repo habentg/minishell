@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 19:45:08 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/24 18:54:53 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/25 03:41:59 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	print_cmd(t_cmd *cmd)
 		printf("----------------------------------\n");
 		printf("cmd: %s\n", cmd->cmd);
 		printf("cmdarg: ");
-		while (cmd->cmdarg[i])
+		while (cmd->cmdarg[i] != NULL)
 			printf("%s ", cmd->cmdarg[i++]);
 		printf("\n");
 		printf("pipeout: %d\n", cmd->pipeout);

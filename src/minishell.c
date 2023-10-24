@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:57:10 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/24 19:47:07 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/25 03:13:20 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 int	init_program(t_data *data)
 {
 	if (possible_error(&data))
-		return (1);
+		return (0);
 	if (start_lexing(data))
 		return (1);
 	if (operator_pipe_error(data))
-		return (1);
+		return (0);
 	if (start_expansion(data))
 		return (1);
 	if (start_cmd_extraction(data))
