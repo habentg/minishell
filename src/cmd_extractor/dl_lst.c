@@ -6,28 +6,11 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 02:41:46 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/23 19:14:14 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/24 19:09:26 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	ft_clean_dl(t_cmd **dl)
-{
-	t_cmd	*current;
-	t_cmd	*next;
-
-	current = *dl;
-	next = NULL;
-	while (current != NULL)
-	{
-		next = current->next;
-		// free(current->value);
-		free(current);
-		current = next;
-	}
-	free(dl);
-}
 
 int	ft_dlsize(t_cmd *lst)
 {
@@ -44,17 +27,13 @@ int	ft_dlsize(t_cmd *lst)
 	return (i);
 }
 
-t_cmd	*new_cmd(char *str)
+t_cmd	*new_cmd(void)
 {
 	t_cmd	*cmd_node;
 
 	cmd_node = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!cmd_node)
 		return (NULL);
-	if (str)
-		cmd_node->cmd = ft_strdup(str);
-	if (!cmd_node->cmd)
-		return (ft_error(CMD_ALLOC_FAIL), NULL);
 	cmd_node->cmd = NULL;
 	cmd_node->cmdarg = NULL;
 	cmd_node->pipeout = 0;

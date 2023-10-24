@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:57:10 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/23 18:22:10 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/24 19:47:07 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ int	init_data(t_data **data, char *input, char **envp)
 	(*data)->input = input;
 	(*data)->cmd = NULL;
 	(*data)->token = NULL;
-	(*data)->envi = (char **)malloc((sizeof(char *)) * (arr_length(envp) + 1));
+	(*data)->envi = (char **)ft_calloc((sizeof(char *)), \
+		(arr_length(envp) + 1));
 	if (!(*data)->envi)
 		return (1);
 	while (envp[++i])
 		(*data)->envi[i] = ft_strdup(envp[i]);
-	(*data)->envi[arr_length(envp)] = NULL;
 	return (0);
 }
 
@@ -58,13 +58,17 @@ int	launch_minishell(t_data *data, char **envp)
 		if (!input)
 			break ;
 		if (ft_strncmp(input, "exit", 4) == 0)
-			return (ft_error("exit"), 1);
+		{
+			printf("exit\n");
+			return (0);
+		}
 		if (init_data(&data, input, envp))
 			return (1);
 		if (ft_strlen(data->input) > 0)
 			add_history(data->input);
 		if (init_program(data))
 			return (1);
+		ft_clean_data(&data);
 	}
 	return (0);
 }
@@ -83,6 +87,6 @@ int	main(int ac, char **av, char **envp)
 		return (1);
 	if (launch_minishell(data, envp))
 		return (1);
-	ft_clean_data(&data);
+	ft_clean_data_exit(&data);
 	return (0);
 }

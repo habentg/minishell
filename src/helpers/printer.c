@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 19:45:08 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/23 18:43:39 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/24 18:54:53 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,21 @@ void	print_cmd(t_cmd *cmd)
 	int	i;
 
 	i = 0;
-	printf("we have: %d nodes\n", ft_dlsize(cmd));
 	while (cmd)
 	{
-		printf("##cmd: %s, pipeout: %d\n", cmd->cmd, cmd->pipeout);
-		while (cmd->cmdarg[i])
-			printf("-cmdarg: %s\n", cmd->cmdarg[i++]);
 		i = 0;
+		printf("----------------------------------\n");
+		printf("cmd: %s\n", cmd->cmd);
+		printf("cmdarg: ");
+		while (cmd->cmdarg[i])
+			printf("%s ", cmd->cmdarg[i++]);
+		printf("\n");
+		printf("pipeout: %d\n", cmd->pipeout);
+		printf("infile: %s\n", cmd->iofd->infile);
+		printf("outfile: %s\n", cmd->iofd->outfile);
+		printf("fdin: %d\n", cmd->iofd->fdin);
+		printf("fdout: %d\n", cmd->iofd->fdout);
+		printf("----------------------------------\n");
 		cmd = cmd->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 02:05:18 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/22 21:13:45 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/24 19:39:52 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	start_lexing(t_data *data)
 		return (ft_error(ONESPACE_ALLOC_FAIL), 1);
 	free(data->input);
 	data->input = inp;
-	token_lst = (t_token *)malloc(sizeof(t_token));
+	token_lst = (t_token *)ft_calloc((sizeof(t_token) + 1), 1);
 	if (!token_lst)
 		return (ft_error(TOKENDL_ALLOC_FAIL), 1);
 	token_lst = NULL;

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 05:08:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/22 19:41:23 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/24 19:54:18 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	ft_clean_tok_dl(t_token **dl)
 	while (current != NULL)
 	{
 		next = current->next;
-		free(current->str);
+		if (current->str)
+			free(current->str);
 		free(current);
 		current = next;
 	}
@@ -54,6 +55,17 @@ int	arr_length(char **arr)
 
 void	ft_clean_data(t_data **data)
 {
-	printf("we here in ft_clean_data\n");
-	(void)data;
+	if ((*data)->input)
+		free((*data)->input);
+	if ((*data)->cmd)
+		ft_clean_cmd_dl(&(*data)->cmd);
+	if ((*data)->token)
+		ft_clean_tok_dl(&(*data)->token);
+}
+
+void	ft_clean_data_exit(t_data **data)
+{
+	if ((*data)->envi)
+		ft_clean_arr((*data)->envi);
+	free(*data);
 }

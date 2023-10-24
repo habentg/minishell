@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/23 18:43:53 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/24 19:42:27 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,14 @@ typedef enum e_quoteType
 // token type struct
 typedef enum e_tokenType
 {
-	WORD, // word = 0
-	PIPE, // pipe = 1
-	APPEND, // append = 2 >>
-	TRUNC, // trunc = 3 >
-	INPUT_REDIR, // input redirection = 4 <
-	HERE_DOC, // here document = 5 <<
-	VAR, // variable = 6
-	END // end = 7
+	WORD,
+	PIPE,
+	APPEND,
+	TRUNC,
+	INPUT_REDIR,
+	HERE_DOC,
+	VAR,
+	END
 }			t_tokenType;
 
 // token node struct
@@ -120,6 +120,8 @@ void				print_cmd(t_cmd *cmd);
 int					arr_length(char **arr);
 void				ft_clean_arr(char **argv);
 void				ft_clean_data(t_data **data);
+void				ft_clean_cmd_dl(t_cmd **dl);
+void				ft_clean_data_exit(t_data **data);
 
 // launch funcs
 int					launch_minishell(t_data *data, char **envp);
@@ -144,16 +146,20 @@ void				remove_quotes(t_data *data);
 // cmd extraction funcs
 int					start_cmd_extraction(t_data *data);
 
-int					extract_word(t_token **token, t_cmd **cmd_lst);
-int					extract_pipe(t_token **token, t_cmd **cmd_lst);
-int					extract_trunc(t_token **token, t_cmd **cmd_lst);
-
-t_cmd				*new_cmd(char *str);
+int					extract_one_cmd(t_token **token, t_cmd **cmd_lst);
+int					extract_word(t_token **token, t_cmd **cmd_node);
+int					extract_cmdargs(t_token **token, t_cmd **cmd_node);
+void				extract_pipe(t_token **token, t_cmd **cmd_lst);
+void				extract_trunc(t_token **token, t_cmd **cmd_node);
+// int	extract_append(t_token **token, t_cmd **cmd_lst);
+// int	extract_input_redir(t_token **token, t_cmd **cmd_lst);
+// int	extract_here_doc(t_token **token, t_cmd **cmd_lst);
+// int	extract_var(t_token **token, t_cmd **cmd_lst);
+// int	extract_end(t_token **token, t_cmd **cmd_lst);
+t_cmd				*new_cmd(void);
 t_cmd				*ft_lstlast(t_cmd *lst);
 void				add_cmdnode_back(t_cmd **lst, t_cmd *node);
-void				ft_clean_dl(t_cmd **dl);
 int					ft_dlsize(t_cmd *lst);
-
 t_iofds				*new_iofds(void);
 // execution funcs
 
