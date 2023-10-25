@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/25 02:32:50 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/25 20:57:25 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@
 # define OPERATOR_ERROR_INP "Error: syntax error near unexpected token '<'"
 # define OPERATOR_ERROR_APP "Error: syntax error near unexpected token '>>'"
 # define OPERATOR_ERROR_HD "Error: syntax error near unexpected token '<<'"
+# define CMD_NOT_FOUND "Error: command not found"
 
 // FILE DESCRIPTORS & FILE ACCESS ERRORS
 # define FAILED_TO_OPEN_INPUT_FILE "Error: failed to find/open input file"
@@ -95,6 +96,7 @@ typedef struct s_cmd
 	char			*cmd;
 	char			**cmdarg;
 	int				pipeout;
+	int				pipein;
 	t_iofds			*iofd;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
@@ -106,6 +108,7 @@ typedef struct s_data
 	t_cmd			*cmd;
 	t_token			*token;
 	char			**envi;
+	char			**path;
 }					t_data;
 
 // Error && other helper funcs
@@ -121,7 +124,9 @@ int					ft_whitespaces(char *str, int *index, char c);
 char				**splitter(char *str);
 void				print_token(t_token *token);
 void				print_cmd(t_cmd *cmd);
-
+int					ft_strncmp_custom(const char *str1, \
+	const char *str2, size_t n);
+void				ft_clean_arr(char **argv);
 // Double-linked list && Array funcs funcs
 int					arr_length(char **arr);
 void				ft_clean_arr(char **argv);
@@ -152,16 +157,18 @@ void				remove_quotes(t_data *data);
 
 // cmd extraction funcs
 int					start_cmd_extraction(t_data *data);
-
-int					extract_one_cmd(t_token **token, t_cmd **cmd_lst);
+int					cmd_node_construction(t_data *data, t_token **token, \
+	t_cmd **cmd_lst);
+int					extract_one_cmd(t_data *data, t_token **token, \
+	t_cmd **cmd_lst);
 int					extract_word(t_token **token, t_cmd **cmd_node);
 int					extract_cmdargs(t_token **token, t_cmd **cmd_node);
 void				extract_pipe(t_token **token, t_cmd **cmd_lst);
 void				extract_trunc(t_token **token, t_cmd **cmd_node);
 int					extract_input_redir(t_token **token, t_cmd **cmd_node);
-// int	extract_append(t_token **token, t_cmd **cmd_lst);
+void				extract_here_doc(t_token **token, t_cmd **cmd_node);
+void				extract_append(t_token **token, t_cmd **cmd_node);
 // int	extract_input_redir(t_token **token, t_cmd **cmd_lst);
-// int	extract_here_doc(t_token **token, t_cmd **cmd_lst);
 // int	extract_var(t_token **token, t_cmd **cmd_lst);
 // int	extract_end(t_token **token, t_cmd **cmd_lst);
 t_cmd				*new_cmd(void);

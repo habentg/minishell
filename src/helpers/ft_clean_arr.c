@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 05:08:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/24 20:37:11 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/25 11:14:16 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	arr_length(char **arr)
 	int	i;
 
 	i = 0;
-	while (arr[i])
+	while (arr[i] != NULL)
 		i++;
 	return (i);
 }

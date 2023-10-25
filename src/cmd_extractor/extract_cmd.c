@@ -6,13 +6,38 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 16:49:08 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/24 21:03:50 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/25 16:49:24 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	extract_one_cmd(t_token **token, t_cmd **cmd_lst)
+int	check_cmd_validity(t_data *data, t_cmd **cmd_node)
+{
+	int		i;
+	char	*cmd_path;
+
+	i = -1;
+	cmd_path = NULL;
+	while (data->path[++i])
+	{
+		cmd_path = ft_strjoin(data->path[i], "/");
+		if (!(*cmd_node)->cmd)
+			return (0);
+		cmd_path = ft_strjoin(cmd_path, (*cmd_node)->cmd);
+		if (access(cmd_path, F_OK) == 0)
+		{
+			free((*cmd_node)->cmd);
+			(*cmd_node)->cmd = cmd_path;
+			return (0);
+		}
+		else
+			free(cmd_path);
+	}
+	return (ft_error(CMD_NOT_FOUND), 1);
+}
+
+int	extract_one_cmd(t_data *data, t_token **token, t_cmd **cmd_lst)
 {
 	t_cmd	*cmd_node;
 	int		add_flag;
@@ -28,25 +53,29 @@ int	extract_one_cmd(t_token **token, t_cmd **cmd_lst)
 			extract_trunc(token, &cmd_node);
 		if ((*token)->type == INPUT_REDIR)
 			add_flag = extract_input_redir(token, &cmd_node);
+		if ((*token)->type == APPEND)
+			extract_append(token, &cmd_node);
+		if ((*token)->type == HERE_DOC)
+			extract_here_doc(token, &cmd_node);
 	}
-	if (add_flag == -1)
+	if (add_flag == -1 || check_cmd_validity(data, &cmd_node))
 		free_cmdnode(cmd_node);
 	else
 		add_cmdnode_back(cmd_lst, cmd_node);
 	return (0);
 }
 
-int	cmd_node_construction(t_token **token, t_cmd **cmd_lst)
+int	cmd_node_construction(t_data *data, t_token **token, t_cmd **cmd_lst)
 {
 	while ((*token)->type != END && (*token)->type != PIPE)
 	{
-		if (extract_one_cmd(token, cmd_lst))
+		if (extract_one_cmd(data, token, cmd_lst))
 			return (0);
 	}
 	if ((*token)->type == PIPE)
 		extract_pipe(token, cmd_lst);
 	if ((*token)->type != END)
-		if (cmd_node_construction(token, cmd_lst))
+		if (cmd_node_construction(data, token, cmd_lst))
 			return (1);
 	return (0);
 }
@@ -64,7 +93,7 @@ int	start_cmd_extraction(t_data *data)
 		return (1);
 	*cmd_lst = NULL;
 	add_tok_back(&data->token, end_node);
-	if (cmd_node_construction(&data->token, cmd_lst))
+	if (cmd_node_construction(data, &data->token, cmd_lst))
 		return (1);
 	data->cmd = *cmd_lst;
 	print_cmd(data->cmd);

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:57:10 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/25 03:13:20 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/25 17:10:47 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,24 +25,58 @@ int	init_program(t_data *data)
 		return (1);
 	if (start_cmd_extraction(data))
 		return (1);
+	// if (start_execution(data))
+	// 	return (1);
 	return (0);
+}
+
+void	print_arr(char **arr)
+{
+	int	i;
+
+	i = -1;
+	while (arr[++i])
+		printf("arr[%d]: %s\n", i, arr[i]);
+}
+
+char	*get_path(char **envp, char *key)
+{
+	int		i;
+	char	*path;
+
+	i = -1;
+	path = NULL;
+	while (envp[++i])
+	{
+		if (ft_strncmp(envp[i], key, ft_strlen(key)) == 0)
+		{
+			path = ft_strdup(envp[i] + ft_strlen(key) + 1);
+			break ;
+		}
+	}
+	return (path);
 }
 
 // initialize my data struct
 int	init_data(t_data **data, char *input, char **envp)
 {
-	int	i;
+	int		i;
+	char	*my_path;
 
 	i = -1;
+	my_path = NULL;
 	(*data)->input = input;
 	(*data)->cmd = NULL;
 	(*data)->token = NULL;
 	(*data)->envi = (char **)ft_calloc((sizeof(char *)), \
-		(arr_length(envp) + 1));
+		(arr_length(envp)));
 	if (!(*data)->envi)
 		return (1);
 	while (envp[++i])
 		(*data)->envi[i] = ft_strdup(envp[i]);
+	my_path = get_path((*data)->envi, "PATH");
+	free(my_path);
+	(*data)->path = ft_split(my_path, ':');
 	return (0);
 }
 
@@ -57,7 +91,7 @@ int	launch_minishell(t_data *data, char **envp)
 		input = readline(PROMPT);
 		if (!input)
 			break ;
-		if (ft_strncmp(input, "exit", 4) == 0)
+		if (ft_strncmp_custom(input, "exit", 4) == 0)
 		{
 			printf("exit\n");
 			return (0);

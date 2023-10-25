@@ -6,36 +6,32 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 03:56:05 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/09 08:03:38 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/25 21:07:08 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	*new_strdup(const char *s1, size_t len)
-{
-	char	*ret;
-
-	ret = ft_calloc(len + 1, sizeof(char));
-	if (!ret)
-		return (NULL);
-	return ((char *)ft_memmove(ret, s1, len));
-}
-
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*ret;
-	size_t	ret_len;
+	char			*substring;
+	unsigned int	i;
 
-	if (!s)
-		return (NULL);
-	if (ft_strlen(s) < start)
-		return (ft_strdup(""));
-	ret_len = ft_strlen(s + start);
-	if (len > ret_len)
-		len = ret_len;
-	ret = new_strdup(s + start, len);
-	return (ret);
+	if (!s || len == 0)
+		return (0);
+	i = start;
+	while (s[i] != '\0' && (i - start) < len)
+		i++;
+	substring = (char *)malloc((i + 1 - start) * sizeof(char));
+	if (!substring)
+		return (0);
+	i = 0;
+	while (s[start] != '\0' && start < ft_strlen(s) && i < len)
+	{
+		substring[i++] = s[start++];
+	}
+	substring[i] = '\0';
+	return (substring);
 }
 
 // int	main()

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 19:45:08 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/25 03:41:59 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/25 15:12:02 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@ void	print_cmd(t_cmd *cmd)
 		printf("----------------------------------\n");
 		printf("cmd: %s\n", cmd->cmd);
 		printf("cmdarg: ");
-		while (cmd->cmdarg[i] != NULL)
-			printf("%s ", cmd->cmdarg[i++]);
+		if (cmd->cmdarg)
+			while (cmd->cmdarg[i] != NULL)
+				printf("%s ", cmd->cmdarg[i++]);
 		printf("\n");
 		printf("pipeout: %d\n", cmd->pipeout);
 		printf("infile: %s\n", cmd->iofd->infile);
@@ -46,4 +47,22 @@ void	print_cmd(t_cmd *cmd)
 		printf("----------------------------------\n");
 		cmd = cmd->next;
 	}
+}
+
+int	ft_strncmp_custom(const char *str1, const char *str2, size_t n)
+{
+	unsigned int		i;
+
+	i = 0;
+	while (str1[i] && i < n)
+	{
+		if (str1[i] != str2[i])
+		{
+			return ((unsigned char)str1[i] - (unsigned char)str2[i]);
+		}
+		i++;
+	}
+	if (str2[i] == '\0' && str1[i] == '\0')
+		return (0);
+	return ((unsigned char)str1[i] - (unsigned char)str2[i]);
 }

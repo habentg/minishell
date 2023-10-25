@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 17:51:34 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/25 03:40:51 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/25 15:14:16 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	extract_cmdargs(t_token **token, t_cmd **cmd_node)
 	i = 0;
 	count = count_cmdargs(*token);
 	(*cmd_node)->cmdarg = (char **)ft_calloc(sizeof(char *), (count + 1));
-	(*cmd_node)->cmdarg[count] = NULL;
 	if (!(*cmd_node)->cmdarg)
 		return (1);
 	while ((*token)->type != END && (*token)->type == WORD && i < count)
@@ -63,10 +62,3 @@ int	extract_word(t_token **token, t_cmd **cmd_node)
 	return (0);
 }
 
-// int	extract_redir(t_token **token, t_cmd **cmd_lst)
-// {
-// 	(void)cmd_lst;
-// 	printf("we have redir\n");
-// 	(*token) = (*token)->next;
-// 	return (0);
-// }

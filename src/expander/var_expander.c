@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:12:27 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/23 06:00:26 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/25 13:38:34 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ static int	init_var_expansion(t_data *data)
 				if (is_expansion_possible(data, tmp->str) == 2)
 					return (1);
 				expand_variable(data, tmp);
+				tmp->type = WORD;
 			}
 			else
 				tmp->type = WORD;
