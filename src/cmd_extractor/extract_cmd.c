@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 16:49:08 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/25 16:49:24 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/25 22:31:47 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	check_cmd_validity(t_data *data, t_cmd **cmd_node)
 
 	i = -1;
 	cmd_path = NULL;
+	printf("cmd_path: %s\n", (*cmd_node)->cmd);
 	while (data->path[++i])
 	{
 		cmd_path = ft_strjoin(data->path[i], "/");
@@ -83,19 +84,19 @@ int	cmd_node_construction(t_data *data, t_token **token, t_cmd **cmd_lst)
 // implemet a recursive function that will handle the cmd extraction until pipe
 int	start_cmd_extraction(t_data *data)
 {
-	t_cmd	**cmd_lst;
+	// t_cmd	**cmd_lst;
 	t_token	*end_node;
 
 	end_node = tokenize_mem("end");
 	end_node->type = END;
-	cmd_lst = (t_cmd **)malloc(sizeof(t_cmd *));
-	if (!cmd_lst)
-		return (1);
-	*cmd_lst = NULL;
+	// cmd_lst = (t_cmd **)malloc(sizeof(t_cmd *));
+	// if (!cmd_lst)
+	// 	return (1);
+	// *cmd_lst = NULL;
 	add_tok_back(&data->token, end_node);
-	if (cmd_node_construction(data, &data->token, cmd_lst))
+	if (cmd_node_construction(data, &data->token, &data->cmd))
 		return (1);
-	data->cmd = *cmd_lst;
+	// data->cmd = *cmd_lst;
 	print_cmd(data->cmd);
 	return (0);
 }

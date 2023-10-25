@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:57:10 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/25 17:10:47 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/25 22:40:02 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,17 @@ int	init_data(t_data **data, char *input, char **envp)
 	(*data)->input = input;
 	(*data)->cmd = NULL;
 	(*data)->token = NULL;
-	(*data)->envi = (char **)ft_calloc((sizeof(char *)), \
-		(arr_length(envp)));
+	// (*data)->envi = (char **)malloc((sizeof(char *)),
+	// 	(arr_length(envp)));
+	(*data)->envi = malloc((sizeof(char *)) * (arr_length(envp)));
 	if (!(*data)->envi)
 		return (1);
 	while (envp[++i])
 		(*data)->envi[i] = ft_strdup(envp[i]);
 	my_path = get_path((*data)->envi, "PATH");
-	free(my_path);
 	(*data)->path = ft_split(my_path, ':');
+	// print_arr((*data)->path);
+	free(my_path);
 	return (0);
 }
 
@@ -103,6 +105,7 @@ int	launch_minishell(t_data *data, char **envp)
 		if (init_program(data))
 			return (1);
 		ft_clean_data(&data);
+		// free(input);
 	}
 	return (0);
 }
@@ -116,9 +119,10 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	if (ac != 1)
 		return (1);
+	// data = NULL;
 	data = (t_data *)malloc(sizeof(t_data));
-	if (!data)
-		return (1);
+	// if (!data)
+	// 	return (1);
 	if (launch_minishell(data, envp))
 		return (1);
 	ft_clean_data_exit(&data);

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 02:46:29 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/25 02:43:21 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/25 22:06:31 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ t_token	*tokenize_mem(char *mem)
 {
 	t_token	*token;
 
-	token = (t_token *)ft_calloc(1, (sizeof(t_token) + 1));
+	// token = (t_token *)ft_calloc(1, (sizeof(t_token) + 1));
+	token = malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);
 	token->str = ft_strdup(mem);

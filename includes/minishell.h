@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/25 20:57:25 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/25 22:12:10 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,8 @@ t_cmd				*ft_lstlast(t_cmd *lst);
 void				add_cmdnode_back(t_cmd **lst, t_cmd *node);
 int					ft_dlsize(t_cmd *lst);
 t_iofds				*new_iofds(void);
+void	voidfree(void *ptr);
+void	ft_clean_tok_dl_2(t_token **lst, void (*del)(void*));
 // execution funcs
 
 #endif

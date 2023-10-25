@@ -6,7 +6,7 @@
 #    By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/03 01:59:13 by hatesfam          #+#    #+#              #
-#    Updated: 2023/10/25 17:06:28 by hatesfam         ###   ########.fr        #
+#    Updated: 2023/10/25 22:01:52 by hatesfam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ RED         =   \e[91m
 RESET		=	\e[0m
 CURSIVE		=	\e[33;3m
 
-CC = cc
+CC = cc -g3
 sanitizer = -fsanitize=address -fno-omit-frame-pointer
 INC = ./includes
 RDLINE_L = -L/Users/$(USER)/.brew/opt/readline/lib -lreadline
@@ -52,6 +52,10 @@ OBJ_FILES = $(SRC_FILES:.c=.o)
 	@$(CC) -c $(CFALGS) $< -o $@
 
 all: $(NAME)
+
+leaks: 
+	valgrind --suppressions=readleak.txt --leak-check=full --trace-children=yes \
+	--show-leak-kinds=all --track-origins=yes --track-fds=yes ./minishell
 
 # Rule for generating the executable:
 $(NAME): $(OBJ_FILES)

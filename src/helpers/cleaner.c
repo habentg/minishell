@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 19:02:57 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/24 19:19:20 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/25 22:10:12 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,3 +36,6 @@ void	ft_clean_cmd_dl(t_cmd **dl)
 		current = next;
 	}
 }
+
+
+
