@@ -6,12 +6,29 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:57:10 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/25 22:40:02 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/26 22:34:40 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+int	start_execution(t_data *data)
+{
+	int	pid;
+
+	pid = fork();
+	printf("pid: %d\n", pid);
+	if (pid == -1)
+		return (1);
+	if (pid == 0)
+	{
+		execve(data->cmd->cmd, data->cmd->cmdarg, data->envi);
+		return (1);
+	}
+	else
+		waitpid(pid, NULL, 0);
+	return (0);
+}
 // init minishell program
 int	init_program(t_data *data)
 {
@@ -25,18 +42,9 @@ int	init_program(t_data *data)
 		return (1);
 	if (start_cmd_extraction(data))
 		return (1);
-	// if (start_execution(data))
-	// 	return (1);
+	if (start_execution(data))
+		return (1);
 	return (0);
-}
-
-void	print_arr(char **arr)
-{
-	int	i;
-
-	i = -1;
-	while (arr[++i])
-		printf("arr[%d]: %s\n", i, arr[i]);
 }
 
 char	*get_path(char **envp, char *key)
@@ -68,16 +76,13 @@ int	init_data(t_data **data, char *input, char **envp)
 	(*data)->input = input;
 	(*data)->cmd = NULL;
 	(*data)->token = NULL;
-	// (*data)->envi = (char **)malloc((sizeof(char *)),
-	// 	(arr_length(envp)));
-	(*data)->envi = malloc((sizeof(char *)) * (arr_length(envp)));
+	(*data)->envi = malloc((sizeof(char *)) * (arr_length(envp) + 1));
 	if (!(*data)->envi)
 		return (1);
 	while (envp[++i])
 		(*data)->envi[i] = ft_strdup(envp[i]);
 	my_path = get_path((*data)->envi, "PATH");
 	(*data)->path = ft_split(my_path, ':');
-	// print_arr((*data)->path);
 	free(my_path);
 	return (0);
 }
@@ -93,6 +98,8 @@ int	launch_minishell(t_data *data, char **envp)
 		input = readline(PROMPT);
 		if (!input)
 			break ;
+		if (ft_strlen(input) == 0)
+			continue ;
 		if (ft_strncmp_custom(input, "exit", 4) == 0)
 		{
 			printf("exit\n");
@@ -104,8 +111,8 @@ int	launch_minishell(t_data *data, char **envp)
 			add_history(data->input);
 		if (init_program(data))
 			return (1);
+		printf("----------------------\n");
 		ft_clean_data(&data);
-		// free(input);
 	}
 	return (0);
 }
@@ -119,10 +126,9 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	if (ac != 1)
 		return (1);
-	// data = NULL;
 	data = (t_data *)malloc(sizeof(t_data));
-	// if (!data)
-	// 	return (1);
+	if (!data)
+		return (1);
 	if (launch_minishell(data, envp))
 		return (1);
 	ft_clean_data_exit(&data);

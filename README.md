@@ -43,6 +43,8 @@ after we successfully initialize our general data, we will:
 
 <---------  Expansion of VAR -------->
 
+str len - var_len + envp_len(after equal) + 1 (for null termi) -> malloc this one (free the old one first)
+our final token->str == characters before $ + envp_len(after equal) + characters after var_name + '\0'
 
 <---------  Parsing and Constructing a Command -------->
 

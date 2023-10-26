@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 01:30:41 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/25 03:12:42 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/26 18:45:19 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,10 @@ int	operator_pipe_error(t_data *data)
 				return (ft_error(OPERATOR_ERROR_HD), 1);
 			return (ft_error(OPERATOR_ERROR_APP), 1);
 		}
-		if (token->type == TRUNC && is_operator(token->prev->str[0]) 
+		if (token->type == TRUNC && is_operator(token->prev->str[0]) \
 			&& token->prev != NULL)
 			return (ft_error(OPERATOR_ERROR_TRU), 1);
-		if (is_operator(token->str[0]) && is_operator(token->prev->str[0])\
+		if (is_operator(token->str[0]) && is_operator(token->prev->str[0]) \
 			&& token->type == INPUT_REDIR && token->prev != NULL)
 			return (ft_error(OPERATOR_ERROR_INP), 1);
 		token = token->next;

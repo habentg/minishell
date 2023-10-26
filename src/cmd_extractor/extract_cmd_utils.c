@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 17:51:34 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/25 15:14:16 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/26 19:11:04 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,3 @@ int	extract_word(t_token **token, t_cmd **cmd_node)
 	}
 	return (0);
 }
-

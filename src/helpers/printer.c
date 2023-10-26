@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 19:45:08 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/25 15:12:02 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/26 19:09:59 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,13 @@ int	ft_strncmp_custom(const char *str1, const char *str2, size_t n)
 	if (str2[i] == '\0' && str1[i] == '\0')
 		return (0);
 	return ((unsigned char)str1[i] - (unsigned char)str2[i]);
+}
+
+void	print_arr(char **arr)
+{
+	int	i;
+
+	i = -1;
+	while (arr[++i])
+		printf("arr[%d]: %s\n", i, arr[i]);
 }

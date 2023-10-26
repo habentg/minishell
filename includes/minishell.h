@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/25 22:12:10 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/26 21:55:10 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <unistd.h>   // for read, write, close
 # include <readline/readline.h>
 # include <readline/history.h>
+#include <sys/wait.h>
 
 # include "libft/libft.h"
 
@@ -96,7 +97,6 @@ typedef struct s_cmd
 	char			*cmd;
 	char			**cmdarg;
 	int				pipeout;
-	int				pipein;
 	t_iofds			*iofd;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
@@ -111,30 +111,6 @@ typedef struct s_data
 	char			**path;
 }					t_data;
 
-// Error && other helper funcs
-int					possible_error(t_data **data);
-int					operator_pipe_error(t_data *data);
-void				ft_error(char *err_msg);
-char				*one_space_setter(char *str);
-int					is_heredoc_append(char *str, int i, char c);
-int					is_whitespace(char c);
-int					is_operator(char c);
-int					is_qoute(char c);
-int					ft_whitespaces(char *str, int *index, char c);
-char				**splitter(char *str);
-void				print_token(t_token *token);
-void				print_cmd(t_cmd *cmd);
-int					ft_strncmp_custom(const char *str1, \
-	const char *str2, size_t n);
-void				ft_clean_arr(char **argv);
-// Double-linked list && Array funcs funcs
-int					arr_length(char **arr);
-void				ft_clean_arr(char **argv);
-void				ft_clean_data(t_data **data);
-void				ft_clean_cmd_dl(t_cmd **dl);
-void				ft_clean_data_exit(t_data **data);
-void				free_cmdnode(t_cmd *cmd);
-
 // launch funcs
 int					launch_minishell(t_data *data, char **envp);
 int					init_program(t_data *data);
@@ -146,10 +122,9 @@ int					tokenize_cmd(t_token **lst, char *cmd);
 t_token				*last_mem(t_token *lst);
 int					add_tok_back(t_token **lst, t_token *token);
 t_token				*tokenize_mem(char *mem);
-void				ft_clean_tok_dl(t_token **dl);
 int					ft_tokendl_size(t_token **lst);
 
-// expansion funcs
+// var expansion funcs
 int					start_expansion(t_data *data);
 int					is_expansion_possible(t_data *data, char *str);
 t_quoteType			get_q_state(char *str, int end);
@@ -168,16 +143,41 @@ void				extract_trunc(t_token **token, t_cmd **cmd_node);
 int					extract_input_redir(t_token **token, t_cmd **cmd_node);
 void				extract_here_doc(t_token **token, t_cmd **cmd_node);
 void				extract_append(t_token **token, t_cmd **cmd_node);
-// int	extract_input_redir(t_token **token, t_cmd **cmd_lst);
-// int	extract_var(t_token **token, t_cmd **cmd_lst);
-// int	extract_end(t_token **token, t_cmd **cmd_lst);
 t_cmd				*new_cmd(void);
 t_cmd				*ft_lstlast(t_cmd *lst);
 void				add_cmdnode_back(t_cmd **lst, t_cmd *node);
 int					ft_dlsize(t_cmd *lst);
 t_iofds				*new_iofds(void);
-void	voidfree(void *ptr);
-void	ft_clean_tok_dl_2(t_token **lst, void (*del)(void*));
+
 // execution funcs
+// Error && other helper funcs
+int					possible_error(t_data **data);
+int					operator_pipe_error(t_data *data);
+void				ft_error(char *err_msg);
+char				*one_space_setter(char *str);
+int					is_heredoc_append(char *str, int i, char c);
+int					is_whitespace(char c);
+int					is_operator(char c);
+int					is_qoute(char c);
+int					ft_whitespaces(char *str, int *index, char c);
+char				**splitter(char *str);
+void				print_token(t_token *token);
+void				print_cmd(t_cmd *cmd);
+int					ft_strncmp_custom(const char *str1, \
+	const char *str2, size_t n);
+
+// cleaning funcs
+void				ft_clean_arr(char **argv);
+void				voidfree(void *ptr);
+void				ft_clean_tok_dl(t_token **lst, void (*del)(void*));
+void				ft_delone_token(t_token *lst, void (*del)(void*));
+void				ft_lst_clear_cmd(t_cmd **lst, void (*del)(void*));
+void				ft_delone_cmd(t_cmd *lst, void (*del) (void *));
+void				ft_free_iofile(t_iofds *iofiles);
+int					arr_length(char **arr);
+void				ft_clean_arr(char **argv);
+void				ft_clean_data(t_data **data);
+void				ft_clean_data_exit(t_data **data);
+void				free_cmdnode(t_cmd *cmd);
 
 #endif
