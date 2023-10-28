@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 16:49:08 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/26 21:53:29 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/28 23:05:44 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,18 @@ int	check_cmd_validity(t_data *data, t_cmd **cmd_node)
 {
 	int		i;
 	char	*cmd_path;
+	char	*tmp_join;
 
 	i = -1;
 	cmd_path = NULL;
+	tmp_join = NULL;
 	while (data->path[++i])
 	{
-		cmd_path = ft_strjoin(data->path[i], "/");
-		if (!(*cmd_node)->cmd)
+		tmp_join = ft_strjoin(data->path[i], "/");
+		if (!tmp_join)
 			return (0);
-		cmd_path = ft_strjoin(cmd_path, (*cmd_node)->cmd);
+		cmd_path = ft_strjoin(tmp_join, (*cmd_node)->cmd);
+		free(tmp_join);
 		if (access(cmd_path, F_OK) == 0)
 		{
 			free((*cmd_node)->cmd);
@@ -84,13 +87,15 @@ int	cmd_node_construction(t_data *data, t_token **token, t_cmd **cmd_lst)
 int	start_cmd_extraction(t_data *data)
 {
 	t_token	*end_node;
+	t_token	*tmp;
 
 	end_node = tokenize_mem("end");
 	end_node->type = END;
 	add_tok_back(&data->token, end_node);
+	tmp = data->token;
 	if (cmd_node_construction(data, &data->token, &data->cmd))
 		return (1);
-	// print_cmd(data->cmd);
+	data->token = tmp;
 	return (0);
 }
 /*

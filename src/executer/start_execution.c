@@ -1,42 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleaner_arr.c                                      :+:      :+:    :+:   */
+/*   start_execution.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/26 18:16:16 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/28 21:59:09 by hatesfam         ###   ########.fr       */
+/*   Created: 2023/10/28 10:37:24 by hatesfam          #+#    #+#             */
+/*   Updated: 2023/10/28 10:37:59 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_clean_arr(char **argv)
+int	start_execution(t_data *data)
 {
-	int	i;
+	int	pid;
 
-	i = 0;
-	if (!argv || arr_length(argv) == 0)
-		return ;
-	while (i < arr_length(argv))
+	pid = fork();
+	if (pid == -1)
+		return (1);
+	if (pid == 0)
 	{
-		if (argv[i] != NULL)
-			free(argv[i]);
-		i++;
+		execve(data->cmd->cmd, data->cmd->cmdarg, data->envi);
+		return (1);
 	}
-	if (argv)
-		free(argv);
-}
-
-int	arr_length(char **arr)
-{
-	int	i;
-
-	i = 0;
-	if (!arr)
-		return (0);
-	while (arr[i])
-		i++;
-	return (i);
+	else
+		waitpid(pid, NULL, 0);
+	return (0);
 }

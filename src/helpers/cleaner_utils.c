@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 05:08:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/26 18:22:30 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/28 21:59:28 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ void	voidfree(void *ptr)
 	return ;
 }
 
-void	ft_delone_token(t_token *lst, void (*del)(void*))
+void	ft_delone_token(t_token *lst)
 {
-	if (lst && del && lst->str)
+	if (lst && lst->str)
 	{
-		(del)(lst->str);
+		free(lst->str);
 		lst->str = NULL;
 	}
 	if (lst->prev)
@@ -56,10 +56,10 @@ void	ft_free_iofile(t_iofds *iofiles)
 	free(iofiles);
 }
 
-void	ft_delone_cmd(t_cmd *lst, void (*del) (void *))
+void	ft_delone_cmd(t_cmd *lst)
 {
 	if (lst->cmd)
-		(*del)(lst->cmd);
+		free(lst->cmd);
 	if (lst->cmdarg)
 		ft_clean_arr(lst->cmdarg);
 	if (lst->iofd)

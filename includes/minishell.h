@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/26 21:55:10 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/28 22:00:15 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <unistd.h>   // for read, write, close
 # include <readline/readline.h>
 # include <readline/history.h>
-#include <sys/wait.h>
+# include <sys/wait.h>
 
 # include "libft/libft.h"
 
@@ -150,6 +150,8 @@ int					ft_dlsize(t_cmd *lst);
 t_iofds				*new_iofds(void);
 
 // execution funcs
+int					start_execution(t_data *data);
+
 // Error && other helper funcs
 int					possible_error(t_data **data);
 int					operator_pipe_error(t_data *data);
@@ -169,10 +171,10 @@ int					ft_strncmp_custom(const char *str1, \
 // cleaning funcs
 void				ft_clean_arr(char **argv);
 void				voidfree(void *ptr);
-void				ft_clean_tok_dl(t_token **lst, void (*del)(void*));
-void				ft_delone_token(t_token *lst, void (*del)(void*));
-void				ft_lst_clear_cmd(t_cmd **lst, void (*del)(void*));
-void				ft_delone_cmd(t_cmd *lst, void (*del) (void *));
+void				ft_clean_tok_dl(t_token **lst);
+void				ft_delone_token(t_token *lst);
+void				ft_lst_clear_cmd(t_cmd **lst);
+void				ft_delone_cmd(t_cmd *lst);
 void				ft_free_iofile(t_iofds *iofiles);
 int					arr_length(char **arr);
 void				ft_clean_arr(char **argv);
