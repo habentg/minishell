@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 16:49:08 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/28 23:05:44 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/28 23:36:09 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,15 @@ int	check_cmd_validity(t_data *data, t_cmd **cmd_node)
 	i = -1;
 	cmd_path = NULL;
 	tmp_join = NULL;
+	if (cmd_node && (*cmd_node)->cmd && (*cmd_node)->cmd[0] == '/')
+		return (0);
+	if (cmd_node && (*cmd_node)->cmd && (*cmd_node)->cmd[0] == '.' && (*cmd_node)->cmd[1] == '/')
+	{
+		if (access((*cmd_node)->cmd, F_OK) == 0)
+			return (0);
+		else
+			return (ft_error(CMD_NOT_FOUND), 1);
+	}
 	while (data->path[++i])
 	{
 		tmp_join = ft_strjoin(data->path[i], "/");
