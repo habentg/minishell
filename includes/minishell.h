@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/28 22:00:15 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/29 16:43:49 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ typedef struct s_data
 // launch funcs
 int					launch_minishell(t_data *data, char **envp);
 int					init_program(t_data *data);
-int					init_data(t_data **data, char *input, char **envp);
+int					init_data(t_data **data, char **envp);
 
 //lexical analysis funcs
 int					start_lexing(t_data *data);
@@ -148,6 +148,7 @@ t_cmd				*ft_lstlast(t_cmd *lst);
 void				add_cmdnode_back(t_cmd **lst, t_cmd *node);
 int					ft_dlsize(t_cmd *lst);
 t_iofds				*new_iofds(void);
+int					check_cmd_validity(t_data *data, t_cmd **cmd_node);
 
 // execution funcs
 int					start_execution(t_data *data);
