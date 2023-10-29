@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:57:10 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/29 16:43:24 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/30 00:12:23 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,24 @@
 // launch minishell
 int	launch_minishell(t_data *data, char **envp)
 {
-	char	*input;
+	char	*input_res;
 
-	input = NULL;
+	input_res = NULL;
 	if (init_data(&data, envp))
 		return (1);
 	while (1)
 	{
-		input = readline(PROMPT);
-		if (!input)
+		input_res = readline(PROMPT);
+		if (!input_res)
 			break ;
-		if (ft_strlen(input) == 0)
+		if (ft_strlen(input_res) == 0)
 			continue ;
-		if (ft_strncmp_custom(input, "exit", 4) == 0)
+		if (ft_strncmp_custom(input_res, "exit", 4) == 0)
 		{
-			printf("exit\n");
-			return (0);
+			ft_clean_data_onexit(&data);
+			exit (0);
 		}
-		data->input = input;
+		data->input = input_res;
 		if (ft_strlen(data->input) > 0)
 			add_history(data->input);
 		if (init_program(data))
@@ -55,7 +55,7 @@ int	main(int ac, char **av, char **envp)
 	if (!data)
 		return (1);
 	if (launch_minishell(data, envp))
-		return (ft_clean_data_exit(&data), 1);
-	ft_clean_data_exit(&data);
+		return (ft_clean_data_done(&data), 1);
+	ft_clean_data_done(&data);
 	return (0);
 }

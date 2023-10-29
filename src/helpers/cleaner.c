@@ -6,22 +6,13 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 19:02:57 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/29 15:53:07 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/30 00:15:01 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	free_cmdnode(t_cmd *cmd)
-{
-	if (cmd->cmd)
-		free(cmd->cmd);
-	if (cmd->cmdarg)
-		ft_clean_arr(cmd->cmdarg);
-	if (cmd->iofd)
-		ft_free_iofile(cmd->iofd);
-}
-
+/* cleaning cmd d-linked list*/
 void	ft_lst_clear_cmd(t_cmd **lst)
 {
 	t_cmd	*m;
@@ -38,6 +29,7 @@ void	ft_lst_clear_cmd(t_cmd **lst)
 	}
 }
 
+/* cleaning token d-linked list*/
 void	ft_clean_tok_dl(t_token **lst)
 {
 	t_token	*m;
@@ -54,18 +46,33 @@ void	ft_clean_tok_dl(t_token **lst)
 	}
 }
 
-// new cleaner funcs
+// cleaner funcs
+/* at every run*/
 void	ft_clean_data(t_data **data)
 {
-	if ((*data)->input)
+	if ((*data)->input != NULL)
 		free((*data)->input);
-	if ((*data)->cmd)
+	if ((*data)->cmd != NULL)
 		ft_lst_clear_cmd(&(*data)->cmd);
-	if ((*data)->token)
+	if ((*data)->token != NULL)
 		ft_clean_tok_dl(&(*data)->token);
 }
 
-void	ft_clean_data_exit(t_data **data)
+/* at exit*/
+void	ft_clean_data_onexit(t_data **data)
+{
+	if ((*data)->envi)
+		ft_clean_arr((*data)->envi);
+	if ((*data)->path)
+		ft_clean_arr((*data)->path);
+	if (*data)
+		free(*data);
+	printf("exit\n");
+}
+
+
+/* at anytime when we are finishing up with minishell*/
+void	ft_clean_data_done(t_data **data)
 {
 	ft_clean_data(data);
 	if ((*data)->envi)

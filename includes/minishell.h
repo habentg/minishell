@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/29 16:43:49 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/30 00:11:30 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ int					start_expansion(t_data *data);
 int					is_expansion_possible(t_data *data, char *str);
 t_quoteType			get_q_state(char *str, int end);
 void				remove_quotes(t_data *data);
+void				expand_variable(t_data *data, t_token *token);
 
 // cmd extraction funcs
 int					start_cmd_extraction(t_data *data);
@@ -171,16 +172,15 @@ int					ft_strncmp_custom(const char *str1, \
 
 // cleaning funcs
 void				ft_clean_arr(char **argv);
-void				voidfree(void *ptr);
 void				ft_clean_tok_dl(t_token **lst);
 void				ft_delone_token(t_token *lst);
 void				ft_lst_clear_cmd(t_cmd **lst);
-void				ft_delone_cmd(t_cmd *lst);
 void				ft_free_iofile(t_iofds *iofiles);
 int					arr_length(char **arr);
 void				ft_clean_arr(char **argv);
 void				ft_clean_data(t_data **data);
-void				ft_clean_data_exit(t_data **data);
+void				ft_clean_data_done(t_data **data);
+void				ft_clean_data_onexit(t_data **data);
 void				free_cmdnode(t_cmd *cmd);
 
 #endif
