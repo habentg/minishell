@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/30 00:11:30 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/30 19:40:08 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@
 # define TOKENDL_ALLOC_FAIL "Error: Token DL allocation failed"
 # define CMD_ALLOC_FAIL "Error: CMD allocation failed"
 # define FAILED_TO_DUPLICATE "Error: duplication failed in extract_cmdargs"
+# define PIPE_MALLOC_ERROR "Error: PIPE allocation failed"
+# define PIPE_FUNC_ERROR "Error: PIPE creation failed"
+# define EXECVE_FAIL "Error: execve failed"
 
 // error messages
 # define TOKENIZE_FAIL "Error: Tokenization failure"
@@ -98,6 +101,7 @@ typedef struct s_cmd
 	char			**cmdarg;
 	int				pipeout;
 	t_iofds			*iofd;
+	int				*pipe_fd;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
 }					t_cmd;
@@ -105,7 +109,7 @@ typedef struct s_cmd
 typedef struct s_data
 {
 	char			*input;
-	t_cmd			*cmd;
+	t_cmd			*cmd_lst;
 	t_token			*token;
 	char			**envi;
 	char			**path;
@@ -153,6 +157,16 @@ int					check_cmd_validity(t_data *data, t_cmd **cmd_node);
 
 // execution funcs
 int					start_execution(t_data *data);
+int					create_pipes(t_cmd *cmd);
+int					is_builtin_cmd(t_cmd *cmd_node);
+void				exec_builtin_cmd(t_cmd *cmd_node, t_data *data);
+int					execute_non_builtin_cmd(t_cmd *cmd_node, t_data *data);
+
+			// fd related
+void				dup_pipe_fds(t_cmd **cmd_node);
+void				reset_std_fds(t_cmd **cmd_node);
+void				backup_std_fds(t_cmd **cmd_node);
+void				close_fds(t_cmd **cmd_node);
 
 // Error && other helper funcs
 int					possible_error(t_data **data);
@@ -167,6 +181,7 @@ int					ft_whitespaces(char *str, int *index, char c);
 char				**splitter(char *str);
 void				print_token(t_token *token);
 void				print_cmd(t_cmd *cmd);
+void				cmd_not_found(char *cmd);
 int					ft_strncmp_custom(const char *str1, \
 	const char *str2, size_t n);
 

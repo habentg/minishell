@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 19:02:57 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/30 00:15:01 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/30 20:02:28 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void	ft_clean_data(t_data **data)
 {
 	if ((*data)->input != NULL)
 		free((*data)->input);
-	if ((*data)->cmd != NULL)
-		ft_lst_clear_cmd(&(*data)->cmd);
+	if ((*data)->cmd_lst != NULL)
+		ft_lst_clear_cmd(&(*data)->cmd_lst);
 	if ((*data)->token != NULL)
 		ft_clean_tok_dl(&(*data)->token);
 }
@@ -69,7 +69,6 @@ void	ft_clean_data_onexit(t_data **data)
 		free(*data);
 	printf("exit\n");
 }
-
 
 /* at anytime when we are finishing up with minishell*/
 void	ft_clean_data_done(t_data **data)

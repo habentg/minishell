@@ -6,7 +6,7 @@
 #    By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/03 01:59:13 by hatesfam          #+#    #+#              #
-#    Updated: 2023/10/30 00:24:47 by hatesfam         ###   ########.fr        #
+#    Updated: 2023/10/30 20:34:50 by hatesfam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,11 +37,12 @@ EXEC_DIR = ./src/executer
 
 # Source files:
 SRC_FILES = src/minishell.c  src/init_minishell.c\
-			$(LEXER_DIR)/tokenize_input.c $(LEXER_DIR)/cmd_elem_lst.c \
+			$(HELPER_DIR)/is_funcs.c $(HELPER_DIR)/ft_error.c $(HELPER_DIR)/one_space_setter.c $(HELPER_DIR)/cleaner_utils.c $(HELPER_DIR)/cleaner_arr.c \
+			$(HELPER_DIR)/splitter.c $(HELPER_DIR)/printer.c $(HELPER_DIR)/cleaner.c \
+			$(LEXER_DIR)/tokenize_input.c $(LEXER_DIR)/token_lst.c \
 			$(EXPANDER_DIR)/var_expander.c $(EXPANDER_DIR)/var_expander_utils.c $(EXPANDER_DIR)/expand_utils.c $(EXPANDER_DIR)/remove_qoutes.c\
-			$(EXTRACT_DIR)/extract_cmd.c $(EXTRACT_DIR)/extract_cmd_utils.c $(EXTRACT_DIR)/dl_lst.c $(EXTRACT_DIR)/extract_operator.c $(EXTRACT_DIR)/init_iofds.c $(EXTRACT_DIR)/here_doc.c \
-			$(EXEC_DIR)/start_execution.c $(EXEC_DIR)/valid_cmd.c \
-			$(HELPER_DIR)/is_funcs.c $(HELPER_DIR)/ft_error.c $(HELPER_DIR)/one_space_setter.c $(HELPER_DIR)/cleaner_utils.c $(HELPER_DIR)/cleaner_arr.c $(HELPER_DIR)/splitter.c $(HELPER_DIR)/printer.c $(HELPER_DIR)/cleaner.c
+			$(EXTRACT_DIR)/extract_cmd.c $(EXTRACT_DIR)/extract_cmd_utils.c $(EXTRACT_DIR)/cmd_lst.c $(EXTRACT_DIR)/extract_operator.c $(EXTRACT_DIR)/init_iofds.c $(EXTRACT_DIR)/here_doc.c \
+			$(EXEC_DIR)/start_execution.c $(EXEC_DIR)/valid_cmd.c $(EXEC_DIR)/pipes.c $(EXEC_DIR)/builtins.c $(EXEC_DIR)/non_builtins.c\
 
 # Object files:
 OBJ_FILES = $(SRC_FILES:.c=.o)
@@ -52,11 +53,6 @@ OBJ_FILES = $(SRC_FILES:.c=.o)
 	@$(CC) -c $(CFALGS) $< -o $@
 
 all: $(NAME)
-
-leaks:
-	@make all
-	valgrind --suppressions=readleak.txt --leak-check=full --trace-children=yes \
-	--show-leak-kinds=all --track-origins=yes --track-fds=yes ./minishell
 
 # Rule for generating the executable:
 $(NAME): $(OBJ_FILES)
@@ -86,27 +82,15 @@ re: fclean all
 	@printf "$(CURSIVE)$(GRAY)	- Remaking $(NAME)... $(RESET)\n"
 	clear
 
-#<------- delete later------>
+# Rule for easy re-run
 s: all
 	clear
 	./minishell
-f: re
-	clear
-	./minishell
 
-p: fclean
-	git add .
-	git commit -m "Updated on $(shell date +'%Y-%m-%d %H:%M:%S') by $(shell whoami)"
-	git push -u origin master
-
-#Debug 
-ifeq ($(DEBUG), 1)
-   OPTS = -g
-endif
-
-lldb:
-	@make fclean && make DEBUG=1 && lldb minishell
-#<------- delete later------>
-
+# Rule to run and check for memory leaks (inside docker only)
+leaks:
+	@make all
+	valgrind --suppressions=readleak.txt --leak-check=full --trace-children=yes \
+	--show-leak-kinds=all --track-origins=yes --track-fds=yes ./minishell
 # Phony targets:
 .PHONY: all clean fclean re

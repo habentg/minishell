@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 16:05:43 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/29 16:47:01 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/30 20:24:07 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ int	init_program(t_data *data)
 		return (1);
 	if (start_cmd_extraction(data))
 		return (1);
-	if (start_execution(data))
-		return (1);
+	print_cmd(data->cmd_lst);
+	// if (start_execution(data))
+	// 	return (1);
 	return (0);
 }
 
@@ -78,7 +79,7 @@ int	init_env_path(t_data **data, char **envp)
 int	init_data(t_data **data, char **envp)
 {
 	(*data)->input = NULL;
-	(*data)->cmd = NULL;
+	(*data)->cmd_lst = NULL;
 	(*data)->token = NULL;
 	(*data)->envi = NULL;
 	(*data)->path = NULL;

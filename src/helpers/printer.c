@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 19:45:08 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/26 19:09:59 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/30 18:21:19 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	print_cmd(t_cmd *cmd)
 				printf("%s ", cmd->cmdarg[i++]);
 		printf("\n");
 		printf("pipeout: %d\n", cmd->pipeout);
+		printf("pipe_fd: %p\n", cmd->pipe_fd);
 		printf("infile: %s\n", cmd->iofd->infile);
 		printf("outfile: %s\n", cmd->iofd->outfile);
 		printf("fdin: %d\n", cmd->iofd->fdin);
@@ -74,4 +75,9 @@ void	print_arr(char **arr)
 	i = -1;
 	while (arr[++i])
 		printf("arr[%d]: %s\n", i, arr[i]);
+}
+
+void	cmd_not_found(char *cmd)
+{
+	printf("minishell: %s: command not found\n", cmd);
 }

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 20:20:44 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/28 22:55:26 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/30 19:41:39 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	extract_trunc(t_token **token, t_cmd **cmd_node)
 	(*cmd_node)->iofd->outfile = ft_strdup((*token)->next->str);
 	(*cmd_node)->iofd->fdout = open((*cmd_node)->iofd->outfile, O_CREAT | \
 		O_TRUNC | O_RDWR, S_IRUSR | S_IWUSR);
-	close((*cmd_node)->iofd->fdout);
 	(*token) = (*token)->next->next;
 }
 
@@ -46,7 +45,6 @@ int	extract_input_redir(t_token **token, t_cmd **cmd_node)
 	}
 	(*cmd_node)->iofd->infile = ft_strdup((*token)->next->str);
 	(*cmd_node)->iofd->fdin = open((*cmd_node)->iofd->infile, O_RDONLY);
-	close((*cmd_node)->iofd->fdin);
 	(*token) = (*token)->next->next;
 	return (0);
 }
@@ -62,6 +60,5 @@ void	extract_append(t_token **token, t_cmd **cmd_node)
 	(*cmd_node)->iofd->outfile = ft_strdup((*token)->next->str);
 	(*cmd_node)->iofd->fdout = open((*cmd_node)->iofd->outfile, O_CREAT | \
 		O_APPEND | O_RDWR, S_IRUSR | S_IWUSR);
-	close((*cmd_node)->iofd->fdout);
 	(*token) = (*token)->next->next;
 }

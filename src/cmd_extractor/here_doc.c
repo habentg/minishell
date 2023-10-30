@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:54:44 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/25 15:12:52 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/10/30 20:18:35 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,5 @@ void	extract_here_doc(t_token **token, t_cmd **cmd_node)
 	close(tmp_fd);
 	(*cmd_node)->iofd->infile = (temp_file);
 	(*cmd_node)->iofd->fdin = open((*cmd_node)->iofd->infile, O_RDONLY);
-	close((*cmd_node)->iofd->fdin);
 	(*token) = (*token)->next->next;
 }
