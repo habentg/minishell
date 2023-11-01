@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/01 09:47:55 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/01 11:03:18 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 # include <stdlib.h>
 # include <string.h>
 # include <stdbool.h>
+# include <limits.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 # include <fcntl.h>    // for open
 # include <unistd.h>   // for read, write, close
 # include <readline/readline.h>
@@ -157,6 +160,7 @@ int					check_cmd_validity(t_data *data, t_cmd **cmd_node);
 
 // execution funcs
 int					start_execution(t_data *data);
+char				*get_path(char **envp, char *key);
 int					create_pipes(t_cmd *cmd);
 int					is_builtin_cmd(t_cmd *cmd_node);
 void				exec_builtin_cmd(t_cmd *cmd_node, t_data *data);

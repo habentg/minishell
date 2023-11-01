@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:54:44 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/30 20:18:35 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/01 10:16:05 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*generate_temp_file_name(void)
 	static int	i;
 	char		*temp_file_name;
 
-	temp_file_name = ft_strjoin("~/Desktop/.hd_temp_file_", ft_itoa(i++));
+	temp_file_name = ft_strjoin("../../.hd_temp_file_", ft_itoa(i++));
 	return (temp_file_name);
 }
 
@@ -36,7 +36,7 @@ void	extract_here_doc(t_token **token, t_cmd **cmd_node)
 		| O_RDWR, S_IRUSR | S_IWUSR);
 	while (1)
 	{
-		content_line = readline("> ");
+		content_line = readline("heredoc> ");
 		if (ft_strncmp_custom(content_line, (*cmd_node)->iofd->here_delemiter, \
 			ft_strlen((*cmd_node)->iofd->here_delemiter)) == 0)
 			break ;

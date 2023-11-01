@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 08:00:53 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/01 09:47:38 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/01 13:47:47 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	close_unused_pipe_fds(t_cmd **cmd_lst, t_cmd **cmd_node)
 				close(curr_cmd->pipe_fd[0]);
 			if (curr_cmd->pipe_fd[1])
 				close(curr_cmd->pipe_fd[1]);
-			close_cmd_fds(&curr_cmd);
+			// close_cmd_fds(&curr_cmd);
 		}
 		curr_cmd = curr_cmd->next;
 	}
