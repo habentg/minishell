@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:09:52 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/01 14:00:01 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/01 14:26:49 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,28 +50,54 @@ int	handle_pwd(void)
 int	handle_echo(t_cmd *cmd_node)
 {
 	int	i;
+	int	n_flag;
 
 	i = 1;
+	n_flag = 0;
+	if (ft_strncmp_custom(cmd_node->cmdarg[1], "-n", 2) == 0)
+		n_flag = 1;
 	if (cmd_node->iofd->fdout != -1)
 	{
 		while (cmd_node->cmdarg[i])
 		{
-			ft_putstr_fd(cmd_node->cmdarg[i], cmd_node->iofd->fdout);
+			// if (ft_strncmp_custom(cmd_node->cmdarg[i], "$?", 2) == 0)
+			// {
+			// 	ft_putstr_fd(ft_itoa(cmd_node->exit_status), \
+			// 		cmd_node->iofd->fdout);
+			// 	i++;
+			// 	continue ;
+			// }
+			if (n_flag == 1 && i == 1)
+				i++;
+			if (cmd_node->cmdarg[i] != NULL)
+				ft_putstr_fd(cmd_node->cmdarg[i], cmd_node->iofd->fdout);
 			if (cmd_node->cmdarg[i + 1])
 				ft_putstr_fd(" ", cmd_node->iofd->fdout);
 			i++;
 		}
-		ft_putstr_fd("\n", cmd_node->iofd->fdout);
+		if (n_flag == 0)
+			ft_putstr_fd("\n", cmd_node->iofd->fdout);
 		return (0);
 	}
 	while (cmd_node->cmdarg[i])
 	{
-		printf("%s", cmd_node->cmdarg[i]);
+		// if (ft_strncmp_custom(cmd_node->cmdarg[i], "$?", 2) == 0)
+		// {
+		// 	ft_putstr_fd(ft_itoa(cmd_node->exit_status), \
+		// 		cmd_node->iofd->fdout);
+		// 	i++;
+		// 	continue ;
+		// }
+		if (n_flag == 1 && i == 1)
+			i++;
+		if (cmd_node->cmdarg[i] != NULL)
+			printf("%s", cmd_node->cmdarg[i]);
 		if (cmd_node->cmdarg[i + 1])
 			printf(" ");
 		i++;
 	}
-	printf("\n");
+	if (n_flag == 0)
+		printf("\n");
 	return (0);
 }
 
@@ -92,9 +118,6 @@ int	handle_cd(t_cmd *cmd_node, t_data *data)
 		path = cmd_node->cmdarg[1];
 	if (chdir(path) == -1)
 		return (ft_error("Error: chdir failure"), 1);
-	close_used_pipe_fds(&data->cmd_lst, &cmd_node);
-	reset_std_fds(&cmd_node);
-	close_cmd_fds(&cmd_node);
 	return (0);
 }
 

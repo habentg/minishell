@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 10:37:24 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/01 13:46:28 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/01 14:07:32 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@ int	start_execution(t_data *data)
 				if (execute_non_builtin_cmd(tmp_cmd, data))
 					return (1);
 			}
+			else
+				waitpid(id, 0, 0);
 		}
-		waitpid(id, 0, 0);
 		tmp_cmd = tmp_cmd->next;
 	}
 	return (0);
