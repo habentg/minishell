@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 20:20:44 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/30 19:41:39 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/01 07:00:55 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	extract_trunc(t_token **token, t_cmd **cmd_node)
 	//content of next token && the fdin to the file descriptor of the infile.
 int	extract_input_redir(t_token **token, t_cmd **cmd_node)
 {
-	if (access((*token)->next->str, F_OK) == -1)
+	if (access((*token)->next->str, F_OK | R_OK) == -1)
 	{
 		(*token) = (*token)->next->next;
 		return (ft_error(FAILED_TO_OPEN_INPUT_FILE), -1);

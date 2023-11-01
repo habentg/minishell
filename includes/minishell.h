@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/30 19:40:08 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/01 09:47:55 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 # include "libft/libft.h"
 
-# define PROMPT "\e[1;32mMinishell~$ \e[0m"
+# define PROMPT "\e[1;32m[ሚ  ኒ ሸ ል 💀]~$ \e[0m"
 
 //allocation error messages
 # define ONESPACE_ALLOC_FAIL "Error: One space allocation failed"
@@ -163,11 +163,12 @@ void				exec_builtin_cmd(t_cmd *cmd_node, t_data *data);
 int					execute_non_builtin_cmd(t_cmd *cmd_node, t_data *data);
 
 			// fd related
-void				dup_pipe_fds(t_cmd **cmd_node);
+void				dup_pipe_fds(t_cmd **cmd_lst, t_cmd **cmd_node);
 void				reset_std_fds(t_cmd **cmd_node);
 void				backup_std_fds(t_cmd **cmd_node);
-void				close_fds(t_cmd **cmd_node);
-
+void				close_cmd_fds(t_cmd **cmd_node);
+void				close_used_pipe_fds(t_cmd **cmd_lst, t_cmd **cmd_node);
+void				close_unused_pipe_fds(t_cmd **cmd_lst, t_cmd **cmd_node);
 // Error && other helper funcs
 int					possible_error(t_data **data);
 int					operator_pipe_error(t_data *data);

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 16:05:43 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/30 20:24:07 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/01 05:05:54 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@ int	init_program(t_data *data)
 		return (1);
 	if (start_cmd_extraction(data))
 		return (1);
-	print_cmd(data->cmd_lst);
-	// if (start_execution(data))
-	// 	return (1);
+	if (start_execution(data))
+		return (1);
 	return (0);
 }
 
@@ -59,7 +58,7 @@ int	init_env_path(t_data **data, char **envp)
 	i = -1;
 	my_path = NULL;
 	if (arr_length(envp) == 0)
-		return (ft_error("Error: loading the ENV problem!"), 1);
+		return (ft_error("Error: problem in retreiving the ENV!"), 1);
 	(*data)->envi = (char **)ft_calloc((sizeof(char *)), \
 		(arr_length(envp) + 1));
 	if (!(*data)->envi)

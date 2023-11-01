@@ -6,7 +6,7 @@
 #    By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/03 01:59:13 by hatesfam          #+#    #+#              #
-#    Updated: 2023/10/30 20:34:50 by hatesfam         ###   ########.fr        #
+#    Updated: 2023/11/01 08:02:31 by hatesfam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ SRC_FILES = src/minishell.c  src/init_minishell.c\
 			$(LEXER_DIR)/tokenize_input.c $(LEXER_DIR)/token_lst.c \
 			$(EXPANDER_DIR)/var_expander.c $(EXPANDER_DIR)/var_expander_utils.c $(EXPANDER_DIR)/expand_utils.c $(EXPANDER_DIR)/remove_qoutes.c\
 			$(EXTRACT_DIR)/extract_cmd.c $(EXTRACT_DIR)/extract_cmd_utils.c $(EXTRACT_DIR)/cmd_lst.c $(EXTRACT_DIR)/extract_operator.c $(EXTRACT_DIR)/init_iofds.c $(EXTRACT_DIR)/here_doc.c \
-			$(EXEC_DIR)/start_execution.c $(EXEC_DIR)/valid_cmd.c $(EXEC_DIR)/pipes.c $(EXEC_DIR)/builtins.c $(EXEC_DIR)/non_builtins.c\
+			$(EXEC_DIR)/start_execution.c $(EXEC_DIR)/valid_cmd.c $(EXEC_DIR)/pipes.c $(EXEC_DIR)/builtins.c $(EXEC_DIR)/non_builtins.c    $(EXEC_DIR)/fd_close.c  \
 
 # Object files:
 OBJ_FILES = $(SRC_FILES:.c=.o)
