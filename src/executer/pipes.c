@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:15:11 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/01 08:49:54 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/03 00:48:03 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,16 @@ int	create_pipes(t_cmd *cmd)
 void	dup_pipe_fds(t_cmd **cmd_lst, t_cmd **cmd_node)
 {
 	backup_std_fds(cmd_node);
+	(void)cmd_lst;
 	if ((*cmd_node)->pipeout == 1)
 	{
+		printf("(*cmd_node)->pipe_fd[1]: %d\n", (*cmd_node)->pipe_fd[1]);
+		printf("STDOUT_FILENO: %d\n", STDOUT_FILENO);
 		dup2((*cmd_node)->pipe_fd[1], STDOUT_FILENO);
-		close((*cmd_node)->pipe_fd[0]);
+		printf("we in dup_pipe_fds -- 0e\n");
 	}
 	if ((*cmd_node)->prev && (*cmd_node)->prev->pipeout == 1)
-	{
-		dup2((*cmd_node)->pipe_fd[0], STDIN_FILENO);
-		close((*cmd_node)->pipe_fd[1]);
-	}
+		dup2((*cmd_node)->prev->pipe_fd[0], STDIN_FILENO);
 	close_unused_pipe_fds(cmd_lst, cmd_node);
+	printf("we in dup_pipe_fds ===== 2\n");
 }

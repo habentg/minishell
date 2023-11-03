@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 19:02:57 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/30 20:02:28 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/03 01:38:25 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	ft_clean_data_onexit(t_data **data)
 		ft_clean_arr((*data)->path);
 	if (*data)
 		free(*data);
-	printf("exit\n");
 }
 
 /* at anytime when we are finishing up with minishell*/

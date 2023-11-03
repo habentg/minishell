@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:09:52 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/01 14:26:49 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/03 03:13:26 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,59 +47,6 @@ int	handle_pwd(void)
 	}
 }
 
-int	handle_echo(t_cmd *cmd_node)
-{
-	int	i;
-	int	n_flag;
-
-	i = 1;
-	n_flag = 0;
-	if (ft_strncmp_custom(cmd_node->cmdarg[1], "-n", 2) == 0)
-		n_flag = 1;
-	if (cmd_node->iofd->fdout != -1)
-	{
-		while (cmd_node->cmdarg[i])
-		{
-			// if (ft_strncmp_custom(cmd_node->cmdarg[i], "$?", 2) == 0)
-			// {
-			// 	ft_putstr_fd(ft_itoa(cmd_node->exit_status), \
-			// 		cmd_node->iofd->fdout);
-			// 	i++;
-			// 	continue ;
-			// }
-			if (n_flag == 1 && i == 1)
-				i++;
-			if (cmd_node->cmdarg[i] != NULL)
-				ft_putstr_fd(cmd_node->cmdarg[i], cmd_node->iofd->fdout);
-			if (cmd_node->cmdarg[i + 1])
-				ft_putstr_fd(" ", cmd_node->iofd->fdout);
-			i++;
-		}
-		if (n_flag == 0)
-			ft_putstr_fd("\n", cmd_node->iofd->fdout);
-		return (0);
-	}
-	while (cmd_node->cmdarg[i])
-	{
-		// if (ft_strncmp_custom(cmd_node->cmdarg[i], "$?", 2) == 0)
-		// {
-		// 	ft_putstr_fd(ft_itoa(cmd_node->exit_status), \
-		// 		cmd_node->iofd->fdout);
-		// 	i++;
-		// 	continue ;
-		// }
-		if (n_flag == 1 && i == 1)
-			i++;
-		if (cmd_node->cmdarg[i] != NULL)
-			printf("%s", cmd_node->cmdarg[i]);
-		if (cmd_node->cmdarg[i + 1])
-			printf(" ");
-		i++;
-	}
-	if (n_flag == 0)
-		printf("\n");
-	return (0);
-}
 
 /*if only cd is given, find 'HOME' in the path and chdir to there*/
 /*else, change to the path given give after 'cd', idk what comes after that*/
@@ -121,16 +68,26 @@ int	handle_cd(t_cmd *cmd_node, t_data *data)
 	return (0);
 }
 
+void	handle_env(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (data->envi[i])
+	{
+		printf("%s\n", data->envi[i]);
+		i++;
+	}
+}
+
 void	exec_builtin_cmd(t_cmd *cmd_node, t_data *data)
 {
-	if (ft_strncmp_custom(cmd_node->cmd, "cd", 2) == 0 \
-		|| ft_strncmp_custom(cmd_node->cmd, "CD", 2) == 0)
+	if (ft_strncmp_custom(cmd_node->cmd, "cd", 2) == 0)
 	{
 		if (handle_cd(cmd_node, data))
 			return ;
 	}
-	else if (ft_strncmp_custom(cmd_node->cmd, "pwd", 3) == 0 \
-		|| ft_strncmp_custom(cmd_node->cmd, "PWD", 3) == 0)
+	else if (ft_strncmp_custom(cmd_node->cmd, "pwd", 3) == 0)
 	{
 		if (handle_pwd())
 			return ;
@@ -140,9 +97,18 @@ void	exec_builtin_cmd(t_cmd *cmd_node, t_data *data)
 		if (handle_echo(cmd_node))
 			return ;
 	}
+	else if (ft_strncmp_custom(cmd_node->cmd, "exit", 4) == 0)
+	{
+		if (handle_exit(data, cmd_node))
+			return ;
+	}
+	else if (ft_strncmp_custom(cmd_node->cmd, "export", 6) == 0)
+	{
+		if (handle_export(data, cmd_node))
+			return ;
+	}
+	else if (ft_strncmp_custom(cmd_node->cmd, "env", 3) == 0)
+		handle_env(data);
 	else
 		printf("chilll we not there yet!\n");
-	close_used_pipe_fds(&data->cmd_lst, &cmd_node);
-	reset_std_fds(&cmd_node);
-	close_cmd_fds(&cmd_node);
 }

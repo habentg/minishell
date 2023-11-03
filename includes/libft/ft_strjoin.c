@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 03:57:06 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/03 03:57:08 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/03 05:58:09 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	i = 0;
 	j = 0;
-	if (s1 == NULL || s2 == NULL)
-		return (0);
 	newstr = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!newstr)
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/01 11:03:18 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/03 08:09:29 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@
 # define FAILED_TO_OPEN_INPUT_FILE "Error: failed to find/open input file"
 
 // exit status
-// # define EXIT_SUCCESS 0
+int	g_exit_status;
 
 // qoute state struct
 typedef enum e_quoteType
@@ -107,6 +107,7 @@ typedef struct s_cmd
 	int				*pipe_fd;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
+	int				cmd_exit_status;
 }					t_cmd;
 
 typedef struct s_data
@@ -165,7 +166,11 @@ int					create_pipes(t_cmd *cmd);
 int					is_builtin_cmd(t_cmd *cmd_node);
 void				exec_builtin_cmd(t_cmd *cmd_node, t_data *data);
 int					execute_non_builtin_cmd(t_cmd *cmd_node, t_data *data);
-
+			// builtins
+int					handle_pwd(void);
+int					handle_echo(t_cmd *cmd_node);
+int					handle_exit(t_data *data, t_cmd *cmd_node);
+int					handle_export(t_data *data, t_cmd *cmd_node);
 			// fd related
 void				dup_pipe_fds(t_cmd **cmd_lst, t_cmd **cmd_node);
 void				reset_std_fds(t_cmd **cmd_node);
@@ -186,7 +191,7 @@ int					ft_whitespaces(char *str, int *index, char c);
 char				**splitter(char *str);
 void				print_token(t_token *token);
 void				print_cmd(t_cmd *cmd);
-void				cmd_not_found(char *cmd);
+void				cmd_not_found(t_cmd **cmd);
 int					ft_strncmp_custom(const char *str1, \
 	const char *str2, size_t n);
 

@@ -21,5 +21,5 @@ int	ft_isdigit(int digit)
 
 // int	main(void)
 // {
-// 	printf("%d", ft_isdigit('2'));
+// 	printf("%d", ft_isdigit(ft_atoi("13")));
 // }

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 23:51:27 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/30 20:27:59 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/03 08:10:52 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,34 @@ char	*replace_var_utils(char *str, char *envi, int varlen, int *k)
 		(*k)++;
 	}
 	return (tmp);
+}
+
+int	expande_exit_status(t_token **token, int i)
+{
+	char	*tmp;
+	char	*tmp_join;
+	int		j;
+	int		k;
+	int		g_e_s_len;
+
+	j = -1;
+	k = -1;
+	tmp = (char *)ft_calloc(sizeof(char), ((ft_strlen((*token)->str)) - 2 + \
+		(ft_strlen(ft_itoa(g_exit_status))) + 1));
+	if (!tmp)
+		return (1);
+	while (++j < (i - 1))
+		tmp[j] = (*token)->str[j];
+	tmp_join = ft_strdup(ft_itoa(g_exit_status));
+	while (tmp_join[++k])
+		tmp[j++] = tmp_join[k];
+	while ((*token)->str[++i])
+		tmp[j++] = (*token)->str[i];
+	free(tmp_join);
+	g_e_s_len = ft_strlen(ft_itoa(g_exit_status));
+	free((*token)->str);
+	(*token)->str = tmp;
+	return (i + g_e_s_len);
 }
 
 int	replace_var(t_data *data, t_token *token, char *var_name, int *index)
@@ -62,8 +90,11 @@ int	replace_var(t_data *data, t_token *token, char *var_name, int *index)
 	return (*index);
 }
 
-static int	expande_variable_utils(char *str, int *i)
+static int	expande_variable_utils(t_data *data, t_token *token, \
+	char *str, int *i)
 {
+	(void)data;
+	(void)token;
 	while (str[*i] && !is_whitespace(str[*i]) && str[*i] != '$' \
 		&& !is_operator(str[*i]) && !is_qoute(str[*i]))
 				(*i)++;
@@ -83,9 +114,15 @@ void	expand_variable(t_data *data, t_token *token)
 		if (token->str[i] == '$' && get_q_state(token->str, i) != SINGLE)
 		{
 			k = ++i;
+			if (token->str[i] == '?')
+			{
+				i = expande_exit_status(&token, i);
+				i = 0;
+				continue ;
+			}
 			if (!token->str[i])
 				break ;
-			i = expande_variable_utils(token->str, &i);
+			i = expande_variable_utils(data, token, token->str, &i);
 			if ((i - k) > 0)
 			{
 				var_name = ft_substr(token->str, k, i - k);
