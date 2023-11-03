@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:15:11 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/03 00:48:03 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/03 14:16:11 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	create_pipes(t_cmd *cmd)
 	int		*tmp_pipe;
 
 	tmp_cmd = cmd;
-	tmp_pipe = NULL;
+	// tmp_pipe = NULL;
 	while (tmp_cmd)
 	{
 		if (tmp_cmd->pipeout == 1 || (tmp_cmd->prev && \
@@ -38,7 +38,7 @@ int	create_pipes(t_cmd *cmd)
 
 void	dup_pipe_fds(t_cmd **cmd_lst, t_cmd **cmd_node)
 {
-	backup_std_fds(cmd_node);
+	// backup_std_fds(cmd_node);
 	(void)cmd_lst;
 	if ((*cmd_node)->pipeout == 1)
 	{
