@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 16:14:58 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/03 15:13:08 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/03 21:50:57 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 int	execute_non_builtin_cmd(t_cmd *cmd_node, t_data *data)
 {
+	if (cmd_node->iofd->fdin != -1)
+		dup2(cmd_node->iofd->fdin, STDIN_FILENO);
+	if (cmd_node->iofd->fdout != -1)
+		dup2(cmd_node->iofd->fdout, STDOUT_FILENO);
 	if (execve(cmd_node->cmd, cmd_node->cmdarg, data->envi))
 		return (ft_error(EXECVE_FAIL), 1);
 	return (0);

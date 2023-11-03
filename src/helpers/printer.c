@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 19:45:08 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/03 15:34:35 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/03 22:11:15 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	print_cmd(t_cmd *cmd)
 	{
 		i = 0;
 		printf("----------------------------------\n");
-		// printf("cmd: %s\n", cmd->cmd);
+		printf("cmd: %s\n", cmd->cmd);
 		printf("cmdarg: ");
 		if (cmd->cmdarg)
 			while (cmd->cmdarg[i] != NULL)

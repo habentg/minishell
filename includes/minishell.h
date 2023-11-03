@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/03 14:35:30 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/03 22:10:37 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,11 @@ void				backup_std_fds(t_cmd **cmd_node);
 void				close_cmd_fds(t_cmd **cmd_node);
 void				close_used_pipe_fds(t_cmd **cmd_lst, t_cmd **cmd_node);
 void				close_unused_pipe_fds(t_cmd **cmd_lst, t_cmd **cmd_node);
+void				set_redirections(t_iofds *iofd);
+void				reset_stdio(t_iofds *iofds);
+void				close_unused_pipes_2(t_cmd *headcmd, t_cmd *curcmd);
+void				exitshell(t_data *data, int excode);
+void				close_open_fds(t_cmd *cmd_lst, int exc_ended);
 // Error && other helper funcs
 int					possible_error(t_data **data);
 int					operator_pipe_error(t_data *data);
