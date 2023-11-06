@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 19:45:08 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/03 22:11:15 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/06 02:53:13 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,24 +51,6 @@ void	print_cmd(t_cmd *cmd)
 	}
 }
 
-int	ft_strncmp_custom(const char *str1, const char *str2, size_t n)
-{
-	unsigned int		i;
-
-	i = 0;
-	while (str1[i] && i < n)
-	{
-		if (str1[i] != str2[i])
-		{
-			return ((unsigned char)str1[i] - (unsigned char)str2[i]);
-		}
-		i++;
-	}
-	if (str2[i] == '\0' && str1[i] == '\0')
-		return (0);
-	return ((unsigned char)str1[i] - (unsigned char)str2[i]);
-}
-
 void	print_arr(char **arr)
 {
 	int	i;
@@ -78,8 +60,16 @@ void	print_arr(char **arr)
 		printf("arr[%d]: %s\n", i, arr[i]);
 }
 
-void	cmd_not_found(t_cmd **cmd)
+void	print_env_lst(t_data *data)
 {
-	g_exit_status = 127;
-	printf("minishell: %s: command not found\n", (*cmd)->cmd);
+	t_env	*tmp;
+
+	tmp = data->env_lst;
+	while (tmp)
+	{
+		printf("key: [%s]\n", tmp->key);
+		printf("value: %s\n", tmp->value);
+		tmp = tmp->next;
+	}
+	printf("env_lst head: %s\n", data->env_lst->key);
 }

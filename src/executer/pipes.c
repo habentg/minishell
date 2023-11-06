@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:15:11 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/03 19:30:11 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/06 05:08:29 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	exitshell(t_data *data, int excode)
 	{
 		if (data->cmd_lst && data->cmd_lst->iofd)
 			close_open_fds(data->cmd_lst, 1);
-		ft_clean_data(&data);
 	}
+	ft_clean_data_done(&data);
 	exit(excode);
 }

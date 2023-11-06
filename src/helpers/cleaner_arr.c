@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 18:16:16 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/28 21:59:09 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/06 01:50:42 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,21 @@ int	arr_length(char **arr)
 	while (arr[i])
 		i++;
 	return (i);
+}
+
+void	free_env_lst(t_data *data)
+{
+	t_env	*tmp;
+
+	tmp = data->env_lst;
+	while (tmp)
+	{
+		if (tmp->key)
+			free(tmp->key);
+		if (tmp->value)
+			free(tmp->value);
+		if (tmp)
+			free(tmp);
+		tmp = tmp->next;
+	}
 }

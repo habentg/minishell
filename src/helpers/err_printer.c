@@ -1,24 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   non_builtins.c                                     :+:      :+:    :+:   */
+/*   err_printer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/30 16:14:58 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/03 21:50:57 by hatesfam         ###   ########.fr       */
+/*   Created: 2023/11/06 02:52:48 by hatesfam          #+#    #+#             */
+/*   Updated: 2023/11/06 06:06:52 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	execute_non_builtin_cmd(t_cmd *cmd_node, t_data *data)
+void	cmd_not_found(t_cmd **cmd)
 {
-	if (cmd_node->iofd->fdin != -1)
-		dup2(cmd_node->iofd->fdin, STDIN_FILENO);
-	if (cmd_node->iofd->fdout != -1)
-		dup2(cmd_node->iofd->fdout, STDOUT_FILENO);
-	if (execve(cmd_node->cmd, cmd_node->cmdarg, data->envi))
-		return (ft_error(EXECVE_FAIL), 1);
-	return (0);
+	g_exit_status = 127;
+	printf("minishell: %s: command not found\n", (*cmd)->cmd);
+}
+
+void	file_dir_not_found(char *dir)
+{
+	g_exit_status = 1;
+	printf("minishell: cd: %s: No such file or directory\n", dir);
+}
+
+void	ft_error(char *err_msg)
+{
+	ft_putendl_fd(err_msg, 1);
 }

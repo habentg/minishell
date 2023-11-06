@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 05:08:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/30 00:10:44 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/05 22:12:54 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,6 @@ void	free_cmdnode(t_cmd *cmd)
 		ft_clean_arr(cmd->cmdarg);
 	if (cmd->iofd)
 		ft_free_iofile(cmd->iofd);
+	if (cmd->pipe_fd)
+		free(cmd->pipe_fd);
 }

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/03 22:10:37 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/06 07:20:45 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,14 @@ typedef struct s_cmd
 	int				*pipe_fd;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
-	int				cmd_exit_status;
 }					t_cmd;
+
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}					t_env;
 
 typedef struct s_data
 {
@@ -118,12 +124,18 @@ typedef struct s_data
 	t_token			*token;
 	char			**envi;
 	char			**path;
+	t_env			*env_lst;
 }					t_data;
 
 // launch funcs
 int					launch_minishell(t_data *data, char **envp);
 int					init_program(t_data *data);
 int					init_data(t_data **data, char **envp);
+int					init_env_path(t_data **data, char **envp);
+void				add_env_back(t_data *data, char **env_node_arr);
+int					create_env_lst(t_data **data);
+t_env				*new_env_node(char *key, char *value);
+int					ft_env_lsize(t_env *lst);
 
 //lexical analysis funcs
 int					start_lexing(t_data *data);
@@ -156,8 +168,10 @@ void				extract_append(t_token **token, t_cmd **cmd_node);
 t_cmd				*new_cmd(void);
 t_cmd				*ft_lstlast(t_cmd *lst);
 void				add_cmdnode_back(t_cmd **lst, t_cmd *node);
+void				remove_cmd_node(t_cmd **cmd_lst, t_cmd *cmd_node);
 int					ft_dlsize(t_cmd *lst);
 t_iofds				*new_iofds(void);
+int					iofd_validity(t_iofds *iofd);
 int					check_cmd_validity(t_data *data, t_cmd **cmd_node);
 
 // execution funcs
@@ -166,12 +180,17 @@ char				*get_path(char **envp, char *key);
 int					create_pipes(t_cmd *cmd);
 int					is_builtin_cmd(t_cmd *cmd_node);
 void				exec_builtin_cmd(t_cmd *cmd_node, t_data *data);
-int					execute_non_builtin_cmd(t_cmd *cmd_node, t_data *data);
+void				pre_exec_checks(t_data *data);
 			// builtins
 int					handle_pwd(void);
 int					handle_echo(t_cmd *cmd_node);
 int					handle_exit(t_data *data, t_cmd *cmd_node);
 int					handle_export(t_data *data, t_cmd *cmd_node);
+int					handle_cd(t_cmd *cmd_node, t_data *data);
+void				update_envi(t_data *data);
+void				env_lst_to_arr(t_data *data);
+void				handle_unset(t_data *data, t_cmd *cmd_node);
+void				handle_env(t_data *data);
 			// fd related
 void				dup_pipe_fds(t_cmd **cmd_lst, t_cmd **cmd_node);
 void				reset_std_fds(t_cmd **cmd_node);
@@ -197,9 +216,13 @@ int					ft_whitespaces(char *str, int *index, char c);
 char				**splitter(char *str);
 void				print_token(t_token *token);
 void				print_cmd(t_cmd *cmd);
-void				cmd_not_found(t_cmd **cmd);
 int					ft_strncmp_custom(const char *str1, \
 	const char *str2, size_t n);
+void				print_arr(char **arr);
+void				print_env_lst(t_data *data);
+		// err printer
+void				cmd_not_found(t_cmd **cmd);
+void				file_dir_not_found(char *dir);
 
 // cleaning funcs
 void				ft_clean_arr(char **argv);
@@ -211,7 +234,7 @@ int					arr_length(char **arr);
 void				ft_clean_arr(char **argv);
 void				ft_clean_data(t_data **data);
 void				ft_clean_data_done(t_data **data);
-void				ft_clean_data_onexit(t_data **data);
 void				free_cmdnode(t_cmd *cmd);
+void				free_env_lst(t_data *data);
 
 #endif

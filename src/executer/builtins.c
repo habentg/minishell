@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:09:52 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/03 03:13:26 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/06 07:20:32 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,32 +40,8 @@ int	handle_pwd(void)
 		printf("%s\n", path);
 		return (0);
 	}
-	else
-	{
-		perror("getcwd");
-		return (1);
-	}
-}
-
-
-/*if only cd is given, find 'HOME' in the path and chdir to there*/
-/*else, change to the path given give after 'cd', idk what comes after that*/
-int	handle_cd(t_cmd *cmd_node, t_data *data)
-{
-	char	*path;
-
-	if (cmd_node->cmdarg[1] == NULL || \
-		ft_strncmp_custom(cmd_node->cmdarg[1], "~", 1) == 0)
-	{
-		path = get_path(data->envi, "HOME");
-		if (path == NULL)
-			return (ft_error("Error: HOME not set"), 1);
-	}
-	else
-		path = cmd_node->cmdarg[1];
-	if (chdir(path) == -1)
-		return (ft_error("Error: chdir failure"), 1);
-	return (0);
+	perror("getcwd error in handle_pwd");
+	return (1);
 }
 
 void	handle_env(t_data *data)
@@ -75,7 +51,8 @@ void	handle_env(t_data *data)
 	i = 0;
 	while (data->envi[i])
 	{
-		printf("%s\n", data->envi[i]);
+		if (ft_strchr(data->envi[i], '=') != NULL)
+			printf("%s\n", data->envi[i]);
 		i++;
 	}
 }
@@ -107,8 +84,10 @@ void	exec_builtin_cmd(t_cmd *cmd_node, t_data *data)
 		if (handle_export(data, cmd_node))
 			return ;
 	}
+	else if (ft_strncmp_custom(cmd_node->cmd, "unset", 5) == 0)
+		handle_unset(data, cmd_node);
 	else if (ft_strncmp_custom(cmd_node->cmd, "env", 3) == 0)
 		handle_env(data);
 	else
-		printf("chilll we not there yet!\n");
+		return ;
 }

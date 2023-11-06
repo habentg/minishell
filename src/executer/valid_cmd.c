@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 16:23:12 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/03 06:55:49 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/06 06:20:49 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,9 @@ int	check_cmd_validity(t_data *data, t_cmd **cmd_node)
 {
 	if (ft_strchr((*cmd_node)->cmd, '/') != NULL)
 	{
-		if (access((*cmd_node)->cmd, F_OK | X_OK) == 0)
-			return (0);
-		else
+		if (access((*cmd_node)->cmd, F_OK | X_OK) != 0)
 			return (cmd_not_found(cmd_node), 1);
+		return (0);
 	}
 	if (is_builtin_cmd((*cmd_node)))
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 16:49:08 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/30 18:54:21 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/06 04:16:59 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,9 @@
 int	extract_one_cmd(t_data *data, t_token **token, t_cmd **cmd_lst)
 {
 	t_cmd	*cmd_node;
-	int		add_flag;
 
 	cmd_node = new_cmd();
-	add_flag = 0;
+	(void)data;
 	while ((*token)->type != PIPE && (*token)->type != END)
 	{
 		if ((*token)->type == WORD)
@@ -27,16 +26,13 @@ int	extract_one_cmd(t_data *data, t_token **token, t_cmd **cmd_lst)
 		if ((*token)->type == TRUNC)
 			extract_trunc(token, &cmd_node);
 		if ((*token)->type == INPUT_REDIR)
-			add_flag = extract_input_redir(token, &cmd_node);
+			extract_input_redir(token, &cmd_node);
 		if ((*token)->type == APPEND)
 			extract_append(token, &cmd_node);
 		if ((*token)->type == HERE_DOC)
 			extract_here_doc(token, &cmd_node);
 	}
-	if (add_flag == -1 || check_cmd_validity(data, &cmd_node))
-		free_cmdnode(cmd_node);
-	else
-		add_cmdnode_back(cmd_lst, cmd_node);
+	add_cmdnode_back(cmd_lst, cmd_node);
 	return (0);
 }
 

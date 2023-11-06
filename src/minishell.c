@@ -6,11 +6,27 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:57:10 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/03 08:12:54 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/06 03:05:13 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+// initialize my data struct
+int	init_data(t_data **data, char **envp)
+{
+	(*data)->input = NULL;
+	(*data)->cmd_lst = NULL;
+	(*data)->token = NULL;
+	(*data)->envi = NULL;
+	(*data)->path = NULL;
+	(*data)->env_lst = NULL;
+	if (init_env_path(data, envp))
+		return (1);
+	if (create_env_lst(data))
+		return (1);
+	return (0);
+}
 
 // launch minishell
 int	launch_minishell(t_data *data, char **envp)

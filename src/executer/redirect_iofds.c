@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 19:26:46 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/03 19:30:38 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/06 03:06:55 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	set_redirections(t_iofds *iofd)
 	iofd->stdout_backup = dup(STDOUT_FILENO);
 	if (iofd->stdout_backup == -1)
 		return ;
-	if (iofd->fdin != -1) 
+	if (iofd->fdin != -1)
 	{
 		if (dup2(iofd->fdin, STDIN_FILENO) == -1)
 		{

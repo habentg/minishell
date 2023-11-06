@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 03:13:51 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/03 08:10:08 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/06 07:14:18 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,30 +19,36 @@ void	handle_export_add(t_data *data, t_cmd *cmd_node)
 	printf("handle_export_add: [%s]\n", cmd_node->cmdarg[1]);
 }
 
-void	print_export(char **envi)
+void	print_export(t_env *env_lst)
 {
-	int	i;
+	t_env	*tmp;
 
-	i = 0;
-	while (envi[i])
+	tmp = env_lst;
+	while (tmp)
 	{
-		printf("declare -x %s\n", envi[i]);
-		i++;
+		printf("declare -x %s", tmp->key);
+		if (tmp->value)
+			printf("=\"%s\"", tmp->value);
+		tmp = tmp->next;
 	}
 }
 
 int	handle_export(t_data *data, t_cmd *cmd_node)
 {
+	char	**arr;
+
+	arr = NULL;
 	if (cmd_node->cmdarg[1] == NULL)
-		return (print_export(data->envi), 0);
+		return (print_export(data->env_lst), 0);
 	else
 	{
-		if (ft_strchr(cmd_node->cmdarg[1], '=') == NULL)
-		{
-			g_exit_status = 1;
-			return (0);
-		}
-		handle_export_add(data, cmd_node);
+		arr = ft_split(cmd_node->cmdarg[1], '=');
+		if (!arr)
+			return (1);
+		print_arr(arr);
+		add_env_back(data, arr);
+		ft_clean_arr(arr);
+		update_envi(data);
 	}
 	return (0);
 }

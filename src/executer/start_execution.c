@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 10:37:24 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/03 21:55:34 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/06 06:11:55 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,14 @@ int	fork_wait(t_data *data)
 	return (status);
 }
 
-int	exec_multiple_cmds(t_data *data)
+int	fork_and_run(t_data *data, t_cmd *tmp_cmd, pid_t *id)
 {
-	t_cmd	*tmp_cmd;
-	pid_t	id;
-
-	tmp_cmd = data->cmd_lst;
-	if (create_pipes(data->cmd_lst))
-		return (1);
-	id = 1;
-	while (tmp_cmd && id != 0)
+	if (tmp_cmd->iofd->fdout != -2 && tmp_cmd->iofd->fdin != -2)
 	{
-		id = fork();
-		if (id == -1)
+		*id = fork();
+		if (*id == -1)
 			return (ft_error("Error: failed to fork!"), 1);
-		if (id == 0)
+		if (*id == 0)
 		{
 			dup_pipe_fds(&data->cmd_lst, &tmp_cmd);
 			set_redirections(tmp_cmd->iofd);
@@ -62,6 +55,21 @@ int	exec_multiple_cmds(t_data *data)
 				execve(tmp_cmd->cmd, tmp_cmd->cmdarg, data->envi);
 			exitshell(data, 1);
 		}
+	}
+	return (0);
+}
+
+int	exec_multiple_cmds(t_data *data)
+{
+	t_cmd	*tmp_cmd;
+	pid_t	id;
+
+	tmp_cmd = data->cmd_lst;
+	id = 1;
+	while (tmp_cmd && id != 0)
+	{
+		if (fork_and_run(data, tmp_cmd, &id))
+			return (1);
 		tmp_cmd = tmp_cmd->next;
 	}
 	fork_wait(data);
@@ -70,10 +78,17 @@ int	exec_multiple_cmds(t_data *data)
 
 int	start_execution(t_data *data)
 {
+	if (data->cmd_lst == NULL)
+		return (0);
+	pre_exec_checks(data);
 	if (ft_dlsize(data->cmd_lst) == 1 && is_builtin_cmd(data->cmd_lst))
 		exec_builtin_cmd(data->cmd_lst, data);
 	else
+	{
+		if (create_pipes(data->cmd_lst))
+			return (1);
 		if (exec_multiple_cmds(data))
 			return (1);
+	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 01:30:41 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/26 18:45:19 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/06 06:06:45 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,14 @@ int	possible_error(t_data **data)
 	return (0);
 }
 
+static int	is_token_operator(t_token *token)
+{
+	if (token->type == PIPE || token->type == APPEND || token->type == TRUNC \
+		|| token->type == INPUT_REDIR || token->type == HERE_DOC)
+		return (1);
+	return (0);
+}
+
 int	operator_pipe_error(t_data *data)
 {
 	t_token	*token;
@@ -66,29 +74,21 @@ int	operator_pipe_error(t_data *data)
 	token = data->token;
 	while (token)
 	{
-		if (is_operator(token->str[0]) && token->prev == NULL)
-			return (0);
-		if (token->type == PIPE && is_operator(token->prev->str[0]))
+		if (token->type == PIPE && token->next->type == END)
 			return (ft_error(OPERATOR_PIPE_ERROR), 1);
-		if (is_heredoc_append(token->str, 0, token->str[0]) != 0 \
-			&& is_operator(token->prev->str[0]))
-		{
-			if (is_heredoc_append(token->str, 0, token->str[0]) == 1)
-				return (ft_error(OPERATOR_ERROR_HD), 1);
+		if (is_token_operator(token) && token->next->type == END)
+			return (ft_error(REDIR_AT_END), 1);
+		if (is_token_operator(token) && token->next->type == PIPE)
+			return (ft_error(REDIR_AT_END), 1);
+		if (is_token_operator(token) && token->next->type == HERE_DOC)
+			return (ft_error(OPERATOR_ERROR_HD), 1);
+		if (is_token_operator(token) && token->next->type == APPEND)
 			return (ft_error(OPERATOR_ERROR_APP), 1);
-		}
-		if (token->type == TRUNC && is_operator(token->prev->str[0]) \
-			&& token->prev != NULL)
+		if (is_token_operator(token) && token->next->type == TRUNC)
 			return (ft_error(OPERATOR_ERROR_TRU), 1);
-		if (is_operator(token->str[0]) && is_operator(token->prev->str[0]) \
-			&& token->type == INPUT_REDIR && token->prev != NULL)
+		if (is_token_operator(token) && token->next->type == INPUT_REDIR)
 			return (ft_error(OPERATOR_ERROR_INP), 1);
 		token = token->next;
 	}
 	return (0);
-}
-
-void	ft_error(char *err_msg)
-{
-	ft_putendl_fd(err_msg, 1);
 }

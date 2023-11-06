@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 02:41:46 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/03 06:53:25 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/06 03:05:23 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ t_cmd	*new_cmd(void)
 	cmd_node->pipe_fd = NULL;
 	cmd_node->next = NULL;
 	cmd_node->prev = NULL;
-	cmd_node->cmd_exit_status = 0;
 	return (cmd_node);
 }
 
