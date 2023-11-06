@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/06 07:20:45 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/06 18:47:38 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ int					ft_tokendl_size(t_token **lst);
 
 // var expansion funcs
 int					start_expansion(t_data *data);
-int					is_expansion_possible(t_data *data, char *str);
+int					is_expansion_possible(char *str);
 t_quoteType			get_q_state(char *str, int end);
 void				remove_quotes(t_data *data);
 void				expand_variable(t_data *data, t_token *token);
@@ -168,7 +168,6 @@ void				extract_append(t_token **token, t_cmd **cmd_node);
 t_cmd				*new_cmd(void);
 t_cmd				*ft_lstlast(t_cmd *lst);
 void				add_cmdnode_back(t_cmd **lst, t_cmd *node);
-void				remove_cmd_node(t_cmd **cmd_lst, t_cmd *cmd_node);
 int					ft_dlsize(t_cmd *lst);
 t_iofds				*new_iofds(void);
 int					iofd_validity(t_iofds *iofd);
@@ -183,10 +182,10 @@ void				exec_builtin_cmd(t_cmd *cmd_node, t_data *data);
 void				pre_exec_checks(t_data *data);
 			// builtins
 int					handle_pwd(void);
-int					handle_echo(t_cmd *cmd_node);
+void				handle_echo(t_cmd *cmd_node);
 int					handle_exit(t_data *data, t_cmd *cmd_node);
-int					handle_export(t_data *data, t_cmd *cmd_node);
-int					handle_cd(t_cmd *cmd_node, t_data *data);
+void				handle_export(t_data *data, t_cmd *cmd_node);
+void				handle_cd(t_cmd *cmd_node, t_data *data);
 void				update_envi(t_data *data);
 void				env_lst_to_arr(t_data *data);
 void				handle_unset(t_data *data, t_cmd *cmd_node);

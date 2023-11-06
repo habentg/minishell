@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 07:18:57 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/06 07:44:10 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:45:05 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	remove_env_node(t_env **env_lst, char *key_re)
 	t_env	*prev_env;
 
 	curr_env = *env_lst;
-	prev_env = NULL;
 	while (curr_env)
 	{
 		if (ft_strncmp(curr_env->key, key_re, ft_strlen(key_re)) == 0)
@@ -42,13 +41,9 @@ void	remove_env_node(t_env **env_lst, char *key_re)
 			else
 				prev_env->next = curr_env->next;
 			free_env_node(curr_env);
-			break ;
 		}
-		else
-		{
-			prev_env = curr_env;
-			curr_env = curr_env->next;
-		}
+		prev_env = curr_env;
+		curr_env = curr_env->next;
 	}
 }
 

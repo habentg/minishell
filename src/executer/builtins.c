@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:09:52 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/06 07:20:32 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/06 17:03:25 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,34 +60,23 @@ void	handle_env(t_data *data)
 void	exec_builtin_cmd(t_cmd *cmd_node, t_data *data)
 {
 	if (ft_strncmp_custom(cmd_node->cmd, "cd", 2) == 0)
-	{
-		if (handle_cd(cmd_node, data))
-			return ;
-	}
+		handle_cd(cmd_node, data);
 	else if (ft_strncmp_custom(cmd_node->cmd, "pwd", 3) == 0)
 	{
 		if (handle_pwd())
 			return ;
 	}
 	else if (ft_strncmp_custom(cmd_node->cmd, "echo", 4) == 0)
-	{
-		if (handle_echo(cmd_node))
-			return ;
-	}
+		handle_echo(cmd_node);
 	else if (ft_strncmp_custom(cmd_node->cmd, "exit", 4) == 0)
 	{
 		if (handle_exit(data, cmd_node))
 			return ;
 	}
 	else if (ft_strncmp_custom(cmd_node->cmd, "export", 6) == 0)
-	{
-		if (handle_export(data, cmd_node))
-			return ;
-	}
+		handle_export(data, cmd_node);
 	else if (ft_strncmp_custom(cmd_node->cmd, "unset", 5) == 0)
 		handle_unset(data, cmd_node);
 	else if (ft_strncmp_custom(cmd_node->cmd, "env", 3) == 0)
 		handle_env(data);
-	else
-		return ;
 }

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 16:49:08 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/06 04:16:59 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/06 18:46:19 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,21 +66,3 @@ int	start_cmd_extraction(t_data *data)
 	data->token = tmp;
 	return (0);
 }
-/*
-iterate through the token list
-	1. cmd with its potential args -> word type
-		# cmd cases
-			-> if its the 1st word type
-			-> if its the 1s word type after a pipe
-			-> last cmd is null
- 		#cmd args cases
-			* from the 'cmd' all the word type until an operator
-		THEN add_back to the cmd_list.
-	2. handle every other type as well
-		-> pipe
-		-> append
-		-> trunc
-		-> input_redir
-		-> here_doc
-		-> var
-*/

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 09:02:58 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/19 14:06:58 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:46:51 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_whitespaces(char *str, int *index, char c)
 		{
 			if (!is_whitespace(str[i]))
 				break ;
-		}	
+		}
 	}
 	return (i);
 }

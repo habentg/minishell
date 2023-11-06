@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 21:17:17 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/06 02:58:08 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:54:59 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	update_envi(t_data *data)
 
 /*if only cd is given, find 'HOME' in the path and chdir to there*/
 /*else, change to the path given give after 'cd', idk what comes after that*/
-int	handle_cd(t_cmd *cmd_node, t_data *data)
+void	handle_cd(t_cmd *cmd_node, t_data *data)
 {
 	char	*path;
 	char	full_path[PATH_MAX];
@@ -53,15 +53,18 @@ int	handle_cd(t_cmd *cmd_node, t_data *data)
 	{
 		path = get_path(data->envi, "HOME");
 		if (path == NULL)
-			return (ft_error("Error: HOME not set"), 1);
+		{
+			ft_error("Error: HOME not set");
+			return ;
+		}
 	}
 	else
 		path = cmd_node->cmdarg[1];
-	if (chdir(path) == -1)
-		return (file_dir_not_found(path), 1);
-	if (getcwd(full_path, sizeof(full_path)) == NULL)
-		return (ft_error("Error: getcwd in cd failure"), 1);
+	if (chdir(path) == -1 || getcwd(full_path, sizeof(full_path)) == NULL)
+	{
+		file_dir_not_found(path);
+		return ;
+	}
 	edit_env_lst(data, full_path);
 	update_envi(data);
-	return (0);
 }

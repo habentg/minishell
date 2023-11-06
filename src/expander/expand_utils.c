@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:49:37 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/22 19:39:39 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/06 18:47:23 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,13 @@ t_quoteType	get_q_state(char *str, int end)
 	return (quote);
 }
 
-int	is_expansion_possible(t_data *data, char *str)
+int	is_expansion_possible(char *str)
 {
 	int			i;
 	t_quoteType	quote;
 
 	quote = NONE;
 	i = 0;
-	(void)data;
 	while (str[i])
 	{
 		if (str[i] == '$')

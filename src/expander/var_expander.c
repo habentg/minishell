@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:12:27 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/29 23:52:14 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/06 18:49:08 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ static int	init_var_expansion(t_data *data)
 	{
 		if (tmp->type == VAR)
 		{
-			if (is_expansion_possible(data, tmp->str) != 0)
+			if (is_expansion_possible(tmp->str) != 0)
 			{
-				if (is_expansion_possible(data, tmp->str) == 2)
+				if (is_expansion_possible(tmp->str) == 2)
 					return (1);
 				expand_variable(data, tmp);
 				tmp->type = WORD;

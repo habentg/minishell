@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 18:16:16 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/06 01:50:42 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:18:38 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	arr_length(char **arr)
 void	free_env_lst(t_data *data)
 {
 	t_env	*tmp;
+	t_env	*tmp2;
 
 	tmp = data->env_lst;
 	while (tmp)
@@ -52,8 +53,9 @@ void	free_env_lst(t_data *data)
 			free(tmp->key);
 		if (tmp->value)
 			free(tmp->value);
+		tmp2 = tmp->next;
 		if (tmp)
 			free(tmp);
-		tmp = tmp->next;
+		tmp = tmp2;
 	}
 }
