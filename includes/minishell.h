@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/06 18:47:38 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/06 20:20:39 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ int					extract_cmdargs(t_token **token, t_cmd **cmd_node);
 void				extract_pipe(t_token **token, t_cmd **cmd_lst);
 void				extract_trunc(t_token **token, t_cmd **cmd_node);
 int					extract_input_redir(t_token **token, t_cmd **cmd_node);
-void				extract_here_doc(t_token **token, t_cmd **cmd_node);
+void				extract_here_doc(t_data *data, t_token **token, t_cmd **cmd_node);
 void				extract_append(t_token **token, t_cmd **cmd_node);
 t_cmd				*new_cmd(void);
 t_cmd				*ft_lstlast(t_cmd *lst);
