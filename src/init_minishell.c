@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 16:05:43 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/06 16:42:19 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/08 00:20:48 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,23 @@ char	*get_path(char **envp, char *key)
 	return (path);
 }
 
+static void	add_env_back_start(t_data *data, char **env_node_arr)
+{
+	t_env	*env_node;
+	t_env	*tmp;
+
+	if (!env_node_arr)
+		return ;
+	env_node = new_env_node(env_node_arr[0], env_node_arr[1]);
+	if (!env_node)
+		return ;
+	tmp = data->env_lst;
+	if (!data->env_lst)
+		data->env_lst = env_node;
+	else
+		(last_env_node(data->env_lst))->next = env_node;
+}
+
 // env_lst to arr
 int	create_env_lst(t_data **data)
 {
@@ -52,9 +69,8 @@ int	create_env_lst(t_data **data)
 		}
 		else
 			tmp_arr = ft_split((*data)->envi[i], '=');
-		add_env_back(*data, tmp_arr);
+		add_env_back_start(*data, tmp_arr);
 		ft_clean_arr(tmp_arr);
-		tmp_arr = NULL;
 	}
 	return (0);
 }

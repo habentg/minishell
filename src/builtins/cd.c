@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 21:17:17 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/06 16:54:59 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/07 23:05:21 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,15 @@ void	edit_env_lst(t_data *data, char *abs_path)
 	tmp = data->env_lst;
 	while (tmp)
 	{
-		if (ft_strncmp_custom(tmp->key, "PWD", 4) == 0)
+		if (ft_strncmp(tmp->key, "PWD", 3) == 0)
 		{
 			oldpwd_arr = (char **)malloc(sizeof(char *) * 3);
 			oldpwd_arr[0] = ft_strdup("OLDPWD");
 			oldpwd_arr[1] = ft_strdup(tmp->value);
 			oldpwd_arr[2] = NULL;
 			add_env_back(data, oldpwd_arr);
-			free(tmp->value);
+			if (tmp->value)
+				free(tmp->value);
 			ft_clean_arr(oldpwd_arr);
 			tmp->value = ft_strdup(abs_path);
 			break ;

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 19:50:12 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/06 18:41:33 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/08 00:18:33 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,23 @@ void	add_env_back(t_data *data, char **env_node_arr)
 		return ;
 	env_node = new_env_node(env_node_arr[0], env_node_arr[1]);
 	tmp = data->env_lst;
-	while (tmp)
-	{
-		if (ft_strncmp(tmp->key, env_node->key, ft_strlen(env_node->key)) == 0)
-		{
-			free(tmp->value);
-			tmp->value = ft_strdup(env_node->value);
-			return ;
-		}
-		tmp = tmp->next;
-	}
 	if (!data->env_lst)
 		data->env_lst = env_node;
 	else
+	{
+		while (tmp)
+		{
+			if (ft_strncmp(tmp->key, env_node->key, \
+				ft_strlen(env_node->key)) == 0)
+			{
+				free(tmp->value);
+				tmp->value = ft_strdup(env_node->value);
+				return ;
+			}
+			tmp = tmp->next;
+		}
 		(last_env_node(data->env_lst))->next = env_node;
+	}
 }
 
 int	ft_env_lsize(t_env *lst)

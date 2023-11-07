@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/07 18:39:35 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/07 23:45:11 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,5 +239,6 @@ void				ft_clean_data(t_data **data);
 void				ft_clean_data_done(t_data **data);
 void				free_cmdnode(t_cmd *cmd);
 void				free_env_lst(t_data *data);
+t_env				*last_env_node(t_env *lst);
 
 #endif
