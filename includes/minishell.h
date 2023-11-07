@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/06 20:20:39 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/07 18:39:35 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,11 @@ int					extract_cmdargs(t_token **token, t_cmd **cmd_node);
 void				extract_pipe(t_token **token, t_cmd **cmd_lst);
 void				extract_trunc(t_token **token, t_cmd **cmd_node);
 int					extract_input_redir(t_token **token, t_cmd **cmd_node);
-void				extract_here_doc(t_data *data, t_token **token, t_cmd **cmd_node);
+void				extract_here_doc(t_data *data, t_token **token, \
+	t_cmd **cmd_node);
+int					is_heredoc_expandable(char *str);
+int					for_real_expand(t_data *data, char *content, int *i, \
+	int tmp_fd);
 void				extract_append(t_token **token, t_cmd **cmd_node);
 t_cmd				*new_cmd(void);
 t_cmd				*ft_lstlast(t_cmd *lst);
@@ -179,7 +183,7 @@ char				*get_path(char **envp, char *key);
 int					create_pipes(t_cmd *cmd);
 int					is_builtin_cmd(t_cmd *cmd_node);
 void				exec_builtin_cmd(t_cmd *cmd_node, t_data *data);
-void				pre_exec_checks(t_data *data);
+int					pre_exec_checks(t_data *data);
 			// builtins
 int					handle_pwd(void);
 void				handle_echo(t_cmd *cmd_node);

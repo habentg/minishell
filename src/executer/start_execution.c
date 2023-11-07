@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 10:37:24 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/06 06:11:55 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/07 18:38:45 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,8 @@ int	exec_multiple_cmds(t_data *data)
 
 int	start_execution(t_data *data)
 {
-	if (data->cmd_lst == NULL)
+	if (pre_exec_checks(data))
 		return (0);
-	pre_exec_checks(data);
 	if (ft_dlsize(data->cmd_lst) == 1 && is_builtin_cmd(data->cmd_lst))
 		exec_builtin_cmd(data->cmd_lst, data);
 	else

@@ -1,16 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   zzzzz.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/03 03:13:51 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/07 20:06:34 by hatesfam         ###   ########.fr       */
+/*   Created: 2023/11/07 19:21:32 by hatesfam          #+#    #+#             */
+/*   Updated: 2023/11/07 20:01:23 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int	arr_length(char **arr)
+{
+	int	i;
+
+	i = 0;
+	if (!arr)
+		return (0);
+	while (arr[i])
+		i++;
+	return (i);
+}
 
 int	compare_first_char(const char *str1, const char *str2)
 {
@@ -63,20 +78,18 @@ void	print_export(char **envi_arr)
 	// ft_clean_arr(tmp_arr);
 }
 
-void	handle_export(t_data *data, t_cmd *cmd_node)
+int main(void)
 {
-	char	**arr;
-
-	arr = NULL;
-	if (cmd_node->cmdarg[1] == NULL)
-		print_export(data->envi);
-	else
-	{
-		arr = ft_split(cmd_node->cmdarg[1], '=');
-		if (!arr)
-			return ;
-		add_env_back(data, arr);
-		ft_clean_arr(arr);
-		update_envi(data);
-	}
+	char **arr = malloc(sizeof(char *) * 10);
+	arr[0] = strdup("LS_COLORS");
+	arr[1] = strdup("PATH");
+	arr[2] = strdup("PWD");
+	arr[3] = strdup("HOME");
+	arr[4] = strdup("OLDPWD");
+	arr[5] = strdup("SHLVL");
+	arr[6] = strdup("ZSH");
+	arr[7] = strdup("TERM");
+	arr[8] = strdup("USER");
+	arr[9] = NULL;
+	print_export(arr);
 }
