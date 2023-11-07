@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 03:13:51 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/07 21:17:13 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/08 02:40:59 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,19 @@ int	compare_first_char(const char *str1, const char *str2)
 	return (str1[0] - str2[0]);
 }
 
-char	**sorted_envi(char **envi)
+static void	bubble_sort_utils(char **sorted_envi, char **envi)
 {
 	int		length;
-	char	**sorted_envi;
+	char	*tmp;
 	int		i;
 	int		j;
-	char	*tmp;
 
-	length = arr_length(envi);
 	tmp = NULL;
-	sorted_envi = (char **)malloc(sizeof(char *) * (length + 1));
 	i = -1;
 	j = -1;
-	if (!sorted_envi)
-		return (NULL);
+	length = arr_length(envi);
 	while (++i < length)
-		sorted_envi[i] = strdup(envi[i]);
+		sorted_envi[i] = ft_strdup(envi[i]);
 	i = -1;
 	while (++i < length - 1)
 	{
@@ -48,7 +44,19 @@ char	**sorted_envi(char **envi)
 			}
 		}
 	}
-    return (sorted_envi);
+}
+
+char	**sorted_envi(char **envi)
+{
+	int		length;
+	char	**sorted_envi;
+
+	length = arr_length(envi);
+	sorted_envi = (char **)malloc(sizeof(char *) * (length + 1));
+	if (!sorted_envi)
+		return (NULL);
+	bubble_sort_utils(sorted_envi, envi);
+	return (sorted_envi);
 }
 
 void	print_export(char **envi_arr)

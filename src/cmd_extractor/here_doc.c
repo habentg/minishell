@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:54:44 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/07 21:20:46 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/08 02:50:51 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,9 @@ void	extract_here_doc(t_data *data, t_token **token, t_cmd **cmd_node)
 	while (1)
 	{
 		content_line = readline("heredoc> ");
-		if (ft_strncmp_custom(content_line, (*cmd_node)->iofd->here_delemiter, \
-			ft_strlen((*cmd_node)->iofd->here_delemiter)) == 0)
+		if (!content_line)
+			break ;
+		if (!content_line || ft_strncmp_custom(content_line, (*cmd_node)->iofd->here_delemiter,	ft_strlen((*cmd_node)->iofd->here_delemiter)) == 0)
 			break ;
 		if (is_heredoc_expandable(content_line))
 			expand_heredoc_line(data, content_line, tmp_fd);
@@ -80,8 +81,8 @@ void	extract_here_doc(t_data *data, t_token **token, t_cmd **cmd_node)
 		ft_putchar_fd('\n', tmp_fd);
 		free(content_line);
 	}
-	close(tmp_fd);
 	(*cmd_node)->iofd->infile = (temp_file);
 	(*cmd_node)->iofd->fdin = open((*cmd_node)->iofd->infile, O_RDONLY);
 	(*token) = (*token)->next->next;
+	// close(tmp_fd);
 }
