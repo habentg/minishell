@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 04:01:58 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/07 18:39:09 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/07 21:25:40 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	pre_exec_checks(t_data *data)
 	while (tmp_cmd)
 	{
 		if (!tmp_cmd->cmd && tmp_cmd->pipeout == 0 && \
-			ft_strncmp(tmp_cmd->iofd->infile, ".hd_temp", 8) == 0)
+			ft_strncmp(tmp_cmd->iofd->infile, "../../includes/libft/.hd_temp", 8) == 0)
 			return (1);
 		check_cmd_validity(data, &tmp_cmd);
 		iofd_validity(tmp_cmd->iofd);
