@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/07 23:45:11 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/08 05:16:52 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # include <limits.h>
 # include <sys/types.h>
 # include <sys/stat.h>
-# include <fcntl.h>    // for open
-# include <unistd.h>   // for read, write, close
+# include <fcntl.h>
+# include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
@@ -200,10 +200,9 @@ void				reset_std_fds(t_cmd **cmd_node);
 void				backup_std_fds(t_cmd **cmd_node);
 void				close_cmd_fds(t_cmd **cmd_node);
 void				close_used_pipe_fds(t_cmd **cmd_lst, t_cmd **cmd_node);
-void				close_unused_pipe_fds(t_cmd **cmd_lst, t_cmd **cmd_node);
+void				close_unused_pipe_fds(t_cmd **cmd_lst, t_cmd *cmd_node);
 void				set_redirections(t_iofds *iofd);
 void				reset_stdio(t_iofds *iofds);
-void				close_unused_pipes_2(t_cmd *headcmd, t_cmd *curcmd);
 void				exitshell(t_data *data, int excode);
 void				close_open_fds(t_cmd *cmd_lst, int exc_ended);
 // Error && other helper funcs

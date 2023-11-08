@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 01:30:41 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/06 06:06:45 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/08 03:01:38 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	possible_error(t_data **data)
 
 static int	is_token_operator(t_token *token)
 {
-	if (token->type == PIPE || token->type == APPEND || token->type == TRUNC \
+	if (token->type == APPEND || token->type == TRUNC \
 		|| token->type == INPUT_REDIR || token->type == HERE_DOC)
 		return (1);
 	return (0);
@@ -77,6 +77,8 @@ int	operator_pipe_error(t_data *data)
 		if (token->type == PIPE && token->next->type == END)
 			return (ft_error(OPERATOR_PIPE_ERROR), 1);
 		if (is_token_operator(token) && token->next->type == END)
+			return (ft_error(REDIR_AT_END), 1);
+		if (token->type == PIPE && token->next->type == PIPE)
 			return (ft_error(REDIR_AT_END), 1);
 		if (is_token_operator(token) && token->next->type == PIPE)
 			return (ft_error(REDIR_AT_END), 1);

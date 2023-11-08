@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:15:11 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/06 05:08:29 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/08 02:25:22 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,28 +41,7 @@ void	dup_pipe_fds(t_cmd **cmd_lst, t_cmd **cmd_node)
 		dup2((*cmd_node)->pipe_fd[1], STDOUT_FILENO);
 	if ((*cmd_node)->prev && (*cmd_node)->prev->pipeout == 1)
 		dup2((*cmd_node)->prev->pipe_fd[0], STDIN_FILENO);
-	close_unused_pipe_fds(cmd_lst, cmd_node);
-}
-
-void	close_unused_pipes_2(t_cmd *headcmd, t_cmd *curcmd)
-{
-	while (headcmd)
-	{
-		if (headcmd != curcmd && headcmd->pipe_fd)
-		{
-			close(headcmd->pipe_fd[0]);
-			close(headcmd->pipe_fd[1]);
-			if (headcmd->iofd)
-			{
-				if (headcmd->iofd->fdin != -1)
-					close(headcmd->iofd->fdin);
-				if (headcmd->iofd->fdout != -1)
-					close (headcmd->iofd->fdout);
-			}
-		}
-		headcmd = headcmd->next;
-	}
-	return ;
+	close_unused_pipe_fds(cmd_lst, *cmd_node);
 }
 
 void	close_open_fds(t_cmd *cmd_lst, int exc_ended)
@@ -80,8 +59,7 @@ void	close_open_fds(t_cmd *cmd_lst, int exc_ended)
 			close(STDOUT_FILENO);
 		}
 	}
-	// close_unused_pipe_fds(&cmd_lst, NULL);
-	close_unused_pipes_2(cmd_lst, NULL);
+	close_unused_pipe_fds(&cmd_lst, NULL);
 }
 
 void	exitshell(t_data *data, int excode)

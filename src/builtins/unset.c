@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 07:18:57 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/07 23:16:56 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/08 01:03:06 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	handle_unset(t_data *data, t_cmd *cmd_node)
 	int	i;
 
 	i = 1;
-
 	while (cmd_node->cmdarg[i])
 	{
 		remove_env_node(&data->env_lst, cmd_node->cmdarg[i]);

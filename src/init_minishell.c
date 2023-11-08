@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 16:05:43 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/08 00:20:48 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/08 01:01:58 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,12 @@ char	*get_path(char **envp, char *key)
 static void	add_env_back_start(t_data *data, char **env_node_arr)
 {
 	t_env	*env_node;
-	t_env	*tmp;
 
 	if (!env_node_arr)
 		return ;
 	env_node = new_env_node(env_node_arr[0], env_node_arr[1]);
 	if (!env_node)
 		return ;
-	tmp = data->env_lst;
 	if (!data->env_lst)
 		data->env_lst = env_node;
 	else

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 08:00:53 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/06 03:06:24 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/08 02:19:53 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,26 @@ void	close_used_pipe_fds(t_cmd **cmd_lst, t_cmd **cmd_node)
 		close((*cmd_node)->pipe_fd[0]);
 }
 
-void	close_unused_pipe_fds(t_cmd **cmd_lst, t_cmd **cmd_node)
+void	close_unused_pipe_fds(t_cmd **cmd_lst, t_cmd *cmd_node)
 {
-	t_cmd	*curr_cmd;
+	t_cmd	*tmp;
 
-	curr_cmd = *cmd_lst;
-	while (curr_cmd)
+	tmp = *cmd_lst;
+	while (tmp)
 	{
-		if (curr_cmd != (*cmd_node) && curr_cmd->pipe_fd)
+		if (tmp != cmd_node && tmp->pipe_fd)
 		{
-			if (curr_cmd->pipe_fd[0])
-				close(curr_cmd->pipe_fd[0]);
-			if (curr_cmd->pipe_fd[1])
-				close(curr_cmd->pipe_fd[1]);
+			close(tmp->pipe_fd[0]);
+			close(tmp->pipe_fd[1]);
+			if (tmp->iofd)
+			{
+				if (tmp->iofd->fdin != -1)
+					close(tmp->iofd->fdin);
+				if (tmp->iofd->fdout != -1)
+					close (tmp->iofd->fdout);
+			}
 		}
-		curr_cmd = curr_cmd->next;
+		tmp = tmp->next;
 	}
 }
 

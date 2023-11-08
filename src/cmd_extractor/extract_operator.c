@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 20:20:44 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/06 05:37:22 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/08 05:15:32 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ void	extract_pipe(t_token **token, t_cmd **cmd_lst)
 */
 void	extract_trunc(t_token **token, t_cmd **cmd_node)
 {
+	if ((*cmd_node)->iofd->outfile)
+		free((*cmd_node)->iofd->outfile);
+	if ((*cmd_node)->iofd->fdout != -1)
+		close((*cmd_node)->iofd->fdout);
 	(*cmd_node)->iofd->outfile = ft_strdup((*token)->next->str);
 	(*cmd_node)->iofd->fdout = open((*cmd_node)->iofd->outfile, O_CREAT | \
 		O_TRUNC | O_RDWR, S_IRUSR | S_IWUSR);
@@ -40,6 +44,10 @@ void	extract_trunc(t_token **token, t_cmd **cmd_node)
 	//content of next token && the fdin to the file descriptor of the infile.
 int	extract_input_redir(t_token **token, t_cmd **cmd_node)
 {
+	if ((*cmd_node)->iofd->infile)
+		free((*cmd_node)->iofd->infile);
+	if ((*cmd_node)->iofd->fdin != -1)
+		close((*cmd_node)->iofd->fdin);
 	if (access((*token)->next->str, F_OK | R_OK) == -1)
 	{
 		(*token) = (*token)->next->next;
@@ -62,6 +70,10 @@ int	extract_input_redir(t_token **token, t_cmd **cmd_node)
 */
 void	extract_append(t_token **token, t_cmd **cmd_node)
 {
+	if ((*cmd_node)->iofd->outfile)
+		free((*cmd_node)->iofd->outfile);
+	if ((*cmd_node)->iofd->fdout != -1)
+		close((*cmd_node)->iofd->fdout);
 	(*cmd_node)->iofd->outfile = ft_strdup((*token)->next->str);
 	(*cmd_node)->iofd->fdout = open((*cmd_node)->iofd->outfile, O_CREAT | \
 		O_APPEND | O_RDWR, S_IRUSR | S_IWUSR);

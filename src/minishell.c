@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:57:10 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/08 00:25:08 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/08 05:19:24 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	launch_minishell(t_data *data, char **envp)
 		return (1);
 	while (1)
 	{
+		printf("\033[1;34m[%d]\033[0m", g_exit_status);
 		input_res = readline(PROMPT);
 		if (!input_res)
 			break ;
