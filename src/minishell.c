@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:57:10 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/08 05:19:24 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/08 15:58:41 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	init_data(t_data **data, char **envp)
 	(*data)->env_lst = NULL;
 	if (init_env_path(data, envp))
 		return (1);
+	(void) envp;
 	if (create_env_lst(data))
 		return (1);
 	return (0);

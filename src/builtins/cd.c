@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 21:17:17 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/07 23:05:21 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/08 19:32:36 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,29 @@ void	edit_env_lst(t_data *data, char *abs_path)
 
 void	update_envi(t_data *data)
 {
+	char	**tmp_arr;
+	char	*tmp_path;
+
+	tmp_arr = NULL;
 	env_lst_to_arr(data);
+	tmp_path = get_path(data->envi, "PATH");
+	if (tmp_path == NULL)
+	{
+		data->path = (char **)malloc(sizeof(char *) * 1);
+		data->path[0] = NULL;
+	}
+	else
+	{
+		free(tmp_path);
+		ft_clean_arr(data->path);
+		tmp_arr = ft_split(get_path(data->envi, "PATH"), ':');
+		data->path = tmp_arr;
+	}
 }
 
 /*if only cd is given, find 'HOME' in the path and chdir to there*/
 /*else, change to the path given give after 'cd', idk what comes after that*/
-void	handle_cd(t_cmd *cmd_node, t_data *data)
+int	handle_cd(t_cmd *cmd_node, t_data *data)
 {
 	char	*path;
 	char	full_path[PATH_MAX];
@@ -54,18 +71,15 @@ void	handle_cd(t_cmd *cmd_node, t_data *data)
 	{
 		path = get_path(data->envi, "HOME");
 		if (path == NULL)
-		{
-			ft_error("Error: HOME not set");
-			return ;
-		}
+			return (ft_error("Error: HOME not set"), 1);
 	}
 	else
 		path = cmd_node->cmdarg[1];
-	if (chdir(path) == -1 || getcwd(full_path, sizeof(full_path)) == NULL)
-	{
-		file_dir_not_found(path);
-		return ;
-	}
+	if (getcwd(full_path, sizeof(full_path)) == NULL)
+		return (ft_error("cd: getcwd: error retrieving current directory"), 0);
+	if (chdir(path) == -1)
+		return (file_dir_not_found(path), 1);
 	edit_env_lst(data, full_path);
 	update_envi(data);
+	return (0);
 }

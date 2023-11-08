@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 19:50:12 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/08 02:32:28 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/08 19:46:13 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,14 @@ t_env	*new_env_node(char *key, char *value)
 	return (new_node);
 }
 
+static void	replace_value(t_env **current_node, t_env *new_node)
+{
+	if ((*current_node)->value)
+		free((*current_node)->value);
+	if (new_node->value)
+		(*current_node)->value = ft_strdup(new_node->value);
+}
+
 void	add_env_back(t_data *data, char **env_node_arr)
 {
 	t_env	*env_node;
@@ -59,8 +67,7 @@ void	add_env_back(t_data *data, char **env_node_arr)
 			if (ft_strncmp(tmp->key, env_node->key, \
 				ft_strlen(env_node->key)) == 0)
 			{
-				free(tmp->value);
-				tmp->value = ft_strdup(env_node->value);
+				replace_value(&tmp, env_node);
 				return ;
 			}
 			tmp = tmp->next;
@@ -82,33 +89,4 @@ int	ft_env_lsize(t_env *lst)
 		i++;
 	}
 	return (i);
-}
-
-void	env_lst_to_arr(t_data *data)
-{
-	t_env	*tmp;
-	char	*tmp_join;
-	char	**tmp_arr;
-	int		i;
-
-	i = 0;
-	tmp_join = NULL;
-	tmp = data->env_lst;
-	tmp_arr = (char **)malloc(sizeof(char *) * (ft_env_lsize(tmp) + 1));
-	while (tmp)
-	{
-		if (tmp->value == NULL)
-			tmp_arr[i] = ft_strdup(tmp->key);
-		else
-		{
-			tmp_join = ft_strjoin(tmp->key, "=");
-			tmp_arr[i] = ft_strjoin(tmp_join, tmp->value);
-			free(tmp_join);
-		}
-		tmp = tmp->next;
-		i++;
-	}
-	tmp_arr[i] = NULL;
-	ft_clean_arr(data->envi);
-	data->envi = tmp_arr;
 }

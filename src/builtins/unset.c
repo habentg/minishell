@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 07:18:57 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/08 01:03:06 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/08 18:28:58 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	remove_env_node(t_env **env_lst, char *key_re)
 			free_env_node(curr_env);
 		}
 		prev_env = curr_env;
-		curr_env = curr_env->next;
+		curr_env = prev_env->next;
 	}
 }
 

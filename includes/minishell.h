@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/08 05:23:35 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/08 19:31:02 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,7 @@ int					handle_pwd(void);
 void				handle_echo(t_cmd *cmd_node);
 int					handle_exit(t_data *data, t_cmd *cmd_node);
 void				handle_export(t_data *data, t_cmd *cmd_node);
-void				handle_cd(t_cmd *cmd_node, t_data *data);
+int					handle_cd(t_cmd *cmd_node, t_data *data);
 void				update_envi(t_data *data);
 void				env_lst_to_arr(t_data *data);
 void				handle_unset(t_data *data, t_cmd *cmd_node);

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 16:05:43 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/08 01:01:58 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/08 18:48:01 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,22 +81,20 @@ int	init_env_path(t_data **data, char **envp)
 
 	i = -1;
 	my_path = NULL;
-	if (arr_length(envp) == 0)
-		return (ft_error("Error: problem in retreiving the ENV!"), 1);
 	(*data)->envi = (char **)ft_calloc((sizeof(char *)), \
 		(arr_length(envp) + 1));
-	if (!(*data)->envi)
-		return (1);
 	while (++i < arr_length(envp) && envp[i])
 		(*data)->envi[i] = ft_strdup(envp[i]);
 	(*data)->envi[i] = NULL;
 	my_path = get_path((*data)->envi, "PATH");
-	if (!my_path)
-		return (ft_error("Error: couldnt get the path!"), 1);
 	(*data)->path = ft_split(my_path, ':');
-	if (!(*data)->path)
-		return (ft_error("Error: couldnt split the path!"), 1);
-	free(my_path);
+	if (my_path == NULL)
+	{
+		(*data)->path = (char **)malloc(sizeof(char *) * 1);
+		(*data)->path[0] = NULL;
+	}
+	if (my_path)
+		free(my_path);
 	return (0);
 }
 
