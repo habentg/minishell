@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 02:34:15 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/08 02:27:33 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/08 20:49:48 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	is_digit_custom(char *str)
 			return (0);
 		i++;
 	}
+	if (ft_atoi(str) > 255)
+		return (0);
 	return (1);
 }
 
