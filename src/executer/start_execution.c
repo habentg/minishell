@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 10:37:24 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/08 05:07:59 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/08 05:25:19 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	start_execution(t_data *data)
 {
 	if (pre_exec_checks(data))
 		return (0);
-	if (ft_dlsize(data->cmd_lst) == 1 && (is_builtin_cmd(data->cmd_lst)))
+	if (ft_dlsize(data->cmd_lst) == 1 && is_builtin_cmd(data->cmd_lst))
 		exec_builtin_cmd(data->cmd_lst, data);
 	else
 	{

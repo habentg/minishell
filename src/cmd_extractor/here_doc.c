@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:54:44 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/08 05:10:13 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/08 05:29:16 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,9 @@ void	extract_here_doc(t_data *data, t_token **token, t_cmd **cmd_node)
 	while (1)
 	{
 		content_line = readline("heredoc> ");
-		if (ft_strncmp_custom(content_line, (*cmd_node)->iofd->here_delemiter, \
-			ft_strlen((*cmd_node)->iofd->here_delemiter)) == 0)
+		if (!content_line || ft_strncmp_custom(content_line, \
+			(*cmd_node)->iofd->here_delemiter, ft_strlen((*cmd_node) \
+				->iofd->here_delemiter)) == 0)
 			break ;
 		if (is_heredoc_expandable(content_line))
 			expand_heredoc_line(data, content_line, tmp_fd);
