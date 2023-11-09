@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 02:41:46 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/06 03:05:23 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/09 15:50:08 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	ft_dlsize(t_cmd *lst)
 
 	temp_node = lst;
 	i = 0;
+	if (lst == NULL)
+		return (0);
 	while (temp_node != NULL)
 	{
 		temp_node = temp_node->next;

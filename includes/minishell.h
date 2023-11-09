@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/08 19:31:02 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/09 20:19:55 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@
 # define FAILED_TO_DUPLICATE "Error: duplication failed in extract_cmdargs"
 # define PIPE_MALLOC_ERROR "Error: PIPE allocation failed"
 # define PIPE_FUNC_ERROR "Error: PIPE creation failed"
+# define FD_DUP_FAILED "Error: Duplication of file descriptor failed"
 # define EXECVE_FAIL "Error: execve failed"
+# define NO_FILE_DIR "No such file or directory"
+# define PERMISSION_DENY "Permission denied"
 
 // error messages
 # define TOKENIZE_FAIL "Error: Tokenization failure"
@@ -208,7 +211,7 @@ void				close_open_fds(t_cmd *cmd_lst, int exc_ended);
 // Error && other helper funcs
 int					possible_error(t_data **data);
 int					operator_pipe_error(t_data *data);
-void				ft_error(char *err_msg);
+void				ft_error(char *err_msg, int exit_status);
 char				*one_space_setter(char *str);
 int					is_heredoc_append(char *str, int i, char c);
 int					is_whitespace(char c);
@@ -223,9 +226,9 @@ int					ft_strncmp_custom(const char *str1, \
 void				print_arr(char **arr);
 void				print_env_lst(t_data *data);
 		// err printer
-void				cmd_not_found(t_cmd **cmd);
+void				display_error_2(char *s1, char *s2, int exit_status);
 void				file_dir_not_found(char *dir);
-
+long				ft_atol(char *str);
 // cleaning funcs
 void				ft_clean_arr(char **argv);
 void				ft_clean_tok_dl(t_token **lst);

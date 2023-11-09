@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 20:20:44 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/08 05:15:32 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/09 19:58:36 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,15 @@ void	extract_pipe(t_token **token, t_cmd **cmd_lst)
 */
 void	extract_trunc(t_token **token, t_cmd **cmd_node)
 {
-	if ((*cmd_node)->iofd->outfile)
+	if ((*cmd_node)->iofd->outfile != NULL)
 		free((*cmd_node)->iofd->outfile);
-	if ((*cmd_node)->iofd->fdout != -1)
+	if ((*cmd_node)->iofd->fdout > -1)
 		close((*cmd_node)->iofd->fdout);
+	if ((*cmd_node)->iofd->fdin == -2)
+	{
+		(*token) = (*token)->next->next;
+		return ;
+	}
 	(*cmd_node)->iofd->outfile = ft_strdup((*token)->next->str);
 	(*cmd_node)->iofd->fdout = open((*cmd_node)->iofd->outfile, O_CREAT | \
 		O_TRUNC | O_RDWR, S_IRUSR | S_IWUSR);
@@ -48,11 +53,18 @@ int	extract_input_redir(t_token **token, t_cmd **cmd_node)
 		free((*cmd_node)->iofd->infile);
 	if ((*cmd_node)->iofd->fdin != -1)
 		close((*cmd_node)->iofd->fdin);
-	if (access((*token)->next->str, F_OK | R_OK) == -1)
+	if ((*cmd_node)->iofd->here_delemiter != NULL)
+	{
+		free((*cmd_node)->iofd->here_delemiter);
+		(*cmd_node)->iofd->here_delemiter = NULL;
+		unlink((*cmd_node)->iofd->infile);
+	}
+	(*cmd_node)->iofd->infile = ft_strdup((*token)->next->str);
+	if (access((*cmd_node)->iofd->infile, F_OK | R_OK))
 	{
 		(*token) = (*token)->next->next;
 		(*cmd_node)->iofd->fdin = -2;
-		return (file_dir_not_found((*token)->next->str), 0);
+		return (0);
 	}
 	(*cmd_node)->iofd->infile = ft_strdup((*token)->next->str);
 	(*cmd_node)->iofd->fdin = open((*cmd_node)->iofd->infile, O_RDONLY);

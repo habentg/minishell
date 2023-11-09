@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:15:11 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/08 02:25:22 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/08 22:35:00 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int	create_pipes(t_cmd *cmd)
 		{
 			tmp_pipe = (int *)malloc(sizeof(int) * 2);
 			if (!tmp_pipe)
-				return (ft_error(PIPE_MALLOC_ERROR), 1);
+				return (ft_error(PIPE_MALLOC_ERROR, 127), 1);
 			if (pipe(tmp_pipe) == -1)
-				return (ft_error(PIPE_FUNC_ERROR), 1);
+				return (ft_error(PIPE_FUNC_ERROR, 127), 1);
 			tmp_cmd->pipe_fd = tmp_pipe;
 		}
 		tmp_cmd = tmp_cmd->next;
@@ -64,6 +64,7 @@ void	close_open_fds(t_cmd *cmd_lst, int exc_ended)
 
 void	exitshell(t_data *data, int excode)
 {
+	g_exit_status = excode;
 	if (data)
 	{
 		if (data->cmd_lst && data->cmd_lst->iofd)

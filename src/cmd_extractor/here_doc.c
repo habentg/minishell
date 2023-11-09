@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:54:44 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/08 05:29:16 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/09 17:44:45 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*generate_temp_file_name(void)
 	char		*i_temp;
 
 	i_temp = ft_itoa(i);
-	temp_file_name = ft_strjoin(".hd_temp_file_", i_temp);
+	temp_file_name = ft_strjoin("/tmp/.hd_temp_file_", i_temp);
 	if (i_temp)
 		free(i_temp);
 	i++;

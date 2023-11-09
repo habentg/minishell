@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 10:37:24 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/08 21:34:59 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/08 22:39:28 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	fork_and_run(t_data *data, t_cmd *tmp_cmd, pid_t *id)
 	{
 		*id = fork();
 		if (*id == -1)
-			return (ft_error("Error: failed to fork!"), 1);
+			return (ft_error("Error: failed to fork!", 127), 1);
 		if (*id == 0)
 		{
 			dup_pipe_fds(&data->cmd_lst, &tmp_cmd);
@@ -89,5 +89,6 @@ int	start_execution(t_data *data)
 		if (exec_multiple_cmds(data))
 			return (1);
 	}
+	g_exit_status = 0;
 	return (0);
 }

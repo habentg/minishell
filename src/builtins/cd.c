@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 21:17:17 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/08 19:32:36 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/09 19:00:10 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,15 @@ int	handle_cd(t_cmd *cmd_node, t_data *data)
 	{
 		path = get_path(data->envi, "HOME");
 		if (path == NULL)
-			return (ft_error("Error: HOME not set"), 1);
+			return (ft_error("Error: HOME not set", 127), 1);
 	}
 	else
 		path = cmd_node->cmdarg[1];
 	if (getcwd(full_path, sizeof(full_path)) == NULL)
-		return (ft_error("cd: getcwd: error retrieving current directory"), 0);
+		return (ft_error("cd: getcwd: error retrieving current directory"\
+			, 127), 0);
 	if (chdir(path) == -1)
-		return (file_dir_not_found(path), 1);
+		return (display_error_2(path, NO_FILE_DIR, 1), 1);
 	edit_env_lst(data, full_path);
 	update_envi(data);
 	return (0);

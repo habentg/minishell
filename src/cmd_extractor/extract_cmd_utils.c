@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 17:51:34 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/28 22:57:32 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/08 22:24:22 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	extract_cmdargs(t_token **token, t_cmd **cmd_node)
 	{
 		(*cmd_node)->cmdarg[i] = ft_strdup((*token)->str);
 		if (!(*cmd_node)->cmdarg[i++])
-			return (ft_error(FAILED_TO_DUPLICATE), 1);
+			return (ft_error(FAILED_TO_DUPLICATE, 127), 1);
 		if ((*token)->type == END)
 			return (0);
 		(*token) = (*token)->next;
