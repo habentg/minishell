@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 02:51:46 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/10 07:58:03 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/10 10:11:37 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,8 @@ void	handle_echo(t_cmd *cmd_node)
 	int	n_flag;
 	int	fd;
 	int	i_n;
-	int	j_n;
 
 	i_n = 0;
-	j_n = 1;
 	n_flag = 0;
 	if (cmd_node->iofd->fdout == -2 || cmd_node->iofd->fdin == -2)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 19:50:12 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/10 09:28:11 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/10 10:46:18 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,11 @@ t_env	*new_env_node(char *key, char *value)
 {
 	t_env	*new_node;
 
-	new_node = NULL;
 	new_node = (t_env *)ft_calloc(sizeof(t_env), 1);
 	if (!new_node)
 		return (NULL);
-	new_node->key = NULL;
 	new_node->value = NULL;
-	if (key)
-		new_node->key = ft_strdup(key);
+	new_node->key = ft_strdup(key);
 	if (value)
 		new_node->value = ft_strdup(value);
 	new_node->next = NULL;

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 21:17:17 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/09 19:00:10 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/10 10:36:36 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,10 @@ void	update_envi(t_data *data)
 {
 	char	**tmp_arr;
 	char	*tmp_path;
+	char	*path_to_split;
 
 	tmp_arr = NULL;
+	path_to_split = NULL;
 	env_lst_to_arr(data);
 	tmp_path = get_path(data->envi, "PATH");
 	if (tmp_path == NULL)
@@ -52,9 +54,11 @@ void	update_envi(t_data *data)
 	}
 	else
 	{
-		free(tmp_path);
 		ft_clean_arr(data->path);
-		tmp_arr = ft_split(get_path(data->envi, "PATH"), ':');
+		free(tmp_path);
+		path_to_split = get_path(data->envi, "PATH");
+		tmp_arr = ft_split(path_to_split, ':');
+		free(path_to_split);
 		data->path = tmp_arr;
 	}
 }
