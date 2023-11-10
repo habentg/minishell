@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 02:34:15 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/10 03:46:11 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/10 09:33:03 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	handle_exit(t_data *data, t_cmd *cmd_node)
 	printf("exit\n");
 	if (arr_length(cmd_node->cmdarg) == 1)
 	{
-		ft_clean_data_done(&data);
+		ft_clean_data_done(&data, 1);
 		exit(0);
 	}
 	else
@@ -61,7 +61,7 @@ int	handle_exit(t_data *data, t_cmd *cmd_node)
 		{
 			printf("Error: exit: %s: numeric argument required\n", \
 				cmd_node->cmdarg[1]);
-			ft_clean_data_done(&data);
+			ft_clean_data_done(&data, 1);
 			exit(255);
 		}
 		else if (cmd_node->cmdarg[2])
@@ -69,7 +69,8 @@ int	handle_exit(t_data *data, t_cmd *cmd_node)
 		g_exit_status = ft_atol(cmd_node->cmdarg[1]) % 256;
 		if (ft_atol(cmd_node->cmdarg[1]) < 0)
 			g_exit_status = 256 + g_exit_status;
-		ft_clean_data_done(&data);
+		printf("%d\n", g_exit_status);
+		ft_clean_data_done(&data, 1);
 		exit(g_exit_status);
 	}
 	return (0);

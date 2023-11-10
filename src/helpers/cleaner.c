@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 19:02:57 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/08 00:26:46 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/10 06:38:54 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,10 @@ void	ft_clean_data(t_data **data)
 }
 
 /* at anytime when we are finishing up with minishell*/
-void	ft_clean_data_done(t_data **data)
+void	ft_clean_data_done(t_data **data, int code)
 {
-	ft_clean_data(data);
+	if (code == 1)
+		ft_clean_data(data);
 	if ((*data)->envi)
 		ft_clean_arr((*data)->envi);
 	if ((*data)->path)

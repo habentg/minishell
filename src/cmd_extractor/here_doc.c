@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:54:44 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/09 17:44:45 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/10 08:28:46 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	expand_heredoc_line(t_data *data, char *content, int tmp_fd)
 	int	i;
 
 	i = -1;
-	(void)data;
 	while (content[++i])
 	{
 		if (content[i] != '$' || (content[i] == '$' && !content[i + 1]))
@@ -55,6 +54,27 @@ void	expand_heredoc_line(t_data *data, char *content, int tmp_fd)
 	}
 }
 
+int	check_and_expand(t_data *data, t_cmd **cmd_node, \
+	char *content_line, int tmp_fd)
+{
+	char	*trimmed_deli;
+
+	trimmed_deli = ft_remove_quotes((*cmd_node)->iofd->here_delemiter, \
+		count_len_unqouted((*cmd_node)->iofd->here_delemiter));
+	if (!content_line || ft_strncmp_custom(trimmed_deli, content_line, \
+		ft_strlen((*cmd_node)->iofd->here_delemiter)) == 0)
+		return (1);
+	if (is_heredoc_expandable(content_line) && \
+		!ft_strchr((*cmd_node)->iofd->here_delemiter, '\"') && \
+			!ft_strchr((*cmd_node)->iofd->here_delemiter, '\''))
+		expand_heredoc_line(data, content_line, tmp_fd);
+	else
+		ft_putstr_fd(content_line, tmp_fd);
+	ft_putchar_fd('\n', tmp_fd);
+	free(trimmed_deli);
+	return (0);
+}
+
 // create a temp file (hidden preferabley)
 // write a content by reading from the standard INPUT untill the delimeter
 // set the current command infile to the temp file
@@ -70,15 +90,8 @@ void	extract_here_doc(t_data *data, t_token **token, t_cmd **cmd_node)
 	while (1)
 	{
 		content_line = readline("heredoc> ");
-		if (!content_line || ft_strncmp_custom(content_line, \
-			(*cmd_node)->iofd->here_delemiter, ft_strlen((*cmd_node) \
-				->iofd->here_delemiter)) == 0)
+		if (check_and_expand(data, cmd_node, content_line, tmp_fd))
 			break ;
-		if (is_heredoc_expandable(content_line))
-			expand_heredoc_line(data, content_line, tmp_fd);
-		else
-			ft_putstr_fd(content_line, tmp_fd);
-		ft_putchar_fd('\n', tmp_fd);
 		free(content_line);
 	}
 	close(tmp_fd);

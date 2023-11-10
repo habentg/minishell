@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/10 02:45:30 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/10 07:32:09 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ typedef struct s_data
 }					t_data;
 
 // launch funcs
-int					launch_minishell(t_data *data, char **envp);
+int					launch_minishell(t_data *data);
 int					init_program(t_data *data);
 int					init_data(t_data **data, char **envp);
 int					init_env_path(t_data **data, char **envp);
@@ -154,7 +154,8 @@ int					is_expansion_possible(char *str);
 t_quoteType			get_q_state(char *str, int end);
 void				remove_quotes(t_data *data);
 void				expand_variable(t_data *data, t_token *token);
-
+int					count_len_unqouted(char *str);
+char				*ft_remove_quotes(char *str, int len);
 // cmd extraction funcs
 int					start_cmd_extraction(t_data *data);
 int					cmd_node_construction(t_data *data, t_token **token, \
@@ -227,7 +228,6 @@ void				print_arr(char **arr);
 void				print_env_lst(t_data *data);
 		// err printer
 void				display_error_2(char *s1, char *s2, int exit_status);
-void				file_dir_not_found(char *dir);
 long				ft_atol(char *str);
 // cleaning funcs
 void				ft_clean_arr(char **argv);
@@ -238,7 +238,7 @@ void				ft_free_iofile(t_iofds *iofiles);
 int					arr_length(char **arr);
 void				ft_clean_arr(char **argv);
 void				ft_clean_data(t_data **data);
-void				ft_clean_data_done(t_data **data);
+void				ft_clean_data_done(t_data **data, int code);
 void				free_cmdnode(t_cmd *cmd);
 void				free_env_lst(t_data *data);
 t_env				*last_env_node(t_env *lst);

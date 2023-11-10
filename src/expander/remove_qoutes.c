@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 21:04:14 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/20 10:46:14 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/10 08:10:03 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	check_quote(char c)
 	return (quote);
 }
 
-static int	count_len(char *str)
+int	count_len_unqouted(char *str)
 {
 	int		i;
 	int		len;
@@ -89,13 +89,16 @@ void	remove_quotes(t_data *data)
 	token = data->token;
 	while (token)
 	{
-		len = count_len(token->str);
-		if (len != (int) ft_strlen(token->str))
+		len = count_len_unqouted(token->str);
+		if (len == (int)ft_strlen(token->str) || \
+			(token->prev && token->prev->type == HERE_DOC))
 		{
-			tmp = ft_remove_quotes(token->str, len);
-			free(token->str);
-			token->str = tmp;
+			token = token->next;
+			continue ;
 		}
+		tmp = ft_remove_quotes(token->str, len);
+		free(token->str);
+		token->str = tmp;
 		token = token->next;
 	}
 }

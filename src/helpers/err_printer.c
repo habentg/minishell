@@ -6,17 +6,11 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 02:52:48 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/09 20:19:18 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/10 08:18:55 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	file_dir_not_found(char *dir)
-{
-	g_exit_status = 1;
-	printf("minishell: cd: %s: No such file or directory\n", dir);
-}
 
 void	display_error_2(char *s1, char *s2, int exit_status)
 {

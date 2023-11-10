@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:57:10 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/08 15:58:41 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/10 09:27:54 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,21 @@ int	init_data(t_data **data, char **envp)
 }
 
 // launch minishell
-int	launch_minishell(t_data *data, char **envp)
+int	launch_minishell(t_data *data)
 {
 	char	*input_res;
 
 	input_res = NULL;
-	if (init_data(&data, envp))
-		return (1);
 	while (1)
 	{
 		printf("\033[1;34m[%d]\033[0m", g_exit_status);
 		input_res = readline(PROMPT);
 		if (!input_res)
-			break ;
+		{
+			printf("exit\n");
+			ft_clean_data_done(&data, 0);
+			exit(0);
+		}
 		if (ft_strlen(input_res) == 0)
 			continue ;
 		data->input = input_res;
@@ -53,6 +55,27 @@ int	launch_minishell(t_data *data, char **envp)
 		ft_clean_data(&data);
 	}
 	return (0);
+}
+
+// increment shlvl
+void	shlvl_increment(t_data *data)
+{
+	char	*curr_shlvl;
+	char	**arr;
+
+	arr = NULL;
+	curr_shlvl = get_path(data->envi, "SHLVL");
+	arr = (char **)malloc(sizeof(char *) * 3);
+	arr[0] = ft_strdup("SHLVL");
+	if (!curr_shlvl)
+		arr[1] = ft_strdup("1");
+	else
+		arr[1] = ft_itoa(ft_atoi(curr_shlvl) + 1);
+	arr[2] = NULL;
+	add_env_back(data, arr);
+	update_envi(data);
+	ft_clean_arr(arr);
+	free(curr_shlvl);
 }
 
 // program entry
@@ -67,8 +90,11 @@ int	main(int ac, char **av, char **envp)
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
 		return (1);
-	if (launch_minishell(data, envp))
-		return (ft_clean_data_done(&data), 1);
-	ft_clean_data_done(&data);
+	if (init_data(&data, envp))
+		return (ft_clean_data_done(&data, 0), 1);
+	shlvl_increment(data);
+	if (launch_minishell(data))
+		return (ft_clean_data_done(&data, 0), 1);
+	ft_clean_data_done(&data, 0);
 	return (0);
 }
