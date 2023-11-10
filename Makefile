@@ -6,7 +6,7 @@
 #    By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/03 01:59:13 by hatesfam          #+#    #+#              #
-#    Updated: 2023/11/10 02:45:44 by hatesfam         ###   ########.fr        #
+#    Updated: 2023/11/10 19:06:11 by hatesfam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ EXEC_DIR = ./src/executer
 BUILTINS_DIR = ./src/builtins
 
 # Source files:
-SRC_FILES = src/minishell.c  src/init_minishell.c\
+SRC_FILES = src/minishell.c  src/init_minishell.c src/signal.c\
 			$(HELPER_DIR)/err_printer.c $(HELPER_DIR)/is_funcs.c $(HELPER_DIR)/env_dl.c $(HELPER_DIR)/ft_error.c $(HELPER_DIR)/one_space_setter.c $(HELPER_DIR)/cleaner_utils.c $(HELPER_DIR)/cleaner_arr.c \
 			$(HELPER_DIR)/splitter.c $(HELPER_DIR)/printer.c $(HELPER_DIR)/cleaner.c \
 			$(LEXER_DIR)/tokenize_input.c $(LEXER_DIR)/token_lst.c \

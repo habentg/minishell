@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/10 07:32:09 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/10 19:06:46 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,5 +243,6 @@ void				free_cmdnode(t_cmd *cmd);
 void				free_env_lst(t_data *data);
 t_env				*last_env_node(t_env *lst);
 char				**sorted_envi(char **envi);
+void   				sig_handler(void);
 
 #endif
