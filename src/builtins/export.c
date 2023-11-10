@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 03:13:51 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/08 17:53:24 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/10 04:01:07 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,74 +41,77 @@ void	env_lst_to_arr(t_data *data)
 	data->envi = tmp_arr;
 }
 
-static void	bubble_sort_utils(char **sorted_envi, char **envi, int length)
-{
-	char	*tmp;
-	int		i;
-	int		j;
-
-	tmp = NULL;
-	i = -1;
-	j = -1;
-	while (++i < length)
-		sorted_envi[i] = ft_strdup(envi[i]);
-	i = -1;
-	while (++i < length - 1)
-	{
-		j = -1;
-		while (++j < length - i - 1)
-		{
-			if (ft_strncmp(sorted_envi[j], sorted_envi[j + 1], \
-				ft_strlen(sorted_envi[j + 1])) > 0)
-			{
-				tmp = sorted_envi[j];
-				sorted_envi[j] = sorted_envi[j + 1];
-				sorted_envi[j + 1] = tmp;
-			}
-		}
-	}
-}
-
-char	**sorted_envi(char **envi)
-{
-	int		length;
-	char	**sorted_envi;
-
-	length = arr_length(envi);
-	sorted_envi = (char **)ft_calloc(sizeof(char *), (length + 1));
-	if (!sorted_envi)
-		return (NULL);
-	bubble_sort_utils(sorted_envi, envi, length);
-	return (sorted_envi);
-}
-
 void	print_export(char **envi_arr)
 {
 	char	**tmp_arr;
+	char	**split_str;
 	int		i;
 
 	i = -1;
+	split_str = NULL;
 	tmp_arr = sorted_envi(envi_arr);
-	while (++i < arr_length(tmp_arr))
-		printf("declare -x %s\n", tmp_arr[i]);
+	while (tmp_arr[++i])
+	{
+		split_str = ft_split(tmp_arr[i], '=');
+		printf("declare -x %s", split_str[0]);
+		if (tmp_arr[i][ft_strlen(split_str[0])])
+		{
+			if (split_str[1])
+				printf("=\"%s\"", split_str[1]);
+			else
+				printf("=\"\"");
+		}
+		printf("\n");
+		ft_clean_arr(split_str);
+	}
 	if (tmp_arr)
 		ft_clean_arr(tmp_arr);
 }
 
-void	handle_export(t_data *data, t_cmd *cmd_node)
+char	**export_split(char *str)
 {
+	char	*eq_tmp;
 	char	**arr;
 
 	arr = NULL;
-	if (cmd_node->cmdarg[1] == NULL)
-		print_export(data->envi);
+	eq_tmp = NULL;
+	arr = ft_split(str, '=');
+	if (!arr)
+		return (NULL);
+	if (ft_strchr(str, '=') != NULL)
+		eq_tmp = ft_strjoin(arr[0], "=");
 	else
+		eq_tmp = ft_strdup(arr[0]);
+	free(arr[0]);
+	arr[0] = eq_tmp;
+	return (arr);
+}
+
+int	handle_export(t_data *data, t_cmd *cmd_node)
+{
+	int		i;
+	char	**arr;
+
+	arr = NULL;
+	i = 0;
+	if (cmd_node->cmdarg[1] == NULL)
+		return (print_export(data->envi), 0);
+	while (cmd_node->cmdarg[++i])
 	{
-		arr = ft_split(cmd_node->cmdarg[1], '=');
+		if (ft_strlen(cmd_node->cmdarg[i]) == 0)
+		{
+			display_error_2("export: `'", "not a valid identifier", 1);
+			continue ;
+		}
+		if (cmd_node->cmdarg[i][0] == '=')
+			return (display_error_2(cmd_node->cmdarg[i], \
+				"not a valid identifier", 1), 1);
+		arr = export_split(cmd_node->cmdarg[i]);
 		if (!arr)
-			return ;
+			return (display_error_2("export", "couldnt split", 1), 1);
 		add_env_back(data, arr);
 		ft_clean_arr(arr);
-		update_envi(data);
 	}
+	update_envi(data);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/09 20:19:55 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/10 02:45:30 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@
 # define EXECVE_FAIL "Error: execve failed"
 # define NO_FILE_DIR "No such file or directory"
 # define PERMISSION_DENY "Permission denied"
+# define CMD_NOT_FOUND "command not found"
 
 // error messages
 # define TOKENIZE_FAIL "Error: Tokenization failure"
@@ -53,7 +54,6 @@
 # define OPERATOR_ERROR_INP "Error: syntax error near unexpected token '<'"
 # define OPERATOR_ERROR_APP "Error: syntax error near unexpected token '>>'"
 # define OPERATOR_ERROR_HD "Error: syntax error near unexpected token '<<'"
-# define CMD_NOT_FOUND "Error: command not found"
 
 // FILE DESCRIPTORS & FILE ACCESS ERRORS
 # define FAILED_TO_OPEN_INPUT_FILE "Error: failed to find/open input file"
@@ -191,7 +191,7 @@ int					pre_exec_checks(t_data *data);
 int					handle_pwd(void);
 void				handle_echo(t_cmd *cmd_node);
 int					handle_exit(t_data *data, t_cmd *cmd_node);
-void				handle_export(t_data *data, t_cmd *cmd_node);
+int					handle_export(t_data *data, t_cmd *cmd_node);
 int					handle_cd(t_cmd *cmd_node, t_data *data);
 void				update_envi(t_data *data);
 void				env_lst_to_arr(t_data *data);
@@ -242,5 +242,6 @@ void				ft_clean_data_done(t_data **data);
 void				free_cmdnode(t_cmd *cmd);
 void				free_env_lst(t_data *data);
 t_env				*last_env_node(t_env *lst);
+char				**sorted_envi(char **envi);
 
 #endif

@@ -6,11 +6,20 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 02:34:15 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/09 20:51:38 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/10 03:46:11 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static int	set_sign(char c)
+{
+	if (c == '-')
+		return (-1);
+	else if (c == '+')
+		return (1);
+	return (0);
+}
 
 int	valid_e_status(char *str)
 {
@@ -19,24 +28,20 @@ int	valid_e_status(char *str)
 	int		sign;
 
 	i = -1;
-	sign = 1;
 	j = ft_strlen(str);
 	i = ft_whitespaces(str, &i, 'f');
 	j = ft_whitespaces(str, &i, 'b');
-	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			sign = -1;
+	sign = set_sign(str[i]);
+	if (sign != 0)
 		i++;
-	}
-	while (i <= j)
+	while (str[i] && i <= j)
 	{
 		if (!ft_isdigit(str[i]))
 			return (0);
 		i++;
 	}
-	// not working for less than llong min
-	if ((sign == 1 && ft_atol(str) < 0) || (sign == -1 && ft_atol(str) > 0))
+	if ((ft_strlen(str) > 20 || (sign == 1 && ft_atol(str) < 0)) \
+			|| (sign == -1 && ft_atol(str) > 0))
 		return (0);
 	return (1);
 }
