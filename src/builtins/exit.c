@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 02:34:15 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/10 09:47:02 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/10 19:57:51 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	valid_e_status(char *str)
 
 int	handle_exit(t_data *data, t_cmd *cmd_node)
 {
-	printf("exit\n");
+	shlvl_increment(data, 0);
 	if (arr_length(cmd_node->cmdarg) == 1)
 	{
 		ft_clean_data_done(&data, 1);

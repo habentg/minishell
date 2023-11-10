@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 02:52:48 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/10 08:18:55 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/10 23:41:08 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,19 @@
 
 void	display_error_2(char *s1, char *s2, int exit_status)
 {
-	g_exit_status = exit_status;
-	printf("minishell: %s: %s\n", s1, s2);
+	g_exit_status = strerror(exit_status);;
+	(void)s1;
+	// printf("minishell: %s: %s\n", s1, s2);
+	// ft_putstr_fd("minishell: ", 2);
+	// ft_putstr_fd(s1, 2);
+	ft_putstr_fd(s2, 2);
+	ft_putstr_fd("\n", 2);
 }
 
 void	ft_error(char *err_msg, int exit_status)
 {
 	g_exit_status = exit_status;
-	ft_putendl_fd(err_msg, 1);
+	ft_putendl_fd(err_msg, 2);
 }
 
 long	ft_atol(char *str)

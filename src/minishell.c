@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:57:10 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/10 19:07:05 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/10 23:33:13 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	launch_minishell(t_data *data)
 	input_res = NULL;
 	while (1)
 	{
-		printf("\033[1;34m[%d]\033[0m", g_exit_status);
+		// printf("\033[1;34m[%d]\033[0m", g_exit_status);
 		input_res = readline(PROMPT);
 		if (!input_res)
 		{
@@ -58,7 +58,7 @@ int	launch_minishell(t_data *data)
 }
 
 // increment shlvl
-void	shlvl_increment(t_data *data)
+void	shlvl_increment(t_data *data, int inc_dec)
 {
 	char	*curr_shlvl;
 	char	**arr;
@@ -69,8 +69,13 @@ void	shlvl_increment(t_data *data)
 	arr[0] = ft_strdup("SHLVL");
 	if (!curr_shlvl)
 		arr[1] = ft_strdup("1");
-	else
+	else if (inc_dec == 1)
 		arr[1] = ft_itoa(ft_atoi(curr_shlvl) + 1);
+	else if (inc_dec == 0)
+	{
+		printf("exit\n");
+		arr[1] = ft_itoa(ft_atoi(curr_shlvl) - 1);
+	}
 	arr[2] = NULL;
 	add_env_back(data, arr);
 	update_envi(data);
@@ -93,7 +98,7 @@ int	main(int ac, char **av, char **envp)
 		return (1);
 	if (init_data(&data, envp))
 		return (ft_clean_data_done(&data, 0), 1);
-	shlvl_increment(data);
+	shlvl_increment(data, 1);
 	if (launch_minishell(data))
 		return (ft_clean_data_done(&data, 0), 1);
 	ft_clean_data_done(&data, 0);

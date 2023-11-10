@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 02:51:46 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/10 10:11:37 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/10 19:59:48 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,5 @@ void	handle_echo(t_cmd *cmd_node)
 	if (i_n > 1)
 		n_flag = 1;
 	print_echo(cmd_node, n_flag, fd, i_n);
+	g_exit_status = 0;
 }

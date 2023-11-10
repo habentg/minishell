@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 21:17:17 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/10 10:36:36 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/10 20:01:19 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	handle_cd(t_cmd *cmd_node, t_data *data)
 		return (ft_error("cd: getcwd: error retrieving current directory"\
 			, 127), 0);
 	if (chdir(path) == -1)
-		return (display_error_2(path, NO_FILE_DIR, 1), 1);
+		return (display_error_2(NO_FILE_DIR, path, 1), 1);
 	edit_env_lst(data, full_path);
 	update_envi(data);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 03:13:51 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/10 04:01:07 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/10 22:56:57 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ char	**export_split(char *str)
 	return (arr);
 }
 
+// key should be alpha-numerical only -> otheriwse error
 int	handle_export(t_data *data, t_cmd *cmd_node)
 {
 	int		i;

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/10 19:06:46 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/10 19:47:06 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ void				add_env_back(t_data *data, char **env_node_arr);
 int					create_env_lst(t_data **data);
 t_env				*new_env_node(char *key, char *value);
 int					ft_env_lsize(t_env *lst);
+void				shlvl_increment(t_data *data, int inc_dec);
 
 //lexical analysis funcs
 int					start_lexing(t_data *data);
