@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hatesfam <hatesfam@student.abudhabi42.a    +#+  +:+       +#+        */
+/*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 21:17:17 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/12 01:22:54 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/13 00:19:21 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,22 +70,22 @@ int	handle_cd(t_cmd *cmd_node, t_data *data)
 	char	*path;
 	char	full_path[PATH_MAX];
 
-	if (cmd_node->cmdarg[1] == NULL || \
-		ft_strncmp_custom(cmd_node->cmdarg[1], "~", 1) == 0)
+	if (!cmd_node->cmdarg[1] || ft_strncmp_custom(cmd_node->cmdarg[1], "~", 1) \
+		== 0 || (cmd_node->cmdarg[1] && ft_strlen(cmd_node->cmdarg[1]) == 0))
 	{
 		path = get_path(data->envi, "HOME");
 		if (path == NULL)
-			return (ft_error("Error: HOME not set", 127), 1);
+			return (display_error_2(path, NO_FILE_DIR, 1), 1);
 	}
 	else
 		path = cmd_node->cmdarg[1];
 	if (cmd_node->cmdarg[2] || arr_length(cmd_node->cmdarg) >= 3)
-		return (display_error_2("to many arguments", NULL, 1), 1);
+		return (display_error_2("cd", "to many arguments", 1), 1);
 	if (getcwd(full_path, sizeof(full_path)) == NULL)
 		return (ft_error("cd: getcwd: error retrieving current directory"\
 			, 127), 0);
 	if (chdir(path) == -1)
-		return (display_error_2(NO_FILE_DIR, path, 1), 1);
+		return (display_error_2(path, NO_FILE_DIR, 1), 1);
 	edit_env_lst(data, full_path);
 	update_envi(data);
 	return (0);

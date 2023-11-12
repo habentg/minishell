@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:09:52 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/08 19:34:51 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/13 00:31:16 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,16 @@ int	handle_pwd(void)
 	return (1);
 }
 
-void	handle_env(t_data *data)
+void	handle_env(t_data *data, t_cmd *cmd_node)
 {
 	int	i;
 
 	i = 0;
+	if (cmd_node->cmdarg[1] != NULL)
+	{
+		display_error_2("env", "too many arguments", 127);
+		return ;
+	}
 	while (data->envi[i])
 	{
 		if (ft_strchr(data->envi[i], '=') != NULL)
@@ -72,5 +77,5 @@ void	exec_builtin_cmd(t_cmd *cmd_node, t_data *data)
 	else if (ft_strncmp_custom(cmd_node->cmd, "unset", 5) == 0)
 		handle_unset(data, cmd_node);
 	else if (ft_strncmp_custom(cmd_node->cmd, "env", 3) == 0)
-		handle_env(data);
+		handle_env(data, cmd_node);
 }

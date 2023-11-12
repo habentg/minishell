@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   err_printer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hatesfam <hatesfam@student.abudhabi42.a    +#+  +:+       +#+        */
+/*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 02:52:48 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/11 02:42:53 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/12 18:31:29 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	display_error_2(char *s1, char *s2, int exit_status)
 	g_exit_status = exit_status;
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(s1, 2);
+	ft_putstr_fd(": ", 2);
 	ft_putstr_fd(s2, 2);
 	ft_putstr_fd("\n", 2);
 }

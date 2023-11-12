@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hatesfam <hatesfam@student.abudhabi42.a    +#+  +:+       +#+        */
+/*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 02:34:15 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/12 01:41:03 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/12 18:35:31 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,7 @@ int	handle_exit(t_data *data, t_cmd *cmd_node)
 		g_exit_status = 1;
 		if (!valid_e_status(cmd_node->cmdarg[1]))
 		{
-			printf("Error: exit: %s: numeric argument required\n", \
-				cmd_node->cmdarg[1]);
+			display_error_2("exit", "numeric argument required", 255);
 			ft_clean_data_done(&data, 1);
 			exit(255);
 		}

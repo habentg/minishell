@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hatesfam <hatesfam@student.abudhabi42.a    +#+  +:+       +#+        */
+/*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/11 02:44:28 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/13 00:36:54 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,7 @@ int					handle_cd(t_cmd *cmd_node, t_data *data);
 void				update_envi(t_data *data);
 void				env_lst_to_arr(t_data *data);
 void				handle_unset(t_data *data, t_cmd *cmd_node);
-void				handle_env(t_data *data);
+void				handle_env(t_data *data, t_cmd *cmd_node);
 			// fd related
 void				dup_pipe_fds(t_cmd **cmd_lst, t_cmd **cmd_node);
 void				reset_std_fds(t_cmd **cmd_node);
@@ -244,6 +244,6 @@ void				free_cmdnode(t_cmd *cmd);
 void				free_env_lst(t_data *data);
 t_env				*last_env_node(t_env *lst);
 char				**sorted_envi(char **envi);
-void   				sig_handler(void);
+void				sig_handler(void);
 
 #endif
