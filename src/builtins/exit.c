@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: hatesfam <hatesfam@student.abudhabi42.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 02:34:15 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/10 19:57:51 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/12 01:41:03 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static int	set_sign(char c)
 	return (0);
 }
 
+// int ft_isdigit_custom()
 int	valid_e_status(char *str)
 {
 	int		i;
@@ -30,7 +31,7 @@ int	valid_e_status(char *str)
 	i = -1;
 	j = ft_strlen(str);
 	i = ft_whitespaces(str, &i, 'f');
-	j = ft_whitespaces(str, &i, 'b');
+	j = ft_whitespaces(str, &j, 'b');
 	sign = set_sign(str[i]);
 	if (sign != 0)
 		i++;

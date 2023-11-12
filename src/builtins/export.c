@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: hatesfam <hatesfam@student.abudhabi42.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 03:13:51 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/10 22:56:57 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/12 01:43:53 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,21 @@ char	**export_split(char *str)
 	return (arr);
 }
 
+static int	valid_key_check(char *key)
+{
+	int	i;
+
+	i = -1;
+	if (!key)
+		return (0);
+	while (key[++i])
+	{
+		if (ft_isalpha(key[i]) || key[i] == '=')
+			continue ;
+		return (0);
+	}
+	return (1);
+}
 // key should be alpha-numerical only -> otheriwse error
 int	handle_export(t_data *data, t_cmd *cmd_node)
 {
@@ -99,17 +114,16 @@ int	handle_export(t_data *data, t_cmd *cmd_node)
 		return (print_export(data->envi), 0);
 	while (cmd_node->cmdarg[++i])
 	{
-		if (ft_strlen(cmd_node->cmdarg[i]) == 0)
+		if (ft_strlen(cmd_node->cmdarg[i]) == 0 || (ft_strlen(cmd_node->cmdarg[i]) == 1 && cmd_node->cmdarg[i][0] == '='))
 		{
-			display_error_2("export: `'", "not a valid identifier", 1);
+			display_error_2("export: `'", ": not a valid identifier", 1);
 			continue ;
 		}
-		if (cmd_node->cmdarg[i][0] == '=')
-			return (display_error_2(cmd_node->cmdarg[i], \
-				"not a valid identifier", 1), 1);
 		arr = export_split(cmd_node->cmdarg[i]);
 		if (!arr)
-			return (display_error_2("export", "couldnt split", 1), 1);
+			return (display_error_2("export", ": couldnt split", 1), 1);
+		if (!valid_key_check(arr[0]))
+			return (display_error_2(arr[0], ": not a valid identifier", 1), 1);
 		add_env_back(data, arr);
 		ft_clean_arr(arr);
 	}

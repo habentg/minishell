@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: hatesfam <hatesfam@student.abudhabi42.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 21:17:17 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/10 20:01:19 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/12 01:22:54 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ int	handle_cd(t_cmd *cmd_node, t_data *data)
 	}
 	else
 		path = cmd_node->cmdarg[1];
+	if (cmd_node->cmdarg[2] || arr_length(cmd_node->cmdarg) >= 3)
+		return (display_error_2("to many arguments", NULL, 1), 1);
 	if (getcwd(full_path, sizeof(full_path)) == NULL)
 		return (ft_error("cd: getcwd: error retrieving current directory"\
 			, 127), 0);
