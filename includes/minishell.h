@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/13 04:08:44 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/13 05:44:55 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@
 # define PIPE_FUNC_ERROR "Error: PIPE creation failed"
 # define FD_DUP_FAILED "Error: Duplication of file descriptor failed"
 # define EXECVE_FAIL "Error: execve failed"
-# define NO_FILE_DIR ": No such file or directory"
-# define PERMISSION_DENY ": Permission denied"
-# define CMD_NOT_FOUND ": command not found"
+# define NO_FILE_DIR "No such file or directory"
+# define PERMISSION_DENY "Permission denied"
+# define CMD_NOT_FOUND "command not found"
 
 // error messages
 # define TOKENIZE_FAIL "Error: Tokenization failure"
@@ -228,7 +228,8 @@ int					ft_strncmp_custom(const char *str1, \
 void				print_arr(char **arr);
 void				print_env_lst(t_data *data);
 		// err printer
-void				display_error_2(char *s1, char *s2, int exit_status);
+void				display_error_2(char *s1, char *s2, char *s3, int exit_status);
+void				display_error(char *s1, char *s2, int exit_status);
 long				ft_atol(char *str);
 // cleaning funcs
 void				ft_clean_arr(char **argv);

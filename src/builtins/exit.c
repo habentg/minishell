@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 02:34:15 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/12 18:35:31 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/13 05:37:27 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,13 @@ int	handle_exit(t_data *data, t_cmd *cmd_node)
 		g_exit_status = 1;
 		if (!valid_e_status(cmd_node->cmdarg[1]))
 		{
-			display_error_2("exit", "numeric argument required", 255);
+			display_error_2("exit", cmd_node->cmdarg[1], \
+				"numeric argument required", 255);
 			ft_clean_data_done(&data, 1);
 			exit(255);
 		}
 		else if (cmd_node->cmdarg[2])
-			return (display_error_2("exit", "too many arguments", 1), 1);
+			return (display_error("exit", "too many arguments", 1), 1);
 		g_exit_status = ft_atol(cmd_node->cmdarg[1]) % 256;
 		if (ft_atol(cmd_node->cmdarg[1]) < 0)
 			g_exit_status = 256 + g_exit_status;

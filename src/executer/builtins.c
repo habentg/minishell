@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:09:52 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/13 05:02:19 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/13 05:42:29 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	handle_env(t_data *data, t_cmd *cmd_node)
 	(void)cmd_node;
 	if (cmd_node->cmdarg[1] != NULL)
 	{
-		display_error_2("env", "too many arguments", 127);
+		display_error_2("env", cmd_node->cmdarg[1], "too many arguments", 127);
 		return ;
 	}
 	while (data->envi[i])

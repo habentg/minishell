@@ -6,13 +6,25 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 02:52:48 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/13 05:10:59 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/13 05:34:44 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	display_error_2(char *s1, char *s2, int exit_status)
+void	display_error_2(char *s1, char *s2, char *s3, int exit_status)
+{
+	g_exit_status = exit_status;
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(s1, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(s2, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(s3, 2);
+	ft_putstr_fd("\n", 2);
+}
+
+void	display_error(char *s1, char *s2, int exit_status)
 {
 	g_exit_status = exit_status;
 	ft_putstr_fd("minishell: ", 2);
