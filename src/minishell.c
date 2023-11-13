@@ -37,6 +37,7 @@ int	launch_minishell(t_data *data)
 	input_res = NULL;
 	while (1)
 	{
+		sig_handler();
 		printf("\033[1;34m[%d]\033[0m", g_exit_status);
 		input_res = readline(PROMPT);
 		if (!input_res)
@@ -87,7 +88,7 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	if (ac != 1)
 		return (1);
-	sig_handler();
+	//sig_handler();
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
 		return (1);

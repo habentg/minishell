@@ -244,5 +244,7 @@ void				free_env_lst(t_data *data);
 t_env				*last_env_node(t_env *lst);
 char				**sorted_envi(char **envi);
 void   				sig_handler(void);
-
+void			    sig_c_for_functions(int sig);
+void    			sig_c(int sig);
+void    			sig_doc(int sig);
 #endif

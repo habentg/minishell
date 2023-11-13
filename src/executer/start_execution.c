@@ -23,6 +23,7 @@ int	fork_wait(t_data *data)
 	ch_pid = 0;
 	while (ch_pid != -1 || errno != ECHILD)
 	{
+		signal(SIGINT, sig_c_for_functions);
 		ch_pid = waitpid(-1, &status, 0);
 		if (ch_pid == 0)
 			res = status;

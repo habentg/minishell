@@ -89,6 +89,9 @@ void	extract_here_doc(t_data *data, t_token **token, t_cmd **cmd_node)
 	tmp_fd = open(temp_file, O_CREAT | O_TRUNC | O_RDWR, S_IRUSR | S_IWUSR);
 	while (1)
 	{
+		signal(SIGINT, sig_doc);
+		if (g_exit_status == 127)
+			return ((void)NULL);
 		content_line = readline("heredoc> ");
 		if (check_and_expand(data, cmd_node, content_line, tmp_fd))
 			break ;
