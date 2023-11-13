@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 02:52:48 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/12 18:31:29 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/13 05:10:59 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,29 @@ long	ft_atol(char *str)
 		i++;
 	}
 	return (number * sign);
+}
+
+char	**ft_split_custom(char *str)
+{
+	int		i;
+	char	**res;
+
+	if (!str)
+		return (NULL);
+	i = 0;
+	res = ft_calloc(3, sizeof(char *));
+	if (!res)
+		return (NULL);
+	if (ft_strchr(str, '=') == NULL)
+	{
+		res[0] = ft_strdup(str);
+		return (res);
+	}
+	while (str[i] != '=')
+		i++;
+	res[0] = ft_substr(str, 0, ++i);
+	if (str[i] == '\0')
+		return (res);
+	res[1] = ft_substr(str, i, ft_strlen(str));
+	return (res);
 }

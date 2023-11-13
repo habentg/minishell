@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 16:05:43 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/10 08:10:24 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/13 05:10:07 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,7 @@ int	create_env_lst(t_data **data)
 	tmp_arr = NULL;
 	while ((*data)->envi[++i])
 	{
-		if (strncmp((*data)->envi[i], "LS_COLORS", 9) == 0)
-		{
-			tmp_arr = (char **)malloc(sizeof(char *) * 3);
-			tmp_arr[0] = ft_strdup("LS_COLORS");
-			tmp_arr[1] = ft_strdup((*data)->envi[i] + 11);
-			tmp_arr[2] = NULL;
-		}
-		else
-			tmp_arr = ft_split((*data)->envi[i], '=');
+		tmp_arr = ft_split_custom((*data)->envi[i]);
 		add_env_back_start(*data, tmp_arr);
 		ft_clean_arr(tmp_arr);
 	}
