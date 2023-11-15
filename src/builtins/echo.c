@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 02:51:46 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/10 19:59:48 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/15 03:35:24 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	n_option_handler(t_cmd *cmd_node)
 	return (i_n);
 }
 
-void	handle_echo(t_cmd *cmd_node)
+int	handle_echo(t_cmd *cmd_node)
 {
 	int	n_flag;
 	int	fd;
@@ -64,7 +64,7 @@ void	handle_echo(t_cmd *cmd_node)
 	i_n = 0;
 	n_flag = 0;
 	if (cmd_node->iofd->fdout == -2 || cmd_node->iofd->fdin == -2)
-		return ;
+		return (1);
 	fd = cmd_node->iofd->fdout;
 	if (fd == -1)
 		fd = STDOUT_FILENO;
@@ -72,5 +72,5 @@ void	handle_echo(t_cmd *cmd_node)
 	if (i_n > 1)
 		n_flag = 1;
 	print_echo(cmd_node, n_flag, fd, i_n);
-	g_exit_status = 0;
+	return (0);
 }

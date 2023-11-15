@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 02:52:48 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/13 05:34:44 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/15 05:43:57 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,24 @@
 
 void	display_error_2(char *s1, char *s2, char *s3, int exit_status)
 {
-	g_exit_status = exit_status;
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(s1, 2);
-	ft_putstr_fd(": ", 2);
-	ft_putstr_fd(s2, 2);
-	ft_putstr_fd(": ", 2);
-	ft_putstr_fd(s3, 2);
-	ft_putstr_fd("\n", 2);
+	(void)exit_status;
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(s1, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putstr_fd(s2, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putstr_fd(s3, STDERR_FILENO);
+	ft_putstr_fd("\n", STDERR_FILENO);
 }
 
 void	display_error(char *s1, char *s2, int exit_status)
 {
-	g_exit_status = exit_status;
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(s1, 2);
-	ft_putstr_fd(": ", 2);
-	ft_putstr_fd(s2, 2);
-	ft_putstr_fd("\n", 2);
+	(void)exit_status;
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(s1, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putstr_fd(s2, STDERR_FILENO);
+	ft_putstr_fd("\n", STDERR_FILENO);
 }
 
 void	ft_error(char *err_msg, int exit_status)
@@ -40,11 +40,11 @@ void	ft_error(char *err_msg, int exit_status)
 	ft_putendl_fd(err_msg, 2);
 }
 
-long	ft_atol(char *str)
+long long	ft_atol(char *str)
 {
-	int		i;
-	long	number;
-	int		sign;
+	int			i;
+	long long	number;
+	int			sign;
 
 	i = -1;
 	number = 0;
@@ -82,9 +82,9 @@ char	**ft_split_custom(char *str)
 	}
 	while (str[i] != '=')
 		i++;
-	res[0] = ft_substr(str, 0, ++i);
+	res[0] = ft_substr(str, 0, i);
 	if (str[i] == '\0')
 		return (res);
-	res[1] = ft_substr(str, i, ft_strlen(str));
+	res[1] = ft_substr(str, i + 1, ft_strlen(str));
 	return (res);
 }

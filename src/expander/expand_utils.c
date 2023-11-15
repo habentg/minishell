@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:49:37 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/08 22:28:18 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/15 10:40:10 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,78 @@ t_quoteType	get_q_state(char *str, int end)
 	return (quote);
 }
 
-int	is_expansion_possible(char *str)
+// char	*replace_double_var(t_token *token, int *i)
+// {
+// 	char	*b_var;
+// 	char	*a_var;
+// 	char	*final_join;
+// 	char	*not_final_join;
+
+// 	b_var = ft_substr(token->str, 0, *i);
+// 	a_var = ft_substr(token->str, *i + 2, ft_strlen(token->str));
+// 	not_final_join = var_not_found(b_var, "{PID}", i);
+// 	final_join = ft_strjoin(not_final_join, a_var);
+// 	*i = ft_strlen(not_final_join);
+// 	return (final_join);
+// }
+
+char	*replace_double_var(t_token *token, int *i)
+{
+	char	*b_var;
+	char	*a_var;
+	char	*final_join;
+	char	*not_final_join;
+
+	b_var = ft_substr(token->str, 0, *i);
+	if (!b_var)
+		b_var = NULL;
+	a_var = ft_substr(token->str, *i + 2, ft_strlen(token->str));
+	if (!b_var)
+		b_var = NULL;
+	if (!b_var)
+		not_final_join = ft_strdup("{PID}");
+	else
+		not_final_join = var_not_found(b_var, "{PID}", i);
+	if (!a_var)
+		final_join = ft_strdup(not_final_join);
+	else
+		final_join = ft_strjoin(not_final_join, a_var);
+	*i = ft_strlen(not_final_join);
+	free(b_var);
+	free(a_var);
+	free(not_final_join);
+	return (final_join);
+}
+
+void	pid_replacer(t_token *token)
+{
+	int			i;
+	t_quoteType	quote;
+	char		*tmp_str;
+
+	quote = NONE;
+	i = 0;
+	while (token->str[i])
+	{
+		if (token->str[i] == '$')
+		{
+			quote = get_q_state(token->str, i);
+			if (token->str[i + 1] && token->str[i + 1] == '$' \
+				&& quote != SINGLE)
+			{
+				tmp_str = replace_double_var(token, &i);
+				free(token->str);
+				token->str = tmp_str;
+				i = -1;
+			}
+		}
+		i++;
+	}
+	if (token->str[i] == '\0')
+		token->type = WORD;
+}
+
+bool	is_expansion_possible(char *str)
 {
 	int			i;
 	t_quoteType	quote;
@@ -45,13 +116,11 @@ int	is_expansion_possible(char *str)
 	{
 		if (str[i] == '$')
 		{
-			if (str[i + 1] && str[i + 1] == '$')
-				return (ft_error("Error: Double $", 127), 2);
 			quote = get_q_state(str, i);
 			if (quote != SINGLE)
-				return (1);
+				return (true);
 		}
 		i++;
 	}
-	return (0);
+	return (false);
 }

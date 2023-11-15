@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 21:17:17 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/13 06:02:03 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/15 03:32:10 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,9 @@ int	handle_cd(t_cmd *cmd_node, t_data *data)
 {
 	char	*path;
 	char	full_path[PATH_MAX];
+	int		i;
 
+	i = 0;
 	if (!cmd_node->cmdarg[1] || ft_strncmp_custom(cmd_node->cmdarg[1], "~", 1) \
 		== 0 || (cmd_node->cmdarg[1] && ft_strlen(cmd_node->cmdarg[1]) == 0))
 	{
@@ -79,8 +81,8 @@ int	handle_cd(t_cmd *cmd_node, t_data *data)
 	}
 	else
 		path = cmd_node->cmdarg[1];
-	if (cmd_node->cmdarg[2] || arr_length(cmd_node->cmdarg) >= 3)
-		return (display_error("cd", "to many arguments", 1), 1);
+	if (arr_length(cmd_node->cmdarg) > 2)
+		return (display_error("cd", "to many arguments", 1), 0);
 	if (getcwd(full_path, sizeof(full_path)) == NULL)
 		return (ft_error("cd: getcwd: error retrieving current directory"\
 			, 127), 0);

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:57:10 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/13 05:10:35 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/15 10:43:29 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	shlvl_increment(t_data *data, int inc_dec)
 		arr[1] = ft_itoa(ft_atoi(curr_shlvl) + 1);
 	else if (inc_dec == 0)
 	{
-		printf("exit\n");
+		ft_putendl_fd("exit", 1);
 		arr[1] = ft_itoa(ft_atoi(curr_shlvl) - 1);
 	}
 	arr[2] = NULL;
