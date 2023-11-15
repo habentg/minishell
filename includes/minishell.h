@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/15 09:25:55 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/15 13:51:30 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,8 +257,6 @@ char				**sorted_envi(char **envi);
 
 // signal handler
 void				sig_handler(void);
+void				child_signals(t_cmd *cmd);
 char				**ft_split_custom(char *str);
-void				sig_c_for_functions(int sig);
-void				sig_c(int sig);
-void				sig_doc(int sig);
 #endif

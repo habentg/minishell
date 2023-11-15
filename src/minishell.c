@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:57:10 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/15 10:43:29 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/15 13:09:15 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	launch_minishell(t_data *data)
 	input_res = NULL;
 	while (1)
 	{
+		sig_handler();
 		// printf("\033[1;34m[%d]\033[0m", g_exit_status);
 		input_res = readline(PROMPT);
 		if (!input_res)
@@ -91,7 +92,6 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	if (ac != 1)
 		return (1);
-	sig_handler();
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
 		return (1);

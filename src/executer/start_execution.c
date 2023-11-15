@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 10:37:24 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/15 05:46:26 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/15 13:47:29 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,14 @@ int	fork_wait(t_data *data)
 
 	close_open_fds(data->cmd_lst, 0);
 	ch_pid = 0;
-	// signal(SIGCHLD, sigchld_handler);
 	while (1)
 	{
-		signal(SIGINT, sig_c_for_functions);
 		ch_pid = waitpid(-1, &status, 0);
 		if (ch_pid == 0)
 			g_exit_status = (status);
 		if (ch_pid == -1 && errno == ECHILD)
 			break ;
 	}
-	// signal(SIGCHLD, SIG_DFL);
 	// printf("\033[1;34m~~>[%d]\033[0m\n", g_exit_status);
 	return (status);
 }
@@ -57,6 +54,7 @@ int	fork_and_run(t_data *data, t_cmd *tmp_cmd, pid_t *id)
 {
 	if (tmp_cmd->iofd->fdout != -2 && tmp_cmd->iofd->fdin != -2)
 	{
+		child_signals(tmp_cmd);
 		*id = fork();
 		if (*id == -1)
 			return (ft_error("Error: failed to fork!", 127), 1);
