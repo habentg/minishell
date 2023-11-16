@@ -6,22 +6,21 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 16:49:08 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/07 18:26:01 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/16 15:46:28 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	extract_one_cmd(t_data *data, t_token **token, t_cmd **cmd_lst)
+static int	extract_one_cmd(t_data *data, t_token **token, t_cmd **cmd_lst)
 {
 	t_cmd	*cmd_node;
 
 	cmd_node = new_cmd();
-	(void)data;
 	while ((*token)->type != PIPE && (*token)->type != END)
 	{
 		if ((*token)->type == WORD)
-			if (extract_word(token, &cmd_node))
+			if (extract_word(data, token, &cmd_node))
 				return (1);
 		if ((*token)->type == TRUNC)
 			extract_trunc(token, &cmd_node);
@@ -62,7 +61,7 @@ int	start_cmd_extraction(t_data *data)
 	add_tok_back(&data->token, end_node);
 	tmp = data->token;
 	if (cmd_node_construction(data, &data->token, &data->cmd_lst))
-		return (1);
+		return (ft_error(data, "cmd construction failure", 255), 1);
 	data->token = tmp;
 	return (0);
 }

@@ -6,13 +6,13 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:15:11 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/10 06:42:26 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/16 18:28:18 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	create_pipes(t_cmd *cmd)
+int	create_pipes(t_data *data, t_cmd *cmd)
 {
 	t_cmd	*tmp_cmd;
 	int		*tmp_pipe;
@@ -25,9 +25,9 @@ int	create_pipes(t_cmd *cmd)
 		{
 			tmp_pipe = (int *)malloc(sizeof(int) * 2);
 			if (!tmp_pipe)
-				return (ft_error(PIPE_MALLOC_ERROR, 127), 1);
+				return (ft_error(data, PIPE_MALLOC_ERROR, 255), 1);
 			if (pipe(tmp_pipe) == -1)
-				return (ft_error(PIPE_FUNC_ERROR, 127), 1);
+				return (ft_error(data, PIPE_FUNC_ERROR, 255), 1);
 			tmp_cmd->pipe_fd = tmp_pipe;
 		}
 		tmp_cmd = tmp_cmd->next;
@@ -62,14 +62,10 @@ void	close_open_fds(t_cmd *cmd_lst, int exc_ended)
 	close_unused_pipe_fds(&cmd_lst, NULL);
 }
 
-void	exitshell(t_data *data, int excode)
+void	exitshell(t_data *data, t_cmd *cmdnode, int excode)
 {
-	g_exit_status = excode;
-	if (data)
-	{
-		if (data->cmd_lst && data->cmd_lst->iofd)
-			close_open_fds(data->cmd_lst, 1);
-	}
+	(void)excode;
+	if (cmdnode && cmdnode->iofd)
+		close_open_fds(data->cmd_lst, 1);
 	ft_clean_data_done(&data, 1);
-	exit (excode);
 }

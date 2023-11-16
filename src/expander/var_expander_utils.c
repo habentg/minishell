@@ -6,13 +6,13 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 23:51:27 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/15 09:52:57 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/16 15:35:50 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	expande_exit_status(t_token **token, int i)
+void	expande_exit_status(t_data *data, t_token **token, int i)
 {
 	char	*tmp;
 	char	*tmp_join;
@@ -22,7 +22,7 @@ void	expande_exit_status(t_token **token, int i)
 
 	j = -1;
 	k = -1;
-	exit_status_str = ft_itoa(g_exit_status);
+	exit_status_str = ft_itoa(data->exit_code);
 	tmp = (char *)ft_calloc(sizeof(char), ((ft_strlen((*token)->str)) - 2 + \
 		(ft_strlen(exit_status_str) + 1)));
 	if (!tmp)
@@ -63,7 +63,7 @@ void	expand_variable(t_data *data, t_token *token)
 			k = ++i;
 			if (token->str[i] == '?')
 			{
-				expande_exit_status(&token, i);
+				expande_exit_status(data, &token, i);
 				i = 0;
 				continue ;
 			}

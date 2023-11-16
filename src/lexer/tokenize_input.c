@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 02:05:18 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/08 22:29:31 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/16 15:47:03 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ int	start_lexing(t_data *data)
 	inp = one_space_setter(data->input);
 	free(data->input);
 	if (!inp)
-		return (ft_error(ONESPACE_ALLOC_FAIL, 127), 1);
+		return (ft_error(data, ONESPACE_ALLOC_FAIL, 255), 1);
 	data->input = inp;
 	if (tokenize_cmd(&data->token, data->input))
-		return (ft_error(TOKENIZE_FAIL, 127), 1);
+		return (ft_error(data, TOKENIZE_FAIL, 255), 1);
 	return (0);
 }

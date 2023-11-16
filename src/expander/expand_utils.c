@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:49:37 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/15 10:40:10 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/16 15:34:34 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,6 @@ t_quoteType	get_q_state(char *str, int end)
 	}
 	return (quote);
 }
-
-// char	*replace_double_var(t_token *token, int *i)
-// {
-// 	char	*b_var;
-// 	char	*a_var;
-// 	char	*final_join;
-// 	char	*not_final_join;
-
-// 	b_var = ft_substr(token->str, 0, *i);
-// 	a_var = ft_substr(token->str, *i + 2, ft_strlen(token->str));
-// 	not_final_join = var_not_found(b_var, "{PID}", i);
-// 	final_join = ft_strjoin(not_final_join, a_var);
-// 	*i = ft_strlen(not_final_join);
-// 	return (final_join);
-// }
 
 char	*replace_double_var(t_token *token, int *i)
 {
@@ -101,17 +86,17 @@ void	pid_replacer(t_token *token)
 		}
 		i++;
 	}
-	if (token->str[i] == '\0')
-		token->type = WORD;
 }
 
-bool	is_expansion_possible(char *str)
+bool	is_expansion_possible(char *str, int t_type)
 {
 	int			i;
 	t_quoteType	quote;
 
 	quote = NONE;
 	i = 0;
+	if (t_type == WORD)
+		return (false);
 	while (str[i])
 	{
 		if (str[i] == '$')

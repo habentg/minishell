@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 02:34:15 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/15 03:17:40 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/16 12:53:59 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,27 +75,27 @@ int	handle_exit(t_data *data, t_cmd *cmd_node)
 {
 	shlvl_increment(data, 0);
 	if (arr_length(cmd_node->cmdarg) == 1)
-		g_exit_status = 0;
+		data->exit_code = 0;
 	else if (arr_length(cmd_node->cmdarg) == 2)
 	{
 		if (!valid_e_status(cmd_node->cmdarg[1]))
 		{
-			g_exit_status = 255;
+			data->exit_code = 255;
 			display_error_2("exit", cmd_node->cmdarg[1], \
 				"numeric argument required", 255);
 		}
 		else
 		{
-			g_exit_status = ft_atol(cmd_node->cmdarg[1]) % 256;
+			data->exit_code = ft_atol(cmd_node->cmdarg[1]) % 256;
 			if (ft_atol(cmd_node->cmdarg[1]) < 0)
-				g_exit_status = 256 + g_exit_status;
+				data->exit_code = 256 + data->exit_code;
 		}
 	}
 	else if (arr_length(cmd_node->cmdarg) > 2)
 	{
-		g_exit_status = 1;
+		data->exit_code = 1;
 		return (display_error("exit", "too many arguments", 1), 1);
 	}
 	ft_clean_data_done(&data, 1);
-	exit(g_exit_status);
+	exit(data->exit_code);
 }

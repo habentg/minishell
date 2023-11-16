@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 02:52:48 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/15 05:43:57 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/16 18:57:45 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ void	display_error(char *s1, char *s2, int exit_status)
 	ft_putstr_fd("\n", STDERR_FILENO);
 }
 
-void	ft_error(char *err_msg, int exit_status)
+void	ft_error(t_data *data, char *err_msg, int exit_status)
 {
-	g_exit_status = exit_status;
-	ft_putendl_fd(err_msg, 2);
+	data->exit_code = exit_status;
+	ft_putendl_fd(err_msg, STDERR_FILENO);
 }
 
 long long	ft_atol(char *str)

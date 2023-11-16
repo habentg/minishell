@@ -6,13 +6,13 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:12:27 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/15 13:05:05 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/16 15:47:10 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	init_var_expansion(t_data *data)
+static void	init_var_expansion(t_data *data)
 {
 	t_token	*tmp;
 
@@ -22,7 +22,7 @@ static int	init_var_expansion(t_data *data)
 		if (tmp->type == VAR)
 		{
 			pid_replacer(tmp);
-			if (is_expansion_possible(tmp->str))
+			if (is_expansion_possible(tmp->str, tmp->type))
 			{
 				expand_variable(data, tmp);
 				tmp->type = WORD;
@@ -32,7 +32,6 @@ static int	init_var_expansion(t_data *data)
 		}
 		tmp = tmp->next;
 	}
-	return (0);
 }
 
 static void	check_for_var(t_token **token_lst)
@@ -48,11 +47,9 @@ static void	check_for_var(t_token **token_lst)
 	}
 }
 
-int	start_expansion(t_data *data)
+void	start_expansion(t_data *data)
 {
 	check_for_var(&data->token);
-	if (init_var_expansion(data))
-		return (1);
+	init_var_expansion(data);
 	remove_quotes(data);
-	return (0);
 }

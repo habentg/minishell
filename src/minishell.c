@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:57:10 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/16 12:04:46 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/16 15:47:47 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,15 @@ int	init_data(t_data **data, char **envp)
 	(*data)->envi = NULL;
 	(*data)->path = NULL;
 	(*data)->env_lst = NULL;
+	(*data)->exit_code = 0;
 	init_pwd = getcwd(wd, PATH_MAX);
 	(*data)->cwd = ft_strdup(init_pwd);
 	if (!(*data)->cwd)
-		return (1);
+		return (ft_error(*data, "data init failure", 255), 1);
 	if (init_env_path(data, envp))
-		return (1);
+		return (ft_error(*data, "path init failure", 255), 1);
 	if (create_env_lst(data))
-		return (1);
+		return (ft_error(*data, "env_lst init failure", 255), 1);
 	return (0);
 }
 
@@ -44,7 +45,6 @@ int	launch_minishell(t_data *data)
 	while (1)
 	{
 		sig_handler();
-		// printf("\033[1;34m{%d}\033[0m", g_exit_status);
 		input_res = readline(PROMPT);
 		if (!input_res)
 		{
@@ -97,8 +97,8 @@ int	main(int ac, char **av, char **envp)
 	t_data	*data;
 
 	(void)av;
-	if (ac != 1)
-		return (1);
+	if (ac > 1)
+		return (display_error(av[1], NO_FILE_DIR, 0), 127);
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
 		return (1);

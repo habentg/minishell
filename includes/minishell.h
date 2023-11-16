@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/16 12:04:14 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/16 18:22:24 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef enum e_tokenType
 	APPEND,
 	TRUNC,
 	INPUT_REDIR,
-	HERE_DOC,
+	HERE_DOC, 
 	VAR,
 	END
 }			t_tokenType;
@@ -152,8 +152,8 @@ t_token				*tokenize_mem(char *mem);
 int					ft_tokendl_size(t_token **lst);
 
 // var expansion funcs
-int					start_expansion(t_data *data);
-bool				is_expansion_possible(char *str);
+void				start_expansion(t_data *data);
+bool				is_expansion_possible(char *str, int t_type);
 void				pid_replacer(t_token *token);
 t_quoteType			get_q_state(char *str, int end);
 void				remove_quotes(t_data *data);
@@ -168,10 +168,8 @@ char				*var_not_found(char *b_var, char *a_var, int *index);
 int					start_cmd_extraction(t_data *data);
 int					cmd_node_construction(t_data *data, t_token **token, \
 	t_cmd **cmd_lst);
-int					extract_one_cmd(t_data *data, t_token **token, \
-	t_cmd **cmd_lst);
-int					extract_word(t_token **token, t_cmd **cmd_node);
-int					extract_cmdargs(t_token **token, t_cmd **cmd_node);
+int					extract_word(t_data *data, \
+	t_token **token, t_cmd **cmd_node);
 void				extract_pipe(t_token **token, t_cmd **cmd_lst);
 void				extract_trunc(t_token **token, t_cmd **cmd_node);
 int					extract_input_redir(t_token **token, t_cmd **cmd_node);
@@ -186,14 +184,14 @@ t_cmd				*ft_lstlast(t_cmd *lst);
 void				add_cmdnode_back(t_cmd **lst, t_cmd *node);
 int					ft_dlsize(t_cmd *lst);
 t_iofds				*new_iofds(void);
-int					iofd_validity(t_iofds *iofd);
+int					iofd_validity(t_data *data, t_iofds *iofd);
 int					check_cmd_validity(t_data *data, t_cmd **cmd_node);
 
 // execution funcs
 int					start_execution(t_data *data);
 char				*get_path(char **envp, char *key);
-int					create_pipes(t_cmd *cmd);
-int					is_builtin_cmd(t_cmd *cmd_node);
+int					create_pipes(t_data *data, t_cmd *cmd);
+bool				is_builtin_cmd(t_cmd *cmd_node);
 void				exec_builtin_cmd(t_cmd *cmd_node, t_data *data);
 int					pre_exec_checks(t_data *data);
 char				**ft_split_custom(char *str);
@@ -215,14 +213,14 @@ void				backup_std_fds(t_cmd **cmd_node);
 void				close_cmd_fds(t_cmd **cmd_node);
 void				close_used_pipe_fds(t_cmd **cmd_lst, t_cmd **cmd_node);
 void				close_unused_pipe_fds(t_cmd **cmd_lst, t_cmd *cmd_node);
-void				set_redirections(t_iofds *iofd);
+void				set_redirections(t_data *data, t_iofds *iofd);
 void				reset_stdio(t_iofds *iofds);
-void				exitshell(t_data *data, int excode);
+void				exitshell(t_data *data, t_cmd *cmdnode, int excode);
 void				close_open_fds(t_cmd *cmd_lst, int exc_ended);
 // Error && other helper funcs
 int					possible_error(t_data **data);
 int					operator_pipe_error(t_data *data);
-void				ft_error(char *err_msg, int exit_status);
+void				ft_error(t_data *data, char *err_msg, int exit_status);
 char				*one_space_setter(char *str);
 int					is_heredoc_append(char *str, int i, char c);
 int					is_whitespace(char c);

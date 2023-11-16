@@ -6,11 +6,40 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 06:53:39 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/15 09:53:41 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/16 20:20:17 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+// static void	remove_empty_token(t_token *token_lst, t_token *token)
+// {
+// 	t_token	*t_node;
+
+// 	t_node = token_lst;
+// 	while (t_node->next)
+// 	{
+// 		if (t_node->next == token)
+// 		{
+// 			if (t_node)
+// 			t_node->prev = token->next;
+// 			free(token->str);
+// 			free(token);
+// 			return ;
+// 		}
+// 		t_node = t_node->next;
+// 	}
+// }
+
+void	free_allocs(char *varname_tmp, char *before_var, \
+	char *after_var, char *path_join)
+{
+	free(varname_tmp);
+	free(before_var);
+	free(after_var);
+	if (path_join)
+		free(path_join);
+}
 
 char	*var_not_found(char *b_var, char *a_var, int *index)
 {
@@ -24,16 +53,6 @@ char	*var_not_found(char *b_var, char *a_var, int *index)
 		final_join = ft_strjoin(b_var, a_var);
 	*index = ft_strlen(b_var);
 	return (final_join);
-}
-
-void	free_allocs(char *varname_tmp, char *before_var, \
-	char *after_var, char *path_join)
-{
-	free(varname_tmp);
-	free(before_var);
-	free(after_var);
-	if (path_join)
-		free(path_join);
 }
 
 int	replace_var(t_data *data, t_token *token, char *var_name, int *index)
@@ -71,6 +90,8 @@ int	replace_var(t_data *data, t_token *token, char *var_name, int *index)
 	}
 	free(token->str);
 	token->str = final_join;
+	// if (ft_strlen(token->str) == 0)
+	// 	remove_empty_token(data->token, token);
 	free_allocs(varname_tmp, before_var, after_var, path_join);
 	return (*index);
 }

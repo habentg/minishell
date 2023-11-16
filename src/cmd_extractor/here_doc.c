@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:54:44 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/15 13:52:08 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/16 12:53:59 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,14 @@ void	expand_heredoc_line(t_data *data, char *content, int tmp_fd)
 	int	i;
 
 	i = -1;
+	// expand it properly here
 	while (content[++i])
 	{
 		if (content[i] != '$' || (content[i] == '$' && !content[i + 1]))
 			ft_putchar_fd(content[i], tmp_fd);
 		else if (content[i] == '$' && (content[i + 1] && content[i + 1] == '?'))
 		{
-			ft_putnbr_fd(g_exit_status, tmp_fd);
+			ft_putnbr_fd(data->exit_code, tmp_fd);
 			i++;
 		}
 		else if (content[i] == '$' && (content[i + 1] && (content[i + 1] == '$' \
@@ -89,7 +90,7 @@ void	extract_here_doc(t_data *data, t_token **token, t_cmd **cmd_node)
 	tmp_fd = open(temp_file, O_CREAT | O_TRUNC | O_RDWR, S_IRUSR | S_IWUSR);
 	while (1)
 	{
-		if (g_exit_status == 127)
+		if (data->exit_code == 127)
 			return ;
 		content_line = readline("heredoc> ");
 		if (check_and_expand(data, cmd_node, content_line, tmp_fd))

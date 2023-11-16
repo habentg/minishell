@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 01:30:41 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/08 22:28:54 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/16 15:46:57 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ static int	operator_end_err(t_data **data)
 	if (i <= 0)
 		return (0);
 	if ((*data)->input[i] == '|')
-		return (ft_error(PIPE_AT_END, 258), 1);
+		return (ft_error(*data, PIPE_AT_END, 258), 1);
 	else if ((*data)->input[i] == '>' || (*data)->input[i] == '<')
-		return (ft_error(REDIR_AT_END, 258), 1);
+		return (ft_error(*data, REDIR_AT_END, 258), 1);
 	return (0);
 }
 
@@ -46,7 +46,7 @@ static int	open_qoute_err(t_data **data)
 			flag_d = !flag_d;
 	}
 	if (flag_s || flag_d)
-		return (ft_error(UNCLOSED_QOUTE, 258), 1);
+		return (ft_error(*data, UNCLOSED_QOUTE, 258), 1);
 	return (0);
 }
 
@@ -75,21 +75,21 @@ int	operator_pipe_error(t_data *data)
 	while (token)
 	{
 		if (token->type == PIPE && token->next->type == END)
-			return (ft_error(OPERATOR_PIPE_ERROR, 258), 1);
+			return (ft_error(data, OPERATOR_PIPE_ERROR, 258), 1);
 		if (is_token_operator(token) && token->next->type == END)
-			return (ft_error(REDIR_AT_END, 258), 1);
+			return (ft_error(data, REDIR_AT_END, 258), 1);
 		if (token->type == PIPE && token->next->type == PIPE)
-			return (ft_error(REDIR_AT_END, 258), 1);
+			return (ft_error(data, REDIR_AT_END, 258), 1);
 		if (is_token_operator(token) && token->next->type == PIPE)
-			return (ft_error(REDIR_AT_END, 258), 1);
+			return (ft_error(data, REDIR_AT_END, 258), 1);
 		if (is_token_operator(token) && token->next->type == HERE_DOC)
-			return (ft_error(OPERATOR_ERROR_HD, 258), 1);
+			return (ft_error(data, OPERATOR_ERROR_HD, 258), 1);
 		if (is_token_operator(token) && token->next->type == APPEND)
-			return (ft_error(OPERATOR_ERROR_APP, 258), 1);
+			return (ft_error(data, OPERATOR_ERROR_APP, 258), 1);
 		if (is_token_operator(token) && token->next->type == TRUNC)
-			return (ft_error(OPERATOR_ERROR_TRU, 258), 1);
+			return (ft_error(data, OPERATOR_ERROR_TRU, 258), 1);
 		if (is_token_operator(token) && token->next->type == INPUT_REDIR)
-			return (ft_error(OPERATOR_ERROR_INP, 258), 1);
+			return (ft_error(data, OPERATOR_ERROR_INP, 258), 1);
 		token = token->next;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 03:13:51 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/15 05:28:32 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/16 14:11:26 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	env_lst_to_arr(t_data *data)
 	data->envi = tmp_arr;
 }
 
-void	print_export(char **envi_arr)
+int	print_export(t_data *data, char **envi_arr)
 {
 	char	**tmp_arr;
 	char	**split_str;
@@ -50,6 +50,8 @@ void	print_export(char **envi_arr)
 	i = -1;
 	split_str = NULL;
 	tmp_arr = sorted_envi(envi_arr);
+	if (!tmp_arr)
+		return (ft_error(data, "sorting envi failed", 1), 1);
 	while (tmp_arr[++i])
 	{
 		split_str = ft_split_custom(tmp_arr[i]);
@@ -61,6 +63,7 @@ void	print_export(char **envi_arr)
 	}
 	if (tmp_arr)
 		ft_clean_arr(tmp_arr);
+	return (0);
 }
 
 int	valid_key_check(char *key, int unset_flag)
@@ -92,7 +95,7 @@ int	handle_export(t_data *data, t_cmd *cmd_node)
 	arr = NULL;
 	i = 0;
 	if (cmd_node->cmdarg[1] == NULL)
-		return (print_export(data->envi), 0);
+		return (print_export(data, data->envi));
 	while (cmd_node->cmdarg[++i])
 	{
 		if (ft_strlen(cmd_node->cmdarg[i]) == 0 || (ft_strlen \

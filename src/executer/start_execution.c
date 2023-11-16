@@ -6,30 +6,11 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 10:37:24 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/15 13:47:29 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/16 18:36:59 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-// void sigchld_handler(int signo) {
-
-//     pid_t pid;
-//     int status;
-
-//     (void)signo;  // Suppress unused variable warning
-//     while ((pid = waitpid(-1, &status, WNOHANG)) > 0) {
-//         if (pid != 0) {
-//             if (WIFSIGNALED(status)) {
-//                 g_exit_status = 128 + WTERMSIG(status);
-//             } else if (WIFEXITED(status)) {
-//                 g_exit_status = WEXITSTATUS(status);
-//             } else {
-//                continue ;
-//             }
-//         }
-//     }
-// }
 
 int	fork_wait(t_data *data)
 {
@@ -41,13 +22,17 @@ int	fork_wait(t_data *data)
 	while (1)
 	{
 		ch_pid = waitpid(-1, &status, 0);
-		if (ch_pid == 0)
-			g_exit_status = (status);
 		if (ch_pid == -1 && errno == ECHILD)
 			break ;
 	}
-	// printf("\033[1;34m~~>[%d]\033[0m\n", g_exit_status);
-	return (status);
+	if (WIFEXITED(status))
+		data->exit_code = WEXITSTATUS(status);
+	if (WIFSIGNALED(status))
+		data->exit_code = WTERMSIG(status) + 128;
+	printf("pid: %d\n", ch_pid);
+	printf("status: %d\n", status);
+	printf("exit code: %d\n", data->exit_code);
+	return (data->exit_code);
 }
 
 int	fork_and_run(t_data *data, t_cmd *tmp_cmd, pid_t *id)
@@ -57,17 +42,17 @@ int	fork_and_run(t_data *data, t_cmd *tmp_cmd, pid_t *id)
 		child_signals(tmp_cmd);
 		*id = fork();
 		if (*id == -1)
-			return (ft_error("Error: failed to fork!", 127), 1);
+			return (ft_error(data, "Error: failed to fork!", 255), 1);
 		if (*id == 0)
 		{
 			dup_pipe_fds(&data->cmd_lst, &tmp_cmd);
-			set_redirections(tmp_cmd->iofd);
+			set_redirections(data, tmp_cmd->iofd);
 			close_open_fds(data->cmd_lst, 0);
 			if (is_builtin_cmd(tmp_cmd))
 				exec_builtin_cmd(tmp_cmd, data);
 			else
 				execve(tmp_cmd->cmd, tmp_cmd->cmdarg, data->envi);
-			exitshell(data, 1);
+			exitshell(data, tmp_cmd, 1);
 		}
 	}
 	return (0);
@@ -97,7 +82,7 @@ int	start_execution(t_data *data)
 		exec_builtin_cmd(data->cmd_lst, data);
 	else
 	{
-		if (create_pipes(data->cmd_lst))
+		if (create_pipes(data, data->cmd_lst))
 			return (1);
 		exec_multiple_cmds(data);
 	}
