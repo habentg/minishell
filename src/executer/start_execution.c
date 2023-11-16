@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 10:37:24 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/16 18:36:59 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/17 02:35:51 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,6 @@ int	fork_wait(t_data *data)
 		data->exit_code = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))
 		data->exit_code = WTERMSIG(status) + 128;
-	printf("pid: %d\n", ch_pid);
-	printf("status: %d\n", status);
-	printf("exit code: %d\n", data->exit_code);
 	return (data->exit_code);
 }
 

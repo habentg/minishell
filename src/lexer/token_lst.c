@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 02:46:29 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/30 04:46:22 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/17 01:58:36 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ int	ft_tokendl_size(t_token **lst)
 
 	temp_node = *lst;
 	i = 0;
+	if (!temp_node)
+		return (0);
 	while (temp_node != NULL)
 	{
 		temp_node = temp_node->next;

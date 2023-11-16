@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/16 18:22:24 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/17 02:29:16 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef enum e_tokenType
 	APPEND,
 	TRUNC,
 	INPUT_REDIR,
-	HERE_DOC, 
+	HERE_DOC,
 	VAR,
 	END
 }			t_tokenType;
@@ -152,7 +152,7 @@ t_token				*tokenize_mem(char *mem);
 int					ft_tokendl_size(t_token **lst);
 
 // var expansion funcs
-void				start_expansion(t_data *data);
+int					start_expansion(t_data *data);
 bool				is_expansion_possible(char *str, int t_type);
 void				pid_replacer(t_token *token);
 t_quoteType			get_q_state(char *str, int end);
