@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/15 13:51:30 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/16 12:04:14 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,8 @@ typedef struct s_data
 	char			**envi;
 	char			**path;
 	t_env			*env_lst;
+	char			*cwd;
+	int				exit_code;
 }					t_data;
 
 // launch funcs
@@ -196,7 +198,7 @@ void				exec_builtin_cmd(t_cmd *cmd_node, t_data *data);
 int					pre_exec_checks(t_data *data);
 char				**ft_split_custom(char *str);
 			// builtins
-int					handle_pwd(void);
+int					handle_pwd(t_data *data);
 int					handle_echo(t_cmd *cmd_node);
 int					handle_exit(t_data *data, t_cmd *cmd_node);
 int					handle_export(t_data *data, t_cmd *cmd_node);

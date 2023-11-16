@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:09:52 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/15 03:37:27 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/16 11:43:58 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	is_builtin_cmd(t_cmd *cmd_node)
 	return (0);
 }
 
-int	handle_pwd(void)
+int	handle_pwd(t_data *data)
 {
 	char	path[PATH_MAX];
 
@@ -40,7 +40,12 @@ int	handle_pwd(void)
 		printf("%s\n", path);
 		return (0);
 	}
-	perror("pwd: getcwd: error retrieving current directory");
+	if (data->cwd)
+	{
+		printf("%s\n", data->cwd);
+		return (0);
+	}
+	display_error_2("pwd", "getcwd", "error retrieving current directory", 1);
 	return (1);
 }
 
@@ -69,7 +74,7 @@ void	exec_builtin_cmd(t_cmd *cmd_node, t_data *data)
 	if (ft_strncmp_custom(cmd_node->cmd, "cd", 2) == 0)
 		g_exit_status = handle_cd(cmd_node, data);
 	else if (ft_strncmp_custom(cmd_node->cmd, "pwd", 3) == 0)
-		g_exit_status = handle_pwd();
+		g_exit_status = handle_pwd(data);
 	else if (ft_strncmp_custom(cmd_node->cmd, "echo", 4) == 0)
 		g_exit_status = handle_echo(cmd_node);
 	else if (ft_strncmp_custom(cmd_node->cmd, "exit", 4) == 0)

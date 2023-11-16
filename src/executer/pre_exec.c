@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 04:01:58 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/15 05:20:32 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/16 12:02:44 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,11 @@ int	iofd_validity(t_iofds *iofd)
 	if (iofd->fdin == -2)
 	{
 		close(iofd->fdin);
+		g_exit_status = 1;
 		if (access(iofd->infile, F_OK) != 0)
-		{
-			g_exit_status = 1;
-			return (display_error(iofd->infile, NO_FILE_DIR, 127), 1);
-		}		
+			return (display_error(iofd->infile, NO_FILE_DIR, 127), 1);	
 		if (access(iofd->infile, R_OK | X_OK) != 0)
-		{
-			g_exit_status = 1;
 			return (display_error(iofd->infile, PERMISSION_DENY, 126), 1);
-		}
 	}
 	if (iofd->fdout == -2)
 	{

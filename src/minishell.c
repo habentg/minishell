@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:57:10 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/15 13:09:15 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/16 12:04:46 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,19 @@
 // initialize my data struct
 int	init_data(t_data **data, char **envp)
 {
+	char	wd[PATH_MAX];
+	char	*init_pwd;
+
 	(*data)->input = NULL;
 	(*data)->cmd_lst = NULL;
 	(*data)->token = NULL;
 	(*data)->envi = NULL;
 	(*data)->path = NULL;
 	(*data)->env_lst = NULL;
+	init_pwd = getcwd(wd, PATH_MAX);
+	(*data)->cwd = ft_strdup(init_pwd);
+	if (!(*data)->cwd)
+		return (1);
 	if (init_env_path(data, envp))
 		return (1);
 	if (create_env_lst(data))
@@ -37,7 +44,7 @@ int	launch_minishell(t_data *data)
 	while (1)
 	{
 		sig_handler();
-		// printf("\033[1;34m[%d]\033[0m", g_exit_status);
+		// printf("\033[1;34m{%d}\033[0m", g_exit_status);
 		input_res = readline(PROMPT);
 		if (!input_res)
 		{
