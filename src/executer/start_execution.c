@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 10:37:24 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/17 15:48:26 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/17 16:00:17 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,7 @@ int	fork_and_run(t_data *data, t_cmd *tmp_cmd, pid_t *id)
 		if (*id == 0)
 		{
 			dup_pipe_fds(&data->cmd_lst, &tmp_cmd);
-			if (set_redirections(data, tmp_cmd->iofd))
-			{
-				printf ("we here in set redirection\n");
-				data->exit_code = 1;
-				exitshell(data, tmp_cmd, 1);
-			}
+			set_redirections(data, tmp_cmd->iofd);
 			close_open_fds(data->cmd_lst, 0);
 			if (is_builtin_cmd(tmp_cmd))
 				exec_builtin_cmd(tmp_cmd, data);
