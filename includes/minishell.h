@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/17 04:13:04 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/17 15:43:21 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,11 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <errno.h>
+ #include <signal.h>
 
 # include "libft/libft.h"
 
-# define PROMPT "\e[1;32mሚ  ኒ ሸ ል ▸ \e[0m"
+# define PROMPT "\e[1;32mሚ  ኒ ሸ ል $▸ \e[0m"
 
 //allocation error messages
 # define ONESPACE_ALLOC_FAIL "Error: One space allocation failed"
@@ -193,7 +194,7 @@ char				*get_path(char **envp, char *key);
 int					create_pipes(t_data *data, t_cmd *cmd);
 bool				is_builtin_cmd(t_cmd *cmd_node);
 void				exec_builtin_cmd(t_cmd *cmd_node, t_data *data);
-int					pre_exec_checks(t_data *data);
+int					pre_exec_checks(t_data *data, t_cmd *cmd_node);
 char				**ft_split_custom(char *str);
 			// builtins
 int					handle_pwd(t_data *data);
@@ -213,7 +214,7 @@ void				backup_std_fds(t_cmd **cmd_node);
 void				close_cmd_fds(t_cmd **cmd_node);
 void				close_used_pipe_fds(t_cmd **cmd_lst, t_cmd **cmd_node);
 void				close_unused_pipe_fds(t_cmd **cmd_lst, t_cmd *cmd_node);
-void				set_redirections(t_data *data, t_iofds *iofd);
+int					set_redirections(t_data *data, t_iofds *iofd);
 void				reset_stdio(t_iofds *iofds);
 void				exitshell(t_data *data, t_cmd *cmdnode, int excode);
 void				close_open_fds(t_cmd *cmd_lst, int exc_ended);

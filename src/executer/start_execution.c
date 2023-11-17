@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 10:37:24 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/17 03:14:39 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/17 15:48:26 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,12 @@ int	fork_and_run(t_data *data, t_cmd *tmp_cmd, pid_t *id)
 		if (*id == 0)
 		{
 			dup_pipe_fds(&data->cmd_lst, &tmp_cmd);
-			set_redirections(data, tmp_cmd->iofd);
+			if (set_redirections(data, tmp_cmd->iofd))
+			{
+				printf ("we here in set redirection\n");
+				data->exit_code = 1;
+				exitshell(data, tmp_cmd, 1);
+			}
 			close_open_fds(data->cmd_lst, 0);
 			if (is_builtin_cmd(tmp_cmd))
 				exec_builtin_cmd(tmp_cmd, data);
@@ -67,6 +72,8 @@ int	exec_multiple_cmds(t_data *data)
 	id = 1;
 	while (tmp_cmd && id != 0)
 	{
+		if (pre_exec_checks(data, tmp_cmd))
+			return (data->exit_code);
 		if (fork_and_run(data, tmp_cmd, &id))
 			return (ft_error(data, "Error: failed to fork!", 255), 1);
 		tmp_cmd = tmp_cmd->next;
@@ -76,8 +83,6 @@ int	exec_multiple_cmds(t_data *data)
 
 int	start_execution(t_data *data)
 {
-	if (pre_exec_checks(data))
-		return (0);
 	if (ft_dlsize(data->cmd_lst) == 1 && is_builtin_cmd(data->cmd_lst))
 		exec_builtin_cmd(data->cmd_lst, data);
 	else

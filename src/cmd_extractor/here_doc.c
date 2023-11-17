@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:54:44 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/17 05:35:20 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/17 15:16:40 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,6 @@ void	extract_here_doc(t_data *data, t_token **token, t_cmd **cmd_node)
 	tmp_fd = open(temp_file, O_CREAT | O_TRUNC | O_RDWR, S_IRUSR | S_IWUSR);
 	while (1)
 	{
-		if (data->exit_code == 127)
-			return ;
 		content_line = readline("heredoc> ");
 		if (check_and_expand(data, cmd_node, content_line, tmp_fd))
 			break ;

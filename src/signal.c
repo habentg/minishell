@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 19:05:20 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/16 14:42:37 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/17 14:44:39 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,14 @@ void	child_signal_handler(int num)
 		write(1, "\n", 1);
 	else if (num == SIGQUIT)
 		ft_putstr_fd("Quit: 3\n", 2);
+}
+
+
+void	child_signals(t_cmd *cmd)
+{
+	(void)cmd;
+	signal(SIGINT, child_signal_handler);
+	signal(SIGQUIT, child_signal_handler);
 }
 
 void	sig_p_process(int sig)
@@ -35,16 +43,6 @@ void	sig_p_process(int sig)
 			g_exit_status = 1;
 		}
 	}
-}
-
-void	child_signals(t_cmd *cmd)
-{
-	(void)cmd;
-	// if (ft_strcmp(cmd->input.name, "here_doc") != 0)
-	// {
-		signal(SIGINT, child_signal_handler);
-		signal(SIGQUIT, child_signal_handler);
-	// }
 }
 
 void	sig_handler(void)
