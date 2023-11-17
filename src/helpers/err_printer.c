@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 02:52:48 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/16 18:57:45 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/17 04:05:49 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,12 @@ long long	ft_atol(char *str)
 	return (number * sign);
 }
 
+// custom split function
+/*
+	@ splits the string at the first occurence of '='
+	@ returns an array of 2 strings
+	@ if no '=' is found, returns an array of 1 string
+*/
 char	**ft_split_custom(char *str)
 {
 	int		i;

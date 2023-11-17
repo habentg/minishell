@@ -6,12 +6,15 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 17:51:34 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/16 14:44:54 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/17 07:12:37 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/*
+	this whole file is just to extract the command and its arguments
+*/
 int	count_cmdargs(t_token *token)
 {
 	int	i;

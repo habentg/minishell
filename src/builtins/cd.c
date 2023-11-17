@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 21:17:17 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/16 15:54:57 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/17 04:14:02 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,7 @@ int	change_dir_updata_envi(t_data *data, char *path)
 int	handle_cd(t_cmd *cmd_node, t_data *data)
 {
 	char	*path;
-	int		i;
 
-	i = 0;
 	if (!cmd_node->cmdarg[1] || ft_strncmp_custom(cmd_node->cmdarg[1], "~", 1) \
 		== 0 || (cmd_node->cmdarg[1] && ft_strlen(cmd_node->cmdarg[1]) == 0))
 	{

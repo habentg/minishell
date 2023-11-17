@@ -6,13 +6,18 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 16:05:43 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/17 02:24:42 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/17 06:44:45 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 // get path from envi
+/*
+	~ match the key with the envp array
+	~ if the key matches, copy the value to a new string
+	~ return the path
+*/
 char	*get_path(char **envp, char *key)
 {
 	int		i;
@@ -33,6 +38,11 @@ char	*get_path(char **envp, char *key)
 	return (path);
 }
 
+/*
+func to populate the env linked-list
+	# create a new node from the key & value pairs
+	# add the node to the end of the list
+*/
 static void	add_env_back_start(t_data *data, char **env_node_arr)
 {
 	t_env	*env_node;
@@ -49,6 +59,10 @@ static void	add_env_back_start(t_data *data, char **env_node_arr)
 }
 
 // env_lst to arr
+/*
+	~ split each member of the envi and populate it in env_lst (key&value)
+	~ return 0 if everything went well
+*/
 int	create_env_lst(t_data **data)
 {
 	int		i;
@@ -66,6 +80,13 @@ int	create_env_lst(t_data **data)
 }
 
 // init env path
+/*
+	~ get the envp array & copy it to the envi array
+	~ get the path (from envi), split and put it in the path array
+	~ if there is no path, create an empty path array
+		-- coz our minishell can work without the path
+	~ return 0 if everything went well
+*/
 int	init_env_path(t_data **data, char **envp)
 {
 	int		i;
@@ -91,6 +112,36 @@ int	init_env_path(t_data **data, char **envp)
 }
 
 // init minishell program
+/*
+	all minishell steps are here
+			A. PARSING - PART
+	1. basic error handling ->  before all the hustle
+		* unclosed quotes & redirection/pipe at the end
+	2. lexical analysis ->  tokenize the input
+		* recognize every member of the input,
+		* populate it in a linked-list
+		// briefly explained in the start lexing function
+	3. variable expansion ->  expand possible variables
+		* playing with token linked-list
+		* expand the variables i.e something with $ in it
+			// $? -> exit code
+			// $VALID -> replace with the value of the variable
+			// $INVALID -> replace with NULL
+		* removing extra qoutes, thats what bash does
+		// briefly explained in the start var expantion file
+	4. command extraction ->  extract the commands from the token linked-list
+		NOTE: a command is a sequence of tokens separated by PIPE
+		* populate the command linked-list
+		* one command per node
+		// briefly explained in the start cmd extraction file
+		
+			A. EXECUTION - PART
+	5. execution ->  execute the commands
+		* play with the command linked-list
+		* execute the commands one by one in in their own separate process
+		* wait for the child process to finish -> collect exit code
+		// briefly explained inside start execution function.
+*/
 int	init_program(t_data *data)
 {
 	if (possible_error(&data))

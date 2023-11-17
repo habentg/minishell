@@ -6,12 +6,19 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 02:05:18 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/16 15:47:03 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/17 04:48:10 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/*
+	TOKENIZER
+	% split the one spaced input into an array of strings
+	% loop through the array and tokenize (assign a type to) each string
+	% add the token to the end of the token linked-list
+	% clean the array and gtfo
+*/
 int	tokenize_cmd(t_token **token_lst, char *cmd)
 {
 	char	**mem_arr;
@@ -33,6 +40,12 @@ int	tokenize_cmd(t_token **token_lst, char *cmd)
 	return (0);
 }
 
+/*
+	LEXICAL ANALYSIS
+	~ remove all the extra spaces
+	~ add a space before and after the pipe/redirects/qouted values ...
+	~ > TO THE TOKENIZER FUNCTION
+*/
 int	start_lexing(t_data *data)
 {
 	char	*inp;

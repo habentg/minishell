@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 03:13:51 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/16 14:11:26 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/17 07:17:50 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	print_export(t_data *data, char **envi_arr)
 		split_str = ft_split_custom(tmp_arr[i]);
 		printf("declare -x %s", split_str[0]);
 		if (split_str[1])
-			printf("=\'%s\'", split_str[1]);
+			printf("=\"%s\"", split_str[1]);
 		printf("\n");
 		ft_clean_arr(split_str);
 	}

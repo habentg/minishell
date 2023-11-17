@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:49:37 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/16 15:34:34 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/17 06:48:42 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ char	*replace_double_var(t_token *token, int *i)
 	if (!b_var)
 		b_var = NULL;
 	a_var = ft_substr(token->str, *i + 2, ft_strlen(token->str));
-	if (!b_var)
-		b_var = NULL;
+	if (!a_var)
+		a_var = NULL;
 	if (!b_var)
 		not_final_join = ft_strdup("{PID}");
 	else

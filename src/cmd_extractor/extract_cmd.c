@@ -6,12 +6,20 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 16:49:08 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/16 15:46:28 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/17 07:13:30 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/*
+	ONE CMD Extractor
+	% all the "word" types unitl redirection with be considered as cmd and its args
+	% then handle the redirections
+		* token after file is the file name except in here_doc (its exit delimeter)
+	% we finally add the cmd node to the cmd_lst
+	DONE
+*/
 static int	extract_one_cmd(t_data *data, t_token **token, t_cmd **cmd_lst)
 {
 	t_cmd	*cmd_node;
@@ -35,6 +43,14 @@ static int	extract_one_cmd(t_data *data, t_token **token, t_cmd **cmd_lst)
 	return (0);
 }
 
+/*
+	CMD CONSTRUCTION
+		* we consider until we reach a pipe or end as ONE cmd
+		* if there is pipe we flag the last command that it has a pipe
+			and we create a new command node (recursively)
+		* if there is no pipe, that means we are done with our token sequence
+			REMEMBER: pipe cant be the last token
+*/
 int	cmd_node_construction(t_data *data, t_token **token, t_cmd **cmd_lst)
 {
 	while ((*token)->type != END && (*token)->type != PIPE)
@@ -50,7 +66,8 @@ int	cmd_node_construction(t_data *data, t_token **token, t_cmd **cmd_lst)
 	return (0);
 }
 
-// implemet a recursive function that will handle the cmd extraction until pipe
+// implemet a recursive function that will handle 
+// the cmd extraction until pipe or end
 int	start_cmd_extraction(t_data *data)
 {
 	t_token	*end_node;

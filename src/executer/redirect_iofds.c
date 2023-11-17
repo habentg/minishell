@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 19:26:46 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/16 14:25:25 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/17 02:55:59 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	set_redirections(t_data *data, t_iofds *iofd)
 {
-	if (!iofd)
+	if (!iofd || iofd->fdin == -2 || iofd->fdout == -2)
 		return ;
 	iofd->stdin_backup = dup(STDIN_FILENO);
 	if (iofd->stdin_backup == -1)
@@ -26,7 +26,7 @@ void	set_redirections(t_data *data, t_iofds *iofd)
 	{
 		if (dup2(iofd->fdin, STDIN_FILENO) == -1)
 		{
-			ft_error(data, FD_DUP_FAILED, ft_atoi(strerror(errno)));
+			ft_error(data, FD_DUP_FAILED, errno);
 			return ;
 		}
 	}
@@ -34,7 +34,7 @@ void	set_redirections(t_data *data, t_iofds *iofd)
 	{
 		if (dup2(iofd->fdout, STDOUT_FILENO) == -1)
 		{
-			ft_error(data, FD_DUP_FAILED, ft_atoi(strerror(errno)));
+			ft_error(data, FD_DUP_FAILED, errno);
 			return ;
 		}
 	}

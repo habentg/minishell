@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 10:37:24 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/17 02:35:51 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/17 03:14:39 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,12 @@ int	fork_wait(t_data *data)
 {
 	pid_t	ch_pid;
 	int		status;
+	int		ret_status;
 
 	close_open_fds(data->cmd_lst, 0);
 	ch_pid = 0;
+	ret_status = 0;
+	status = 0;
 	while (1)
 	{
 		ch_pid = waitpid(-1, &status, 0);
@@ -26,10 +29,10 @@ int	fork_wait(t_data *data)
 			break ;
 	}
 	if (WIFEXITED(status))
-		data->exit_code = WEXITSTATUS(status);
+		ret_status = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))
-		data->exit_code = WTERMSIG(status) + 128;
-	return (data->exit_code);
+		ret_status = WTERMSIG(status) + 128;
+	return (ret_status);
 }
 
 int	fork_and_run(t_data *data, t_cmd *tmp_cmd, pid_t *id)
@@ -55,7 +58,7 @@ int	fork_and_run(t_data *data, t_cmd *tmp_cmd, pid_t *id)
 	return (0);
 }
 
-void	exec_multiple_cmds(t_data *data)
+int	exec_multiple_cmds(t_data *data)
 {
 	t_cmd	*tmp_cmd;
 	pid_t	id;
@@ -65,10 +68,10 @@ void	exec_multiple_cmds(t_data *data)
 	while (tmp_cmd && id != 0)
 	{
 		if (fork_and_run(data, tmp_cmd, &id))
-			return ;
+			return (ft_error(data, "Error: failed to fork!", 255), 1);
 		tmp_cmd = tmp_cmd->next;
 	}
-	fork_wait(data);
+	return (fork_wait(data));
 }
 
 int	start_execution(t_data *data)
@@ -81,7 +84,7 @@ int	start_execution(t_data *data)
 	{
 		if (create_pipes(data, data->cmd_lst))
 			return (1);
-		exec_multiple_cmds(data);
+		data->exit_code = exec_multiple_cmds(data);
 	}
 	return (0);
 }

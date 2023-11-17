@@ -6,12 +6,16 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:12:27 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/17 02:24:38 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/17 07:03:56 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/*
+	after var expansion, remove any empty tokens
+	they are useless
+*/
 static void	remove_empty_tokens(t_token **token_lst)
 {
 	t_token	*curr_token;
@@ -35,6 +39,18 @@ static void	remove_empty_tokens(t_token **token_lst)
 	}
 }
 
+/*
+	when type is var, check if it is a valid variable
+		* replace $$ with {PID}, would expand it to the pid, getpid() is forbiden
+		* $ in single quotes is not a variable
+		* $ in double quotes && without qoutes is a variable
+	$ if expandable
+		* FOLLOW ME TO EXPAND_VARIABLE
+		* change the type to WORD
+	$ else
+		* change the type to WORD
+		
+*/
 static void	init_var_expansion(t_data *data)
 {
 	t_token	*tmp;
@@ -57,6 +73,9 @@ static void	init_var_expansion(t_data *data)
 	}
 }
 
+/*
+	~ if it has a $ in it, must be a var
+*/
 static void	check_for_var(t_token **token_lst)
 {
 	t_token	*tmp;
@@ -64,12 +83,19 @@ static void	check_for_var(t_token **token_lst)
 	tmp = *token_lst;
 	while (tmp)
 	{
-		if (strchr(tmp->str, '$'))
+		if (ft_strchr(tmp->str, '$'))
 			tmp->type = VAR;
 		tmp = tmp->next;
 	}
 }
 
+/*
+	VAR EXPANSION
+	~ expand the variable
+	~ remove any empty tokens (happens after $INVALID_VAR)
+	~ remove extra qoutes 
+	~ if !token_lst return 1 and I dont have to proced with command extration	
+*/
 int	start_expansion(t_data *data)
 {
 	check_for_var(&data->token);

@@ -6,17 +6,22 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:57:10 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/17 02:25:51 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/17 05:24:19 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 // initialize my data struct
+/*
+	!! initialize all the data struct members
+	!! get & save the current working directory (gonna need it in cd builtin)
+	!! initialize the path variables
+	!! create the env_lst from the envi -> easy to manipulate
+*/
 int	init_data(t_data **data, char **envp)
 {
 	char	wd[PATH_MAX];
-	char	*init_pwd;
 
 	(*data)->input = NULL;
 	(*data)->cmd_lst = NULL;
@@ -25,8 +30,7 @@ int	init_data(t_data **data, char **envp)
 	(*data)->path = NULL;
 	(*data)->env_lst = NULL;
 	(*data)->exit_code = 0;
-	init_pwd = getcwd(wd, PATH_MAX);
-	(*data)->cwd = ft_strdup(init_pwd);
+	(*data)->cwd = ft_strdup(getcwd(wd, PATH_MAX));
 	if (!(*data)->cwd)
 		return (ft_error(*data, "data init failure", 255), 1);
 	if (init_env_path(data, envp))
@@ -37,6 +41,15 @@ int	init_data(t_data **data, char **envp)
 }
 
 // launch minishell
+/*
+	This is were the magic happens
+	%% get the input from the user, if CTRL + D, clean & exit
+	%% if the input is empty, continue (nothing to parse)
+	%% save the input in the data struct
+	%% add the input to the history
+	%% initialize the program (lexer -> parser -> executor)
+	%% clean the data struct (input, cmd_lst, token), ready for the next input
+*/
 int	launch_minishell(t_data *data)
 {
 	char	*input_res;
@@ -50,7 +63,6 @@ int	launch_minishell(t_data *data)
 		{
 			printf("exit\n");
 			ft_clean_data_done(&data, 0);
-			exit(0);
 		}
 		if (ft_strlen(input_res) == 0)
 			continue ;
@@ -64,7 +76,13 @@ int	launch_minishell(t_data *data)
 	return (0);
 }
 
-// increment shlvl
+// increment/decrement shlvl
+/*
+	&& get the current shlvl value
+	&& create a new env node with the new shlvl value
+	&& add it to the env_lst
+	&& update the envi
+*/
 void	shlvl_increment(t_data *data, int inc_dec)
 {
 	char	*curr_shlvl;
@@ -91,7 +109,11 @@ void	shlvl_increment(t_data *data, int inc_dec)
 }
 
 // program entry
-/*Allocating our general data struct and launching our minishell*/
+/*
+ => Allocating & initializing our general data struct 
+ => incrementing the shell level (gonna be helpfull for exit builtin)
+ => and launching our minishell
+ => and cleaning up*/
 int	main(int ac, char **av, char **envp)
 {
 	t_data	*data;

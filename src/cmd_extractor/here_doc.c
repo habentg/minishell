@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:54:44 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/16 12:53:59 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/17 05:35:20 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	expand_heredoc_line(t_data *data, char *content, int tmp_fd)
 	int	i;
 
 	i = -1;
-	// expand it properly here
 	while (content[++i])
 	{
 		if (content[i] != '$' || (content[i] == '$' && !content[i + 1]))

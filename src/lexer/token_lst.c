@@ -6,12 +6,15 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 02:46:29 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/17 01:58:36 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/17 04:49:33 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/*
+	token type identifier -> enumerated in minishell.h
+*/
 t_tokenType	t_type(char *cmd)
 {
 	t_tokenType	type;
@@ -37,6 +40,9 @@ t_tokenType	t_type(char *cmd)
 	return (type);
 }
 
+/*
+	new token initializer
+*/
 t_token	*tokenize_mem(char *mem)
 {
 	t_token	*token;
@@ -51,6 +57,9 @@ t_token	*tokenize_mem(char *mem)
 	return (token);
 }
 
+/*
+	last token node finder
+*/
 t_token	*last_mem(t_token *lst)
 {
 	if (!lst)
@@ -62,6 +71,9 @@ t_token	*last_mem(t_token *lst)
 	return (lst);
 }
 
+/*
+	add token node to the end of the token list
+*/
 int	add_tok_back(t_token **lst, t_token *token)
 {
 	t_token	*last;
@@ -81,6 +93,9 @@ int	add_tok_back(t_token **lst, t_token *token)
 	return (0);
 }
 
+/*
+	token list size
+*/
 int	ft_tokendl_size(t_token **lst)
 {
 	int		i;

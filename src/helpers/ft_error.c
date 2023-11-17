@@ -6,12 +6,16 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 01:30:41 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/16 15:46:57 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/17 04:44:40 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/* 
+	removes whitespaces from the back 
+	and checks if there is a pipe or redirection
+*/
 static int	operator_end_err(t_data **data)
 {
 	int	i;
@@ -29,6 +33,10 @@ static int	operator_end_err(t_data **data)
 	return (0);
 }
 
+/*
+	checks if there is an unclosed quote i.e
+	~ ' or " thats not closed or inside a quote that has a closing quote
+*/
 static int	open_qoute_err(t_data **data)
 {
 	bool	flag_s;
@@ -50,6 +58,11 @@ static int	open_qoute_err(t_data **data)
 	return (0);
 }
 
+/*
+	checks if there is an error in the input
+	~ if there is an operator at the end
+	~ if there is an unclosed quote
+*/
 int	possible_error(t_data **data)
 {
 	if (operator_end_err(data))
@@ -59,6 +72,9 @@ int	possible_error(t_data **data)
 	return (0);
 }
 
+/*
+	if its redirection
+*/
 static int	is_token_operator(t_token *token)
 {
 	if (token->type == APPEND || token->type == TRUNC \
@@ -67,6 +83,10 @@ static int	is_token_operator(t_token *token)
 	return (0);
 }
 
+/*
+	handles pipe - redirection && redirection - redirection combination errors
+	?? shit is exausting, had to manually check all the possible lmao
+*/
 int	operator_pipe_error(t_data *data)
 {
 	t_token	*token;
