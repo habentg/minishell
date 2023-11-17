@@ -26,7 +26,7 @@ RDLINE_L = -L/Users/$(USER)/.brew/opt/readline/lib -lreadline
 LIBFT = ./includes/libft/libft.a
 CFALGS = -Wall -Werror -Wextra -I$(INC)
 RM = rm -rf
-
+LDLIBS = -lreadline -lncurses # Linker for tputs function
 # Source file directories:
 LEXER_DIR = ./src/lexer
 PARSER_DIR = ./src/parser
@@ -61,7 +61,7 @@ all: $(NAME)
 $(NAME): $(OBJ_FILES)
 	@$(MAKE) -C ./includes/libft
 	@printf "$(CURSIVE)$(GRAY) 	- Compiling $(NAME)... $(RESET)\n"
-	@$(CC) $(CFALGS) $^ $(LIBFT) $(RDLINE_L) -o $@ -I$(INC)
+	@$(CC) $(CFALGS) $^ $(LIBFT) $(RDLINE_L) -o $@ -I$(INC) $(LDLIBS)
 	@printf "$(GREEN)    - Minishell Executable ready.\n$(RESET)"
 	clear
 # Rule for cleaning object files:	

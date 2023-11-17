@@ -26,6 +26,8 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <errno.h>
+# include <term.h>		//Library for tputs, needed for deleting ^C after signals
+# include <curses.h>	//Library for tputs, needed for deleting ^C after signals
 
 # include "libft/libft.h"
 
@@ -243,6 +245,7 @@ void				free_cmdnode(t_cmd *cmd);
 void				free_env_lst(t_data *data);
 t_env				*last_env_node(t_env *lst);
 char				**sorted_envi(char **envi);
+// signal.c 
 void   				sig_handler(void);
 void			    sig_c_for_functions(int sig);
 void    			sig_c(int sig);

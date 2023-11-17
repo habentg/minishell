@@ -87,15 +87,24 @@ void	extract_here_doc(t_data *data, t_token **token, t_cmd **cmd_node)
 	(*cmd_node)->iofd->here_delemiter = ft_strdup((*token)->next->str);
 	temp_file = generate_temp_file_name();
 	tmp_fd = open(temp_file, O_CREAT | O_TRUNC | O_RDWR, S_IRUSR | S_IWUSR);
-	while (1)
+	
+	pid_t pid = fork();
+
+	if (pid == 0)
 	{
 		signal(SIGINT, sig_doc);
-		if (g_exit_status == 127)
-			return ((void)NULL);
-		content_line = readline("heredoc> ");
-		if (check_and_expand(data, cmd_node, content_line, tmp_fd))
-			break ;
-		free(content_line);
+		while (1)
+		{
+			content_line = readline("heredoc> ");
+			if (g_exit_status == 1) // changes for trying signals
+			{
+				printf("Signal received");
+				break ;
+			}
+			if (check_and_expand(data, cmd_node, content_line, tmp_fd))
+				break ;
+			free(content_line);
+		}
 	}
 	close(tmp_fd);
 	(*cmd_node)->iofd->infile = (temp_file);
