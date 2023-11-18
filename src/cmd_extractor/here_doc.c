@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:54:44 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/18 05:06:43 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/18 10:27:50 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,146 +74,103 @@ int	check_and_expand(t_data *data, t_cmd **cmd_node, \
 	free(trimmed_deli);
 	return (0);
 }
+// create a temp file (hidden preferabley)
+// write a content by reading from the standard INPUT untill the delimeter
+// set the current command infile to the temp file
+void	extract_here_doc(t_data *data, t_token **token, t_cmd **cmd_node)
+{
+	char	*temp_file;
+	char	*content_line;
+	int		tmp_fd;
 
-// void	heredoc_signal(t_data *data, t_cmd *cmd_node, int sig)
-// {
-// 	if (sig == SIGINT)
-// 		exitshell(data, cmd_node, 1);
-		
-// }
+	(*cmd_node)->iofd->here_delemiter = ft_strdup((*token)->next->str);
+	temp_file = generate_temp_file_name();
+	tmp_fd = open(temp_file, O_CREAT | O_TRUNC | O_RDWR, S_IRUSR | S_IWUSR);
+	while (1)
+	{
+		content_line = readline("heredoc> ");
+		if (check_and_expand(data, cmd_node, content_line, tmp_fd))
+			break ;
+		free(content_line);
+	}
+	close(tmp_fd);
+	(*cmd_node)->iofd->infile = (temp_file);
+	(*cmd_node)->iofd->fdin = open((*cmd_node)->iofd->infile, O_RDONLY);
+	(*token) = (*token)->next->next;
+}
 
-// void	handle_hd_signal(t_data *data, t_cmd *cmd_node)
-// {
-// 	signal(SIGINT, heredoc_signal);
-// 	signal(SIGQUIT, heredoc_signal);
-// }
+
+/// here doc signal implementation
 
 // void heredoc_signal(int sig) {
 //     if (sig == SIGINT) {
+//         // Handle SIGINT in the heredoc process
+//         // For example, clean up resources and exit
 //         printf("\nReceived SIGINT in heredoc. Cleaning up...\n");
 //         exit(1);
 //     }
 // }
 
-// void	extract_here_doc(t_data *data, t_token **token, t_cmd **cmd_node)
-// {
-// 	char	*temp_file;
-// 	char	*content_line;
-// 	int		tmp_fd;
+// void extract_here_doc_child(t_data *data, t_token **token, t_cmd *cmd_node) {
+//     // Set up SIGINT signal handler in the child process
+//     signal(SIGINT, heredoc_signal);
 
-// 	(*cmd_node)->iofd->here_delemiter = ft_strdup((*token)->next->str);
-// 	temp_file = generate_temp_file_name();
-// 	tmp_fd = open(temp_file, O_CREAT | O_TRUNC | O_RDWR, S_IRUSR | S_IWUSR);
-// 	signal(SIGINT, heredoc_signal);
-// 		while (1)
-// 		{
-// 			content_line = readline("heredoc> ");
-// 			if (check_and_expand(data, cmd_node, content_line, tmp_fd))
-// 				break ;
-// 			free(content_line);
-// 		}
-// 	close(tmp_fd);
-// 	(*cmd_node)->iofd->infile = (temp_file);
-// 	(*cmd_node)->iofd->fdin = open((*cmd_node)->iofd->infile, O_RDONLY);
-// 	(*token) = (*token)->next->next;
-// }
-// create a temp file (hidden preferabley)
-// write a content by reading from the standard INPUT untill the delimeter
-// set the current command infile to the temp file
-// void	extract_here_doc(t_data *data, t_token **token, t_cmd **cmd_node)
-// {
-// 	char	*temp_file;
-// 	char	*content_line;
-// 	int		tmp_fd;
+//     char *temp_file;
+//     char *content_line;
+//     int tmp_fd;
 
-// 	(*cmd_node)->iofd->here_delemiter = ft_strdup((*token)->next->str);
-// 	temp_file = generate_temp_file_name();
-// 	tmp_fd = open(temp_file, O_CREAT | O_TRUNC | O_RDWR, S_IRUSR | S_IWUSR);
-// 	while (1)
-// 	{
-// 		content_line = readline("heredoc> ");
-// 		if (check_and_expand(data, cmd_node, content_line, tmp_fd))
-// 			break ;
-// 		free(content_line);
-// 	}
-// 	close(tmp_fd);
-// 	(*cmd_node)->iofd->infile = (temp_file);
-// 	(*cmd_node)->iofd->fdin = open((*cmd_node)->iofd->infile, O_RDONLY);
-// 	(*token) = (*token)->next->next;
+//     cmd_node->iofd->here_delemiter = ft_strdup((*token)->next->str); // Set your delimiter
+//     temp_file = generate_temp_file_name();
+//     tmp_fd = open(temp_file, O_CREAT | O_TRUNC | O_RDWR, S_IRUSR | S_IWUSR);
+
+//     while (1) {
+//         content_line = readline("heredoc> ");
+//         if (check_and_expand(data, &cmd_node, content_line, tmp_fd)) {
+//             break;
+//         }
+//         free(content_line);
+//     }
+
+//     // Close the temporary file
+//     close(tmp_fd);
+
+//     // Set infile and fdin in cmd_node
+//     cmd_node->iofd->infile = temp_file;
+//     cmd_node->iofd->fdin = open(cmd_node->iofd->infile, O_RDONLY);
+
+//     // Exit the child process
+//     exit(0);
 // }
 
+// void extract_here_doc_parent(t_data *data, t_token **token, t_cmd **cmd_node) {
+//     pid_t pid;
+//     int status;
 
-/// here doc signal implementation
+//     pid = fork();
 
-void heredoc_signal(int sig) {
-    if (sig == SIGINT) {
-        // Handle SIGINT in the heredoc process
-        // For example, clean up resources and exit
-        printf("\nReceived SIGINT in heredoc. Cleaning up...\n");
-        exit(1);
-    }
-}
+//     if (pid == -1) {
+//         // Handle fork error
+//         perror("fork");
+//         exit(1);
+//     } else if (pid == 0) {
+//         // Child process
+//         extract_here_doc_child(data, token, *cmd_node);
+//     } else {
+//         // Parent process
+//         // Wait for the child process to finish
+//         waitpid(pid, &status, 0);
 
-void extract_here_doc_child(t_data *data, t_token **token, t_cmd *cmd_node) {
-    // Set up SIGINT signal handler in the child process
-    signal(SIGINT, heredoc_signal);
+//         // Handle the status if needed
+// 		if (WTERMSIG(status))
+// 			sig_handler();
 
-    char *temp_file;
-    char *content_line;
-    int tmp_fd;
+//         // Move to the next token
+//         (*token) = (*token)->next->next;
+//     }
+// }
 
-    cmd_node->iofd->here_delemiter = ft_strdup((*token)->next->str); // Set your delimiter
-    temp_file = generate_temp_file_name();
-    tmp_fd = open(temp_file, O_CREAT | O_TRUNC | O_RDWR, S_IRUSR | S_IWUSR);
-
-    while (1) {
-        content_line = readline("heredoc> ");
-        if (check_and_expand(data, &cmd_node, content_line, tmp_fd)) {
-            break;
-        }
-        free(content_line);
-    }
-
-    // Close the temporary file
-    close(tmp_fd);
-
-    // Set infile and fdin in cmd_node
-    cmd_node->iofd->infile = temp_file;
-    cmd_node->iofd->fdin = open(cmd_node->iofd->infile, O_RDONLY);
-
-    // Exit the child process
-    exit(0);
-}
-
-void extract_here_doc_parent(t_data *data, t_token **token, t_cmd **cmd_node) {
-    pid_t pid;
-    int status;
-
-    pid = fork();
-
-    if (pid == -1) {
-        // Handle fork error
-        perror("fork");
-        exit(1);
-    } else if (pid == 0) {
-        // Child process
-        extract_here_doc_child(data, token, *cmd_node);
-    } else {
-        // Parent process
-        // Wait for the child process to finish
-        waitpid(pid, &status, 0);
-
-        // Handle the status if needed
-		if (WTERMSIG(status))
-			sig_handler();
-
-        // Move to the next token
-        (*token) = (*token)->next->next;
-    }
-}
-
-// Example usage
-// Call this function from your main program
-void run_extract_here_doc(t_data *data, t_token **token, t_cmd **cmd_node) {
-    extract_here_doc_parent(data, token, cmd_node);
-}
+// // Example usage
+// // Call this function from your main program
+// void run_extract_here_doc(t_data *data, t_token **token, t_cmd **cmd_node) {
+//     extract_here_doc_parent(data, token, cmd_node);
+// }
