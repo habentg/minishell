@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/17 15:43:21 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/18 04:47:48 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,8 @@ bool				is_builtin_cmd(t_cmd *cmd_node);
 void				exec_builtin_cmd(t_cmd *cmd_node, t_data *data);
 int					pre_exec_checks(t_data *data, t_cmd *cmd_node);
 char				**ft_split_custom(char *str);
+int	fork_wait(t_data *data, int is_heredoc);
+void run_extract_here_doc(t_data *data, t_token **token, t_cmd **cmd_node);
 			// builtins
 int					handle_pwd(t_data *data);
 int					handle_echo(t_cmd *cmd_node);

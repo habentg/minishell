@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 19:05:20 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/17 14:44:39 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/18 04:11:58 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ void	sig_p_process(int sig)
 	{
 		if (waitpid(-1, &g_exit_status, WNOHANG) == -1)
 		{
-			rl_on_new_line();
-			rl_redisplay();
 			write(1, "\n", 1);
 			rl_replace_line("", 0);
 			rl_on_new_line();
