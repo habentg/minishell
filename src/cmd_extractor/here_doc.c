@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:54:44 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/19 12:48:43 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/19 14:53:12 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int	check_and_expand(t_data *data, t_cmd **cmd_node, \
 	free(trimmed_deli);
 	return (0);
 }
+
 // create a temp file (hidden preferabley)
 // write a content by reading from the standard INPUT untill the delimeter
 // set the current command infile to the temp file
@@ -119,7 +120,7 @@ void	extract_here_doc(t_data *data, t_token **token, t_cmd **cmd_node)
 //     char *content_line;
 //     int tmp_fd;
 
-//     cmd_node->iofd->here_delemiter = ft_strdup((*token)->next->str); // Set your delimiter
+//     cmd_node->iofd->here_delemiter = ft_strdup((*token)->next->str);
 //     temp_file = generate_temp_file_name();
 //     tmp_fd = open(temp_file, O_CREAT | O_TRUNC | O_RDWR, S_IRUSR | S_IWUSR);
 
@@ -142,7 +143,8 @@ void	extract_here_doc(t_data *data, t_token **token, t_cmd **cmd_node)
 //     exit(0);
 // }
 
-// void extract_here_doc_parent(t_data *data, t_token **token, t_cmd **cmd_node) {
+// void extract_here_doc_parent(t_data *data, 
+// t_token **token, t_cmd **cmd_node) {
 //     pid_t pid;
 //     int status;
 
