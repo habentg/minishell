@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 02:05:18 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/17 04:48:10 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/19 13:50:57 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ int	start_lexing(t_data *data)
 {
 	char	*inp;
 
+	if (!data || !data->input)
+		return (0);
 	inp = one_space_setter(data->input);
 	free(data->input);
 	if (!inp)

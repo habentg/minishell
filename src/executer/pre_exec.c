@@ -6,15 +6,16 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 04:01:58 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/19 10:02:43 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/19 14:16:54 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	iofd_validity(t_data *data, t_iofds *iofd)
+int	iofd_validity(t_cmd *cmd_node, t_iofds *iofd)
 {
-	(void)data;
+	if (!cmd_node->cmd && iofd->fdout > -1)
+		return (-1);
 	if (iofd->fdin == -2)
 	{
 		if (access(iofd->infile, F_OK) != 0)
@@ -29,11 +30,13 @@ int	iofd_validity(t_data *data, t_iofds *iofd)
 
 int	pre_exec_checks(t_data *data, t_cmd *cmd_node)
 {
-	if (!cmd_node->cmd && cmd_node->pipeout == 0 && ft_strncmp(cmd_node->iofd->\
-		infile, "/tmp/.hd_temp", 13) == 0)
+	data->exit_code = iofd_validity(cmd_node, cmd_node->iofd);
+	if (data->exit_code == -1)
+	{
+		data->exit_code = 0;
 		return (1);
-	data->exit_code = iofd_validity(data, cmd_node->iofd);
-	if (data->exit_code)
+	}
+	else if (data->exit_code)
 		return (1);
 	data->exit_code = check_cmd_validity(data, &cmd_node);
 	if (data->exit_code)

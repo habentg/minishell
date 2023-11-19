@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 16:49:08 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/18 10:31:14 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/19 13:51:58 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int	start_cmd_extraction(t_data *data)
 	t_token	*end_node;
 	t_token	*tmp;
 
+	if (!data || data->token == NULL)
+		return (0);
 	end_node = tokenize_mem("end");
 	end_node->type = END;
 	add_tok_back(&data->token, end_node);

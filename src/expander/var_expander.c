@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:12:27 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/19 07:20:28 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/19 13:51:28 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ static void	check_for_var(t_token **token_lst)
 */
 int	start_expansion(t_data *data)
 {
+	if (!data || !data->token)
+		return (1);
 	check_for_var(&data->token);
 	init_var_expansion(data);
 	remove_quotes(data);

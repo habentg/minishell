@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 19:50:12 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/19 09:28:29 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/19 11:09:01 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,26 @@ t_env	*last_env_node(t_env *lst)
 	return (lst);
 }
 
+t_env	*env_node_template(void)
+{
+	t_env	*env_node;
+
+	env_node = (t_env *)malloc(sizeof(t_env));
+	if (!env_node)
+		return (NULL);
+	env_node->key = NULL;
+	env_node->value = NULL;
+	env_node->next = NULL;
+	return (env_node);
+}
+
 t_env	*new_env_node(char *key, char *value)
 {
 	t_env	*new_node;
 
-	new_node = (t_env *)ft_calloc(sizeof(t_env), 1);
+	new_node = env_node_template();
 	if (!new_node)
 		return (NULL);
-	new_node->value = NULL;
 	new_node->key = ft_strdup(key);
 	if (value)
 		new_node->value = ft_strdup(value);
@@ -56,6 +68,8 @@ void	add_env_back(t_data *data, char **env_node_arr)
 	if (!env_node_arr)
 		return ;
 	env_node = new_env_node(env_node_arr[0], env_node_arr[1]);
+	if (!env_node)
+		return ;
 	tmp = data->env_lst;
 	if (!data->env_lst)
 		data->env_lst = env_node;
@@ -73,19 +87,4 @@ void	add_env_back(t_data *data, char **env_node_arr)
 		}
 		(last_env_node(data->env_lst))->next = env_node;
 	}
-}
-
-int	ft_env_lsize(t_env *lst)
-{
-	int		i;
-	t_env	*temp_node;
-
-	temp_node = lst;
-	i = 0;
-	while (temp_node != NULL)
-	{
-		temp_node = temp_node->next;
-		i++;
-	}
-	return (i);
 }

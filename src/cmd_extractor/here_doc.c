@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:54:44 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/18 10:27:50 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/19 12:48:43 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	check_and_expand(t_data *data, t_cmd **cmd_node, \
 		count_len_unqouted((*cmd_node)->iofd->here_delemiter));
 	if (!content_line || ft_strncmp_custom(trimmed_deli, content_line, \
 		ft_strlen((*cmd_node)->iofd->here_delemiter)) == 0)
-		exit (0);
+		return (1);
 	if (is_heredoc_expandable(content_line) && \
 		!ft_strchr((*cmd_node)->iofd->here_delemiter, '\"') && \
 			!ft_strchr((*cmd_node)->iofd->here_delemiter, '\''))

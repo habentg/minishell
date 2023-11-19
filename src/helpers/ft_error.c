@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 01:30:41 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/17 04:44:40 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/19 13:57:10 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ static int	open_qoute_err(t_data **data)
 */
 int	possible_error(t_data **data)
 {
+	if (!data || !(*data)->input)
+		return (0);
 	if (operator_end_err(data))
 		return (1);
 	if (open_qoute_err(data))
@@ -77,6 +79,8 @@ int	possible_error(t_data **data)
 */
 static int	is_token_operator(t_token *token)
 {
+	if (!token)
+		return (0);
 	if (token->type == APPEND || token->type == TRUNC \
 		|| token->type == INPUT_REDIR || token->type == HERE_DOC)
 		return (1);
@@ -92,16 +96,17 @@ int	operator_pipe_error(t_data *data)
 	t_token	*token;
 
 	token = data->token;
+	if (token->type == PIPE && ft_tokendl_size(&token) == 1)
+		return (ft_error(data, OPERATOR_PIPE_ERROR, 258), 1);
+	if (ft_tokendl_size(&token) == 1 && (is_token_operator(token)))
+		return (ft_error(data, REDIR_AT_END, 258), 1);
 	while (token)
 	{
-		if (token->type == PIPE && token->next->type == END)
+		if (is_token_operator(token) && (!token->next))
+			return (ft_error(data, REDIR_AT_END, 258), 1);
+		if (token->type == PIPE && (is_token_operator(token->prev) \
+			|| token == data->token || token->next->type == PIPE))
 			return (ft_error(data, OPERATOR_PIPE_ERROR, 258), 1);
-		if (is_token_operator(token) && token->next->type == END)
-			return (ft_error(data, REDIR_AT_END, 258), 1);
-		if (token->type == PIPE && token->next->type == PIPE)
-			return (ft_error(data, REDIR_AT_END, 258), 1);
-		if (is_token_operator(token) && token->next->type == PIPE)
-			return (ft_error(data, REDIR_AT_END, 258), 1);
 		if (is_token_operator(token) && token->next->type == HERE_DOC)
 			return (ft_error(data, OPERATOR_ERROR_HD, 258), 1);
 		if (is_token_operator(token) && token->next->type == APPEND)
