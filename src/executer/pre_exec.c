@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 04:01:58 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/19 14:16:54 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/19 14:28:58 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	iofd_validity(t_cmd *cmd_node, t_iofds *iofd)
 {
-	if (!cmd_node->cmd && iofd->fdout > -1)
+	if (!cmd_node->cmd && (iofd->fdout > -1 || \
+		ft_strncmp(iofd->infile, "/tmp/.hd_temp_file_", 19) == 0))
 		return (-1);
 	if (iofd->fdin == -2)
 	{
