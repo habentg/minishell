@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 19:05:20 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/18 04:11:58 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/19 07:59:26 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	child_signal_handler(int num)
 	else if (num == SIGQUIT)
 		ft_putstr_fd("Quit: 3\n", 2);
 }
-
 
 void	child_signals(t_cmd *cmd)
 {

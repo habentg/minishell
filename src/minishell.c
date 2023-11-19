@@ -6,11 +6,44 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:57:10 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/17 05:24:19 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/19 10:00:37 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	update_oldpwd(t_env *env_lst, char *oldpwd)
+{
+	t_env	*tmp;
+
+	tmp = env_lst;
+	while (tmp)
+	{
+		if (ft_strncmp_custom(tmp->key, "OLDPWD", 6) == 0)
+		{
+			free(tmp->value);
+			tmp->value = ft_strdup(oldpwd);
+			break ;
+		}
+		tmp = tmp->next;
+	}
+}
+
+void	empty_oldpwd(t_env *env_lst)
+{
+	t_env	*tmp;
+
+	tmp = env_lst;
+	while (tmp)
+	{
+		if (ft_strncmp_custom(tmp->key, "OLDPWD", 6) == 0)
+		{
+			free(tmp->value);
+			tmp->value = NULL;
+		}
+		tmp = tmp->next;
+	}
+}
 
 // initialize my data struct
 /*
@@ -18,6 +51,7 @@
 	!! get & save the current working directory (gonna need it in cd builtin)
 	!! initialize the path variables
 	!! create the env_lst from the envi -> easy to manipulate
+	NOTE: I am getting the OLDPWD from envp, I am not adding it my self.
 */
 int	init_data(t_data **data, char **envp)
 {
@@ -37,6 +71,7 @@ int	init_data(t_data **data, char **envp)
 		return (ft_error(*data, "path init failure", 255), 1);
 	if (create_env_lst(data))
 		return (ft_error(*data, "env_lst init failure", 255), 1);
+	empty_oldpwd((*data)->env_lst);
 	return (0);
 }
 
@@ -120,7 +155,7 @@ int	main(int ac, char **av, char **envp)
 
 	(void)av;
 	if (ac > 1)
-		return (display_error(av[1], NO_FILE_DIR, 0), 127);
+		return (display_error(av[1], NO_FILE_DIR), 127);
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
 		return (1);

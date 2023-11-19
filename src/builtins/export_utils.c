@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 02:44:13 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/10 02:55:04 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/19 09:29:11 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,3 +52,8 @@ char	**sorted_envi(char **envi)
 	bubble_sort_utils(sorted_envi, envi, length);
 	return (sorted_envi);
 }
+
+// void	update_env(t_env *env_lst, char *oldpwd)
+// {
+// 	printf("update_env\n");
+// }

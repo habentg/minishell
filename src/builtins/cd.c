@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 21:17:17 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/17 04:14:02 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/19 10:01:16 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,28 @@
 void	edit_env_lst(t_data *data, char *abs_path)
 {
 	t_env	*tmp;
-	char	**oldpwd_arr;
 
 	tmp = data->env_lst;
 	while (tmp)
 	{
-		if (ft_strncmp(tmp->key, "PWD", 3) == 0)
+		if (ft_strncmp_custom(tmp->key, "PWD", 3) != 0)
+			update_oldpwd(data->env_lst, "");
+		else if (ft_strncmp_custom(tmp->key, "PWD", 3) == 0)
 		{
-			oldpwd_arr = (char **)malloc(sizeof(char *) * 3);
-			oldpwd_arr[0] = ft_strdup("OLDPWD");
-			oldpwd_arr[1] = ft_strdup(tmp->value);
-			oldpwd_arr[2] = NULL;
-			add_env_back(data, oldpwd_arr);
-			if (tmp->value)
-				free(tmp->value);
-			ft_clean_arr(oldpwd_arr);
+			update_oldpwd(data->env_lst, tmp->value);
 			tmp->value = ft_strdup(abs_path);
 			break ;
 		}
 		tmp = tmp->next;
 	}
 	free(data->cwd);
-	data->cwd = ft_strdup(get_env_value(data, "PWD"));
+	if (get_env_value(data, "PWD"))
+		data->cwd = ft_strdup(get_env_value(data, "PWD"));
+	else
+	{
+		data->cwd = ft_strdup(abs_path);
+		update_oldpwd(data->env_lst, "");
+	}
 }
 
 void	update_envi(t_data *data)
@@ -74,12 +74,12 @@ int	change_dir_updata_envi(t_data *data, char *path)
 	ret = NULL;
 	tmp = NULL;
 	if (chdir(path) != 0)
-		return (display_error_2("cd", path, NO_FILE_DIR, 1), 1);
+		return (display_error_2("cd", path, NO_FILE_DIR), 1);
 	ret = getcwd(cwd, PATH_MAX);
 	if (!ret)
 	{
 		display_error_2("cd", "error retrieving current directory", \
-			"getcwd: cannot access parent directories", 1);
+			"getcwd: cannot access parent directories");
 		ret = ft_strjoin(data->cwd, "/");
 		tmp = ret;
 		ret = ft_strjoin(tmp, path);
@@ -103,18 +103,18 @@ int	handle_cd(t_cmd *cmd_node, t_data *data)
 	{
 		path = get_path(data->envi, "HOME");
 		if (path == NULL)
-			return (display_error_2("cd", path, "HOME not set", 1), 1);
+			return (display_error_2("cd", path, "HOME not set"), 1);
 		return (change_dir_updata_envi(data, path));
 	}
 	else
 		path = cmd_node->cmdarg[1];
 	if (arr_length(cmd_node->cmdarg) > 2)
-		return (display_error("cd", "to many arguments", 1), 0);
+		return (display_error("cd", "to many arguments"), 0);
 	if (ft_strncmp_custom(path, "-", 2) == 0)
 	{
 		path = get_path(data->envi, "OLDPWD");
 		if (path == NULL)
-			return (display_error_2("cd", path, "OLDPWD not set", 1), 1);
+			return (display_error_2("cd", path, "OLDPWD not set"), 1);
 		return (change_dir_updata_envi(data, path));
 	}
 	return (change_dir_updata_envi(data, path));

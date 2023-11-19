@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 23:51:27 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/17 06:45:34 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/19 07:34:04 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,18 +54,19 @@ int	expande_variable_utils(t_data *data, t_token *token, char *str, int *i)
 	int		k;
 
 	var_name = NULL;
-	if (!str)
+	if (!str || !token || str[*i] == '\0')
 		return (-1);
 	k = (*i);
 	while (str[*i] && !is_whitespace(str[*i]) && str[*i] != '$' \
 		&& !is_operator(str[*i]) && !is_qoute(str[*i]) && str[*i] != '{')
 				(*i)++;
-	if ((*i - k) > 0)
-	{
-		var_name = ft_substr(token->str, k, *i - k);
-		*i = replace_var(data, token, var_name, &k);
-		free(var_name);
-	}
+	if (*i == k)
+		return (-1);
+	var_name = ft_substr(token->str, k, *i - k);
+	if (!var_name)
+		return (-1);
+	*i = replace_var(data, token, var_name, &k);
+	free(var_name);
 	return (*i);
 }
 
@@ -88,6 +89,8 @@ void	expand_variable(t_data *data, t_token *token)
 	{
 		if (token->str[i] == '$' && get_q_state(token->str, i) != SINGLE)
 		{
+			if (token->str[i + 1] == '\0')
+				break ;
 			if (token->str[++i] == '?')
 				expande_exit_status(data, &token, i);
 			else

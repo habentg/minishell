@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 02:51:46 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/15 03:35:24 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/19 07:58:31 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,30 @@ void	print_echo(t_cmd *cmd_node, int n_flag, int fd, int i_n)
 		ft_putstr_fd("\n", fd);
 }
 
+bool	is_n_only(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != 'n')
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
 int	n_option_handler(t_cmd *cmd_node)
 {
 	int	i_n;
-	int	j_n;
 
 	i_n = 0;
-	j_n = 1;
 	while (cmd_node->cmdarg[++i_n])
 	{
 		if (ft_strncmp(cmd_node->cmdarg[i_n], "-n", 2) == 0)
 		{
-			while (cmd_node->cmdarg[i_n][j_n] == 'n')
-			{
-				if (cmd_node->cmdarg[i_n][j_n] != 'n')
-					break ;
-				j_n++;
-			}
-			if (cmd_node->cmdarg[i_n][j_n] != '\0')
+			if (is_n_only(&cmd_node->cmdarg[i_n][1]) == false)
 				break ;
 		}
 		else
@@ -63,8 +69,6 @@ int	handle_echo(t_cmd *cmd_node)
 
 	i_n = 0;
 	n_flag = 0;
-	if (cmd_node->iofd->fdout == -2 || cmd_node->iofd->fdin == -2)
-		return (1);
 	fd = cmd_node->iofd->fdout;
 	if (fd == -1)
 		fd = STDOUT_FILENO;

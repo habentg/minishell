@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/18 04:47:48 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/19 10:00:30 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <errno.h>
- #include <signal.h>
+# include <signal.h>
 
 # include "libft/libft.h"
 
@@ -163,7 +163,7 @@ int					count_len_unqouted(char *str);
 char				*ft_remove_quotes(char *str, int len);
 int					replace_var(t_data *data, t_token \
 	*token, char *var_name, int *index);
-char				*var_not_found(char *b_var, char *a_var, int *index);
+char				*var_not_found(char *b_var, char *a_var);
 
 // cmd extraction funcs
 int					start_cmd_extraction(t_data *data);
@@ -196,8 +196,8 @@ bool				is_builtin_cmd(t_cmd *cmd_node);
 void				exec_builtin_cmd(t_cmd *cmd_node, t_data *data);
 int					pre_exec_checks(t_data *data, t_cmd *cmd_node);
 char				**ft_split_custom(char *str);
-int	fork_wait(t_data *data, int is_heredoc);
-void run_extract_here_doc(t_data *data, t_token **token, t_cmd **cmd_node);
+int					fork_wait(t_data *data, int is_heredoc);
+// void 				run_extract_here_doc(t_data *data, t_token **token, t_cmd **cmd_node);
 			// builtins
 int					handle_pwd(t_data *data);
 int					handle_echo(t_cmd *cmd_node);
@@ -209,6 +209,9 @@ void				env_lst_to_arr(t_data *data);
 int					handle_unset(t_data *data, t_cmd *cmd_node);
 int					handle_env(t_data *data, t_cmd *cmd_node);
 int					valid_key_check(char *key, int unset_flag);
+void				remove_env_node(t_env **env_lst, char *key_re);
+void				update_oldpwd(t_env *env_lst, char *oldpwd);
+void				empty_oldpwd(t_env *env_lst);
 			// fd related
 void				dup_pipe_fds(t_cmd **cmd_lst, t_cmd **cmd_node);
 void				reset_std_fds(t_cmd **cmd_node);
@@ -238,9 +241,8 @@ int					ft_strncmp_custom(const char *str1, \
 void				print_arr(char **arr);
 void				print_env_lst(t_data *data);
 		// err printer
-void				display_error_2(char *s1, char *s2, \
-	char *s3, int exit_status);
-void				display_error(char *s1, char *s2, int exit_status);
+void				display_error_2(char *s1, char *s2, char *s3);
+void				display_error(char *s1, char *s2);
 long long			ft_atol(char *str);
 // cleaning funcs
 void				ft_clean_arr(char **argv);

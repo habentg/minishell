@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:09:52 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/16 14:18:35 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/19 10:02:21 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	handle_pwd(t_data *data)
 		printf("%s\n", data->cwd);
 		return (0);
 	}
-	display_error_2("pwd", "getcwd", "error retrieving current directory", 1);
+	display_error_2("pwd", "getcwd", "error retrieving current directory");
 	return (1);
 }
 
@@ -62,7 +62,7 @@ int	handle_env(t_data *data, t_cmd *cmd_node)
 	(void)cmd_node;
 	if (cmd_node->cmdarg[1] != NULL)
 	{
-		display_error_2("env", cmd_node->cmdarg[1], "too many arguments", 127);
+		display_error_2("env", cmd_node->cmdarg[1], "too many arguments");
 		return (1);
 	}
 	while (data->envi[i])
@@ -77,6 +77,9 @@ int	handle_env(t_data *data, t_cmd *cmd_node)
 /*this is where each of the builtins run*/
 void	exec_builtin_cmd(t_cmd *cmd_node, t_data *data)
 {
+	data->exit_code = iofd_validity(data, cmd_node->iofd);
+	if (data->exit_code)
+		return ;
 	if (ft_strncmp_custom(cmd_node->cmd, "cd", 2) == 0)
 		data->exit_code = handle_cd(cmd_node, data);
 	else if (ft_strncmp_custom(cmd_node->cmd, "pwd", 3) == 0)

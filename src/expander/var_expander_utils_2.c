@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 06:53:39 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/17 06:58:27 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/19 07:09:59 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,18 @@ void	free_allocs(char *before_var, char *after_var)
 		join the before_var and after_var together.
 		done!
 */
-char	*var_not_found(char *b_var, char *a_var, int *index)
+char	*var_not_found(char *b_var, char *a_var)
 {
 	char	*final_join;
 
-	if (!b_var)
+	if (!b_var && !a_var)
+		final_join = ft_calloc(sizeof(char), 1);
+	else if (!b_var)
 		final_join = ft_strdup(a_var);
 	else if (!a_var)
 		final_join = ft_strdup(b_var);
 	else
 		final_join = ft_strjoin(b_var, a_var);
-	*index = ft_strlen(b_var);
 	return (final_join);
 }
 
@@ -45,11 +46,19 @@ char	*var_found(t_data *data, char *b_var, char *a_var, char *var_name)
 	char	*final_join;
 	char	*path_join;
 
-	path_join = ft_strjoin(b_var, get_env_value(data, var_name));
-	if (a_var)
-		final_join = ft_strjoin(path_join, a_var);
+	path_join = NULL;
+	final_join = NULL;
+	if (!b_var && !a_var)
+		final_join = ft_strdup(get_env_value(data, var_name));
+	else if (!b_var)
+		final_join = ft_strjoin(get_env_value(data, var_name), a_var);
+	else if (!a_var)
+		final_join = ft_strjoin(b_var, get_env_value(data, var_name));
 	else
-		final_join = ft_strdup(path_join);
+	{
+		path_join = ft_strjoin(b_var, get_env_value(data, var_name));
+		final_join = ft_strjoin(path_join, a_var);
+	}
 	free(path_join);
 	return (final_join);
 }
@@ -83,7 +92,7 @@ int	replace_var(t_data *data, t_token *token, char *var_name, int *index)
 	else if (!before_var && !after_var)
 		final_join = ft_strdup(get_env_value(data, var_name));
 	else if (get_env_value(data, var_name) == NULL)
-		final_join = var_not_found(before_var, after_var, index);
+		final_join = var_not_found(before_var, after_var);
 	else
 		final_join = var_found(data, before_var, after_var, var_name);
 	free(token->str);

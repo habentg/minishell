@@ -6,27 +6,25 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 02:52:48 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/17 04:05:49 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/19 10:00:07 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	display_error_2(char *s1, char *s2, char *s3, int exit_status)
+void	display_error_2(char *s1, char *s2, char *s3)
 {
-	(void)exit_status;
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(s1, STDERR_FILENO);
-	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putstr_fd(": \'", STDERR_FILENO);
 	ft_putstr_fd(s2, STDERR_FILENO);
-	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putstr_fd("\': ", STDERR_FILENO);
 	ft_putstr_fd(s3, STDERR_FILENO);
 	ft_putstr_fd("\n", STDERR_FILENO);
 }
 
-void	display_error(char *s1, char *s2, int exit_status)
+void	display_error(char *s1, char *s2)
 {
-	(void)exit_status;
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(s1, STDERR_FILENO);
 	ft_putstr_fd(": ", STDERR_FILENO);

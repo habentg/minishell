@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 19:50:12 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/10 10:46:18 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/19 09:28:29 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ t_env	*new_env_node(char *key, char *value)
 
 static void	replace_value(t_env **current_node, t_env *new_node)
 {
+	if (!new_node->value)
+		return ;
 	if ((*current_node)->value)
 		free((*current_node)->value);
 	if (new_node->value)

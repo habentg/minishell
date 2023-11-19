@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 16:23:12 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/18 10:28:37 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/19 10:03:01 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,21 +46,18 @@ int	check_cmd_validity(t_data *data, t_cmd **cmd_node)
 		ft_strncmp((*cmd_node)->iofd->infile, "/tmp/.hd_temp", 13) == 0)
 		return (0);
 	if (!(*cmd_node)->cmd || ft_strlen((*cmd_node)->cmd) == 0)
-		return (display_error((*cmd_node)->cmd, CMD_NOT_FOUND, 127), 127);
+		return (display_error((*cmd_node)->cmd, CMD_NOT_FOUND), 127);
 	if (ft_strchr((*cmd_node)->cmd, '/') != NULL)
 	{
 		if (access((*cmd_node)->cmd, F_OK) != 0)
-			return (display_error((*cmd_node)->cmd, NO_FILE_DIR, 127), 127);
+			return (display_error((*cmd_node)->cmd, NO_FILE_DIR), 127);
 		if (access((*cmd_node)->cmd, X_OK | R_OK) != 0)
-			return (display_error((*cmd_node)->cmd, PERMISSION_DENY, 0), 126);
-		// if (access((*cmd_node)->cmd, F_OK) == 0 && ft_strncmp_custom(
-		// 	(*cmd_node)->cmd, "./minishell", ft_strlen("./minishell")) != 0)
-		// 	return (display_error((*cmd_node)->cmd, "is a directory", 0), 126);
+			return (display_error((*cmd_node)->cmd, PERMISSION_DENY), 126);
 		return (0);
 	}
 	if (is_builtin_cmd((*cmd_node)))
 		return (0);
 	if (check_cmd_valid_utils(data, cmd_node))
-		return (display_error((*cmd_node)->cmd, CMD_NOT_FOUND, 127), 127);
+		return (display_error((*cmd_node)->cmd, CMD_NOT_FOUND), 127);
 	return (0);
 }
