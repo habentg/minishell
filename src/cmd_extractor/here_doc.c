@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:54:44 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/19 14:53:12 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/19 16:34:36 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	check_and_expand(t_data *data, t_cmd **cmd_node, \
 {
 	char	*trimmed_deli;
 
+// you have 4 bytes leaks here -- ft_remove_quotes
 	trimmed_deli = ft_remove_quotes((*cmd_node)->iofd->here_delemiter, \
 		count_len_unqouted((*cmd_node)->iofd->here_delemiter));
 	if (!content_line || ft_strncmp_custom(trimmed_deli, content_line, \

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 21:17:17 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/19 10:01:16 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/19 16:05:08 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,12 +98,11 @@ int	handle_cd(t_cmd *cmd_node, t_data *data)
 {
 	char	*path;
 
-	if (!cmd_node->cmdarg[1] || ft_strncmp_custom(cmd_node->cmdarg[1], "~", 1) \
-		== 0 || (cmd_node->cmdarg[1] && ft_strlen(cmd_node->cmdarg[1]) == 0))
+	if (!cmd_node->cmdarg[1] || !ft_strncmp_custom(cmd_node->cmdarg[1], "~", 1))
 	{
-		path = get_path(data->envi, "HOME");
+		path = get_env_value(data, "HOME");
 		if (path == NULL)
-			return (display_error_2("cd", path, "HOME not set"), 1);
+			return (display_error("cd", "HOME not set"), 1);
 		return (change_dir_updata_envi(data, path));
 	}
 	else
@@ -112,9 +111,9 @@ int	handle_cd(t_cmd *cmd_node, t_data *data)
 		return (display_error("cd", "to many arguments"), 0);
 	if (ft_strncmp_custom(path, "-", 2) == 0)
 	{
-		path = get_path(data->envi, "OLDPWD");
+		path = get_env_value(data, "OLDPWD");
 		if (path == NULL)
-			return (display_error_2("cd", path, "OLDPWD not set"), 1);
+			return (display_error("cd", "OLDPWD not set"), 1);
 		return (change_dir_updata_envi(data, path));
 	}
 	return (change_dir_updata_envi(data, path));

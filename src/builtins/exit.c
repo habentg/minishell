@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 02:34:15 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/19 11:40:39 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/19 16:13:56 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	valid_e_status(char *str)
 
 int	handle_exit(t_data *data, t_cmd *cmd_node)
 {
-	shlvl_increment(data, 0);
+	// shlvl_increment(data, 0);
 	if (arr_length(cmd_node->cmdarg) == 1)
 		data->exit_code = 0;
 	else if (arr_length(cmd_node->cmdarg) == 2)
