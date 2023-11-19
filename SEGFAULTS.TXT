@@ -1,0 +1,4 @@
+1. env > $Q
+segfault coz I am removing the file (VAR) if its not env
+    -> Fixed!
+2. 

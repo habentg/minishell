@@ -6,26 +6,26 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 10:37:24 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/19 14:17:29 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/19 18:09:57 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	fork_wait(t_data *data, int is_heredoc)
+int	fork_wait(t_data *data)
 {
 	pid_t	ch_pid;
 	int		status;
 	int		ret_status;
 
-	if (!is_heredoc)
-		close_open_fds(data->cmd_lst, 0);
+	close_open_fds(data->cmd_lst, 0);
 	ch_pid = 0;
 	ret_status = 0;
 	status = 0;
 	while (1)
 	{
 		ch_pid = waitpid(-1, &status, 0);
+		
 		if (ch_pid == -1 && errno == ECHILD)
 			break ;
 	}
@@ -74,7 +74,7 @@ int	exec_multiple_cmds(t_data *data)
 			return (ft_error(data, "Error: failed to fork!", 255), 1);
 		tmp_cmd = tmp_cmd->next;
 	}
-	return (fork_wait(data, 0));
+	return (fork_wait(data));
 }
 
 int	start_execution(t_data *data)
