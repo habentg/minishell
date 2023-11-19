@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 02:44:13 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/19 09:29:11 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/19 10:28:49 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,35 @@ char	**sorted_envi(char **envi)
 	return (sorted_envi);
 }
 
-// void	update_env(t_env *env_lst, char *oldpwd)
-// {
-// 	printf("update_env\n");
-// }
+void	update_oldpwd(t_env *env_lst, char *oldpwd)
+{
+	t_env	*tmp;
+
+	tmp = env_lst;
+	while (tmp)
+	{
+		if (ft_strncmp_custom(tmp->key, "OLDPWD", 6) == 0)
+		{
+			free(tmp->value);
+			tmp->value = ft_strdup(oldpwd);
+			break ;
+		}
+		tmp = tmp->next;
+	}
+}
+
+void	empty_oldpwd(t_env *env_lst)
+{
+	t_env	*tmp;
+
+	tmp = env_lst;
+	while (tmp)
+	{
+		if (ft_strncmp_custom(tmp->key, "OLDPWD", 6) == 0)
+		{
+			free(tmp->value);
+			tmp->value = NULL;
+		}
+		tmp = tmp->next;
+	}
+}

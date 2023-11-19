@@ -6,44 +6,11 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:57:10 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/19 10:00:37 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/19 10:28:35 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-void	update_oldpwd(t_env *env_lst, char *oldpwd)
-{
-	t_env	*tmp;
-
-	tmp = env_lst;
-	while (tmp)
-	{
-		if (ft_strncmp_custom(tmp->key, "OLDPWD", 6) == 0)
-		{
-			free(tmp->value);
-			tmp->value = ft_strdup(oldpwd);
-			break ;
-		}
-		tmp = tmp->next;
-	}
-}
-
-void	empty_oldpwd(t_env *env_lst)
-{
-	t_env	*tmp;
-
-	tmp = env_lst;
-	while (tmp)
-	{
-		if (ft_strncmp_custom(tmp->key, "OLDPWD", 6) == 0)
-		{
-			free(tmp->value);
-			tmp->value = NULL;
-		}
-		tmp = tmp->next;
-	}
-}
 
 // initialize my data struct
 /*
