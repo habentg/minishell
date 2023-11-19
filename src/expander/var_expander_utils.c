@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 23:51:27 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/19 07:34:04 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/19 10:25:50 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,23 @@ void	expande_exit_status(t_data *data, t_token **token, int i)
 	free((*token)->str);
 	(*token)->str = tmp;
 	free(exit_status_str);
+}
+
+void	remove_var_sign(t_token *token, int i)
+{
+	char	*before_var;
+	char	*after_var;
+	char	*final_value;
+
+	before_var = ft_substr(token->str, 0, (i - 1));
+	if (!before_var)
+		before_var = NULL;
+	after_var = ft_substr(token->str, i, ft_strlen(token->str));
+	if (!after_var)
+		after_var = NULL;
+	final_value = var_not_found(before_var, after_var);
+	free(token->str);
+	token->str = final_value;
 }
 
 /*
@@ -91,7 +108,9 @@ void	expand_variable(t_data *data, t_token *token)
 		{
 			if (token->str[i + 1] == '\0')
 				break ;
-			if (token->str[++i] == '?')
+			if (is_qoute(token->str[++i]))
+				remove_var_sign(token, i);
+			else if (token->str[i] == '?')
 				expande_exit_status(data, &token, i);
 			else
 			{
