@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:57:10 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/19 17:55:07 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/20 17:59:54 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	init_data(t_data **data, char **envp)
 	(*data)->path = NULL;
 	(*data)->env_lst = NULL;
 	(*data)->exit_code = 0;
+	(*data)->ch_pid = -1;
 	(*data)->cwd = ft_strdup(getcwd(wd, PATH_MAX));
 	if (!(*data)->cwd)
 		return (ft_error(*data, "data init failure", 255), 1);
@@ -128,7 +129,7 @@ int	main(int ac, char **av, char **envp)
 		return (1);
 	if (init_data(&data, envp))
 		return (ft_clean_data_done(&data, 0), 1);
-	shlvl_increment(data, 1);
+	// shlvl_increment(data, 1);
 	if (launch_minishell(data))
 		return (ft_clean_data_done(&data, 0), 1);
 	ft_clean_data_done(&data, 0);

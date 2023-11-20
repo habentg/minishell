@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 19:45:08 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/19 11:09:24 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/20 19:03:59 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void	print_env_lst(t_data *data)
 	}
 	printf("env_lst head: %s\n", data->env_lst->key);
 }
-
 
 int	ft_env_lsize(t_env *lst)
 {

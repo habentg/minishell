@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 16:49:08 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/19 13:51:58 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/20 17:48:37 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,17 @@ static int	extract_one_cmd(t_data *data, t_token **token, t_cmd **cmd_lst)
 	return (0);
 }
 
+void	update_cmd_args(t_cmd *cmd_node)
+{
+	if (arr_length(cmd_node->cmdarg) <= ft_arglstsize(&cmd_node->arg_lst))
+	{
+		if (cmd_node->cmdarg)
+			ft_clean_arr(cmd_node->cmdarg);
+		cmd_node->cmdarg = arr_from_arglst(cmd_node->arg_lst);
+		free_arglst(&cmd_node->arg_lst);
+	}
+}
+
 /*
 	CMD CONSTRUCTION
 		* we consider until we reach a pipe or end as ONE cmd
@@ -61,6 +72,7 @@ int	cmd_node_construction(t_data *data, t_token **token, t_cmd **cmd_lst)
 	}
 	if ((*token)->type == PIPE)
 		extract_pipe(token, cmd_lst);
+	update_cmd_args(ft_lstlast(data->cmd_lst));
 	if ((*token)->type != END)
 		if (cmd_node_construction(data, token, cmd_lst))
 			return (1);

@@ -6,34 +6,60 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 10:37:24 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/19 18:09:57 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/20 13:19:39 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+// int	fork_wait(t_data *data)
+// {
+// 	pid_t	ch_pid;
+// 	int		status;
+// 	int		ret_status;
+
+// 	close_open_fds(data->cmd_lst, 0);
+// 	ch_pid = 0;
+// 	ret_status = 0;
+// 	status = 0;
+// 	while (1)
+// 	{
+// 		ch_pid = waitpid(-1, &status, 0);
+// 		if (ch_pid == data->ch_pid)
+// 			ret_status = status;
+// 		if (ch_pid == -1 && errno == ECHILD)
+// 			break ;
+// 	}
+// 	if (WIFEXITED(status))
+// 		ret_status = WEXITSTATUS(status);
+// 	else if (WIFSIGNALED(status))
+// 		ret_status = WTERMSIG(status) + 128;
+// 	return (ret_status);
+// }
+
 int	fork_wait(t_data *data)
 {
-	pid_t	ch_pid;
+	pid_t	pid;
 	int		status;
-	int		ret_status;
+	int		res;
 
 	close_open_fds(data->cmd_lst, 0);
-	ch_pid = 0;
-	ret_status = 0;
-	status = 0;
-	while (1)
+	res = 0;
+	pid = 0;
+	while (pid != -1 || errno != ECHILD)
 	{
-		ch_pid = waitpid(-1, &status, 0);
-		
-		if (ch_pid == -1 && errno == ECHILD)
-			break ;
+		pid = waitpid(-1, &status, 0);
+		if (pid == data->ch_pid)
+			res = status;
+		continue ;
 	}
-	if (WIFEXITED(status))
-		ret_status = WEXITSTATUS(status);
-	if (WIFSIGNALED(status))
-		ret_status = WTERMSIG(status) + 128;
-	return (ret_status);
+	if (WIFSIGNALED(res))
+		status = 128 + WTERMSIG(res);
+	else if (WIFEXITED(res))
+		status = WEXITSTATUS(res);
+	else
+		status = res;
+	return (status);
 }
 
 int	fork_and_run(t_data *data, t_cmd *tmp_cmd, pid_t *id)
@@ -62,15 +88,18 @@ int	fork_and_run(t_data *data, t_cmd *tmp_cmd, pid_t *id)
 int	exec_multiple_cmds(t_data *data)
 {
 	t_cmd	*tmp_cmd;
-	pid_t	id;
 
 	tmp_cmd = data->cmd_lst;
-	id = 1;
-	while (tmp_cmd && id != 0)
+	while (tmp_cmd && data->ch_pid != 0)
 	{
 		if (pre_exec_checks(data, tmp_cmd))
-			return (data->exit_code);
-		if (fork_and_run(data, tmp_cmd, &id))
+		{
+			if (!tmp_cmd->next)
+				return (data->exit_code);
+			tmp_cmd = tmp_cmd->next;
+			continue ;
+		}
+		if (fork_and_run(data, tmp_cmd, &data->ch_pid))
 			return (ft_error(data, "Error: failed to fork!", 255), 1);
 		tmp_cmd = tmp_cmd->next;
 	}

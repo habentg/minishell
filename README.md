@@ -50,4 +50,3 @@ our final token->str == characters before $ + envp_len(after equal) + characters
 
 
 ########################## Execution ###########################
-...

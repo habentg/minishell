@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/19 17:59:17 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/20 18:48:30 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@
 # define NO_FILE_DIR "No such file or directory"
 # define PERMISSION_DENY "Permission denied"
 # define CMD_NOT_FOUND "command not found"
+# define IS_DIRCTRY "is a directory"
 
 // error messages
 # define TOKENIZE_FAIL "Error: Tokenization failure"
@@ -103,10 +104,17 @@ typedef struct s_iofds
 	int				stdout_backup;
 }					t_iofds;
 
+typedef struct s_args
+{
+	char			*arg;
+	struct s_args	*next;
+}					t_args;
+
 typedef struct s_cmd
 {
 	char			*cmd;
 	char			**cmdarg;
+	t_args			*arg_lst;
 	int				pipeout;
 	t_iofds			*iofd;
 	int				*pipe_fd;
@@ -131,6 +139,7 @@ typedef struct s_data
 	t_env			*env_lst;
 	char			*cwd;
 	int				exit_code;
+	pid_t			ch_pid;
 }					t_data;
 
 // launch funcs
@@ -187,7 +196,17 @@ int					ft_dlsize(t_cmd *lst);
 t_iofds				*new_iofds(void);
 int					iofd_validity(t_cmd *cmd_node, t_iofds *iofd);
 int					check_cmd_validity(t_data *data, t_cmd **cmd_node);
-
+int					remove_prev_iofdins(t_cmd **cmd_node, t_token **token);
+int					remove_prev_iofdouts(t_cmd **cmd_node, t_token **token);
+		// for the args - linked list
+t_args				*args_node(char *arg);
+int					add_arglst_back(t_args **lst, char *arg);
+int					ft_arglstsize(t_args **lst);
+t_args				*last_arg(t_args *lst);
+char				**arr_from_arglst(t_args *arg_lst);
+void				print_arglst(t_args *arg_lst);
+void				free_arglst(t_args **arg_lst);
+void				update_cmd_args(t_cmd *cmd_node);
 // execution funcs
 int					start_execution(t_data *data);
 char				*get_path(char **envp, char *key);

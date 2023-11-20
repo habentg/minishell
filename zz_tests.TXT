@@ -1,0 +1,11 @@
+1. env > $Q
+segfault coz I am removing the file (VAR) if its not env
+    -> Fixed!
+2.  cat < ./test_files/infile_big < readleak.txt (working as expected)
+        VS
+    cat < ./test_files/infile_big readleak.txt  (CMD_NOT_FOUND, taking readleak.txt as cmd)
+    -> fixed!
+3. SIGNAL SIGNAL SIGNAL for fucks sake!
+    -> not yet!
+4. Redirection and file
+     -> Fixed ==> alot of them

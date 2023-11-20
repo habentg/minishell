@@ -6,11 +6,20 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 16:23:12 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/19 13:43:34 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/20 12:05:32 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int	is_directory(char *cmd)
+{
+	struct stat	dirstat;
+
+	ft_memset(&dirstat, 0, sizeof(dirstat));
+	stat(cmd, &dirstat);
+	return (S_ISDIR(dirstat.st_mode));
+}
 
 int	check_cmd_valid_utils(t_data *data, t_cmd **cmd_node)
 {
@@ -51,8 +60,10 @@ int	check_cmd_validity(t_data *data, t_cmd **cmd_node)
 	{
 		if (access((*cmd_node)->cmd, F_OK) != 0)
 			return (display_error((*cmd_node)->cmd, NO_FILE_DIR), 127);
-		if (access((*cmd_node)->cmd, X_OK | R_OK) != 0)
+		if (access((*cmd_node)->cmd, X_OK) != 0)
 			return (display_error((*cmd_node)->cmd, PERMISSION_DENY), 126);
+		if (is_directory((*cmd_node)->cmd))
+			return (display_error((*cmd_node)->cmd, IS_DIRCTRY), 126);
 		return (0);
 	}
 	if (is_builtin_cmd((*cmd_node)))

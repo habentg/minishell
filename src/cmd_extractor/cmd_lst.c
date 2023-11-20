@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 02:41:46 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/09 15:50:08 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/20 14:49:21 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ t_cmd	*new_cmd(void)
 		return (NULL);
 	cmd_node->cmd = NULL;
 	cmd_node->cmdarg = NULL;
+	cmd_node->arg_lst = NULL;
 	cmd_node->pipeout = 0;
 	cmd_node->iofd = new_iofds();
 	cmd_node->pipe_fd = NULL;

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 23:51:27 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/19 10:25:50 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/20 12:01:16 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,8 @@ void	expand_variable(t_data *data, t_token *token)
 		{
 			if (token->str[i + 1] == '\0')
 				break ;
-			if (is_qoute(token->str[++i]))
+			if (is_qoute(token->str[++i]) && \
+				get_q_state(token->str, (i - 1)) == NONE)
 				remove_var_sign(token, i);
 			else if (token->str[i] == '?')
 				expande_exit_status(data, &token, i);
