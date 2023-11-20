@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:54:44 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/19 16:34:36 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/20 19:36:13 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int	check_and_expand(t_data *data, t_cmd **cmd_node, \
 {
 	char	*trimmed_deli;
 
-// you have 4 bytes leaks here -- ft_remove_quotes
 	trimmed_deli = ft_remove_quotes((*cmd_node)->iofd->here_delemiter, \
 		count_len_unqouted((*cmd_node)->iofd->here_delemiter));
 	if (!content_line || ft_strncmp_custom(trimmed_deli, content_line, \
@@ -100,80 +99,3 @@ void	extract_here_doc(t_data *data, t_token **token, t_cmd **cmd_node)
 	(*cmd_node)->iofd->fdin = open((*cmd_node)->iofd->infile, O_RDONLY);
 	(*token) = (*token)->next->next;
 }
-
-
-/// here doc signal implementation
-
-// void heredoc_signal(int sig) {
-//     if (sig == SIGINT) {
-//         // Handle SIGINT in the heredoc process
-//         // For example, clean up resources and exit
-//         printf("\nReceived SIGINT in heredoc. Cleaning up...\n");
-//         exit(1);
-//     }
-// }
-
-// void extract_here_doc_child(t_data *data, t_token **token, t_cmd *cmd_node) {
-//     // Set up SIGINT signal handler in the child process
-//     signal(SIGINT, heredoc_signal);
-
-//     char *temp_file;
-//     char *content_line;
-//     int tmp_fd;
-
-//     cmd_node->iofd->here_delemiter = ft_strdup((*token)->next->str);
-//     temp_file = generate_temp_file_name();
-//     tmp_fd = open(temp_file, O_CREAT | O_TRUNC | O_RDWR, S_IRUSR | S_IWUSR);
-
-//     while (1) {
-//         content_line = readline("heredoc> ");
-//         if (check_and_expand(data, &cmd_node, content_line, tmp_fd)) {
-//             break;
-//         }
-//         free(content_line);
-//     }
-
-//     // Close the temporary file
-//     close(tmp_fd);
-
-//     // Set infile and fdin in cmd_node
-//     cmd_node->iofd->infile = temp_file;
-//     cmd_node->iofd->fdin = open(cmd_node->iofd->infile, O_RDONLY);
-
-//     // Exit the child process
-//     exit(0);
-// }
-
-// void extract_here_doc_parent(t_data *data, 
-// t_token **token, t_cmd **cmd_node) {
-//     pid_t pid;
-//     int status;
-
-//     pid = fork();
-
-//     if (pid == -1) {
-//         // Handle fork error
-//         perror("fork");
-//         exit(1);
-//     } else if (pid == 0) {
-//         // Child process
-//         extract_here_doc_child(data, token, *cmd_node);
-//     } else {
-//         // Parent process
-//         // Wait for the child process to finish
-//         waitpid(pid, &status, 0);
-
-//         // Handle the status if needed
-// 		if (WTERMSIG(status))
-// 			sig_handler();
-
-//         // Move to the next token
-//         (*token) = (*token)->next->next;
-//     }
-// }
-
-// // Example usage
-// // Call this function from your main program
-// void run_extract_here_doc(t_data *data, t_token **token, t_cmd **cmd_node) {
-//     extract_here_doc_parent(data, token, cmd_node);
-// }

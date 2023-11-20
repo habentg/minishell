@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:12:27 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/19 14:50:15 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/20 20:26:16 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,18 @@ static void	check_for_var(t_token **token_lst)
 	}
 }
 
+int	check_after_del(t_data *data, t_token *token)
+{
+	if (last_mem(token)->type == PIPE)
+		return (1);
+	if (is_token_operator(last_mem(token)))
+	{
+		data->exit_code = 1;
+		return (display_error("--", "ambiguous redirect"), 1);
+	}
+	return (0);
+}
+
 /*
 	VAR EXPANSION
 	~ expand the variable
@@ -109,6 +121,8 @@ int	start_expansion(t_data *data)
 	remove_quotes(data);
 	remove_empty_tokens(&data->token);
 	if (!data->token)
+		return (1);
+	if (check_after_del(data, data->token))
 		return (1);
 	return (0);
 }

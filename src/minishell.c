@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:57:10 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/20 17:59:54 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/20 19:35:36 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int	main(int ac, char **av, char **envp)
 		return (1);
 	if (init_data(&data, envp))
 		return (ft_clean_data_done(&data, 0), 1);
-	// shlvl_increment(data, 1);
+	shlvl_increment(data, 1);
 	if (launch_minishell(data))
 		return (ft_clean_data_done(&data, 0), 1);
 	ft_clean_data_done(&data, 0);
