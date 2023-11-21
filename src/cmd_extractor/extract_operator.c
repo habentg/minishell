@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 20:20:44 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/20 18:54:54 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/21 10:05:01 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,31 +34,14 @@ void	extract_trunc(t_token **token, t_cmd **cmd_node)
 	(*cmd_node)->iofd->fdout = open((*cmd_node)->iofd->outfile, O_CREAT | \
 		O_TRUNC | O_RDWR, S_IRUSR | S_IWUSR);
 	if ((*cmd_node)->iofd->fdout == -1)
+	{
+		display_error((*cmd_node)->iofd->outfile, strerror(errno));
 		(*cmd_node)->iofd->fdout = -2;
+	}
 	(*token) = (*token)->next->next;
 }
 
 // < (input redir) -> set the current command infile to the
-	//content of next token && the fdin to the file descriptor of the infile.
-int	extract_input_redir(t_token **token, t_cmd **cmd_node)
-{
-	if (remove_prev_iofdins(cmd_node, token))
-		return (0);
-	(*cmd_node)->iofd->infile = ft_strdup((*token)->next->str);
-	if (access((*cmd_node)->iofd->infile, F_OK | R_OK))
-	{
-		(*token) = (*token)->next->next;
-		(*cmd_node)->iofd->fdin = -2;
-		return (0);
-	}
-	(*cmd_node)->iofd->infile = ft_strdup((*token)->next->str);
-	(*cmd_node)->iofd->fdin = open((*cmd_node)->iofd->infile, O_RDONLY);
-	if ((*cmd_node)->iofd->fdin == -1)
-		(*cmd_node)->iofd->fdout = -2;
-	(*token) = (*token)->next->next;
-	return (0);
-}
-
 // >>
 /*
 	If the specified file doesn't exist, it will be created.
@@ -73,6 +56,25 @@ void	extract_append(t_token **token, t_cmd **cmd_node)
 	(*cmd_node)->iofd->fdout = open((*cmd_node)->iofd->outfile, O_CREAT | \
 		O_APPEND | O_RDWR, S_IRUSR | S_IWUSR);
 	if ((*cmd_node)->iofd->fdout == -1)
+	{
+		display_error((*cmd_node)->iofd->outfile, strerror(errno));
 		(*cmd_node)->iofd->fdout = -2;
+	}
 	(*token) = (*token)->next->next;
+}
+
+	//content of next token && the fdin to the file descriptor of the infile.
+int	extract_input_redir(t_token **token, t_cmd **cmd_node)
+{
+	if (remove_prev_iofdins(cmd_node, token))
+		return (0);
+	(*cmd_node)->iofd->infile = ft_strdup((*token)->next->str);
+	(*cmd_node)->iofd->fdin = open((*cmd_node)->iofd->infile, O_RDONLY);
+	if ((*cmd_node)->iofd->fdin == -1)
+	{
+		display_error((*cmd_node)->iofd->infile, strerror(errno));
+		(*cmd_node)->iofd->fdin = -2;
+	}
+	(*token) = (*token)->next->next;
+	return (0);
 }

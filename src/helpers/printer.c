@@ -6,13 +6,13 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 19:45:08 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/20 19:03:59 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/21 14:51:13 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	print_token(t_token *token)
+void	print_token_lst(t_token *token)
 {
 	t_token	*tmp;
 
@@ -24,7 +24,7 @@ void	print_token(t_token *token)
 	}
 }
 
-void	print_cmd(t_cmd *cmd)
+void	print_cmd_lst(t_cmd *cmd)
 {
 	int	i;
 

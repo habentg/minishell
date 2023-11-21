@@ -6,7 +6,7 @@
 #    By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/03 01:59:13 by hatesfam          #+#    #+#              #
-#    Updated: 2023/11/20 18:45:27 by hatesfam         ###   ########.fr        #
+#    Updated: 2023/11/21 14:48:19 by hatesfam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,6 +64,7 @@ $(NAME): $(OBJ_FILES)
 	@$(CC) $(CFALGS) $^ $(LIBFT) $(RDLINE_L) -o $@ -I$(INC)
 	@printf "$(GREEN)    - Minishell Executable ready.\n$(RESET)"
 	clear
+
 # Rule for cleaning object files:	
 clean:
 	@$(MAKE) -C ./includes/libft clean
@@ -84,11 +85,6 @@ fclean: clean
 re: fclean all
 	@printf "$(CURSIVE)$(GRAY)	- Remaking $(NAME)... $(RESET)\n"
 	clear
-
-# Rule for easy re-run
-s: all
-	clear
-	./minishell
 
 # Rule to run and check for memory leaks (inside docker only)
 leaks:

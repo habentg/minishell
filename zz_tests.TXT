@@ -9,3 +9,7 @@ segfault coz I am removing the file (VAR) if its not env
     -> not yet!
 4. Redirection and file
      -> Fixed ==> alot of them
+5. exit "" -> as of now, I am removing empty tokens so this will be considered just exit
+            however bash takes it as a NULL, non numeric value so the exit status is 255
+    -> Yet to be fixed.
+6. 

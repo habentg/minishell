@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 16:23:12 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/20 12:05:32 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/21 13:39:45 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,20 @@ int	check_cmd_valid_utils(t_data *data, t_cmd **cmd_node)
 	{
 		tmp_join = ft_strjoin(data->path[i], "/");
 		if (!tmp_join)
-			return (0);
+			return (display_error((*cmd_node)->cmd, strerror(errno)), 2);
 		cmd_path = ft_strjoin(tmp_join, (*cmd_node)->cmd);
 		free(tmp_join);
 		if (access(cmd_path, F_OK) == 0)
 		{
 			free((*cmd_node)->cmd);
 			(*cmd_node)->cmd = cmd_path;
+			if (access(cmd_path, X_OK) != 0)
+				return (display_error((*cmd_node)->cmd, PERMISSION_DENY), 126);
 			return (0);
 		}
-		else
-			free(cmd_path);
+		free(cmd_path);
 	}
-	return (1);
+	return (display_error((*cmd_node)->cmd, CMD_NOT_FOUND), 127);
 }
 
 int	check_cmd_validity(t_data *data, t_cmd **cmd_node)
@@ -68,7 +69,8 @@ int	check_cmd_validity(t_data *data, t_cmd **cmd_node)
 	}
 	if (is_builtin_cmd((*cmd_node)))
 		return (0);
-	if (check_cmd_valid_utils(data, cmd_node))
-		return (display_error((*cmd_node)->cmd, CMD_NOT_FOUND), 127);
+	data->exit_code = check_cmd_valid_utils(data, cmd_node);
+	if (data->exit_code != 0)
+		return (data->exit_code);
 	return (0);
 }

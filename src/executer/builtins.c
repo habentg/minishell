@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:09:52 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/19 14:18:42 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/21 13:59:05 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,11 @@ int	handle_env(t_data *data, t_cmd *cmd_node)
 }
 
 /*this is where each of the builtins run*/
-void	exec_builtin_cmd(t_cmd *cmd_node, t_data *data)
+int	exec_builtin_cmd(t_cmd *cmd_node, t_data *data)
 {
 	data->exit_code = iofd_validity(cmd_node, cmd_node->iofd);
 	if (data->exit_code)
-		return ;
+		return (data->exit_code);
 	if (ft_strncmp_custom(cmd_node->cmd, "cd", 2) == 0)
 		data->exit_code = handle_cd(cmd_node, data);
 	else if (ft_strncmp_custom(cmd_node->cmd, "pwd", 3) == 0)
@@ -96,5 +96,5 @@ void	exec_builtin_cmd(t_cmd *cmd_node, t_data *data)
 		data->exit_code = handle_unset(data, cmd_node);
 	else if (ft_strncmp_custom(cmd_node->cmd, "env", 3) == 0)
 		data->exit_code = handle_env(data, cmd_node);
-	return ;
+	return (data->exit_code);
 }

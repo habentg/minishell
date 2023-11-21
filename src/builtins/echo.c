@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 02:51:46 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/19 07:58:31 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/21 11:37:09 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,13 @@ int	n_option_handler(t_cmd *cmd_node)
 int	handle_echo(t_cmd *cmd_node)
 {
 	int	n_flag;
-	int	fd;
 	int	i_n;
 
 	i_n = 0;
 	n_flag = 0;
-	fd = cmd_node->iofd->fdout;
-	if (fd == -1)
-		fd = STDOUT_FILENO;
 	i_n = n_option_handler(cmd_node);
 	if (i_n > 1)
 		n_flag = 1;
-	print_echo(cmd_node, n_flag, fd, i_n);
+	print_echo(cmd_node, n_flag, STDOUT_FILENO, i_n);
 	return (0);
 }

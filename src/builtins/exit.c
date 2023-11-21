@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 02:34:15 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/20 19:36:58 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/21 08:09:33 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	handle_exit(t_data *data, t_cmd *cmd_node)
 	shlvl_increment(data, 0);
 	if (arr_length(cmd_node->cmdarg) == 1)
 		data->exit_code = 0;
-	else if (arr_length(cmd_node->cmdarg) == 2)
+	else if (arr_length(cmd_node->cmdarg) >= 2)
 	{
 		if (!valid_e_status(cmd_node->cmdarg[1]))
 		{
@@ -83,17 +83,17 @@ int	handle_exit(t_data *data, t_cmd *cmd_node)
 			display_error_2("exit", cmd_node->cmdarg[1], \
 				"numeric argument required");
 		}
+		else if (arr_length(cmd_node->cmdarg) > 2)
+		{
+			data->exit_code = 1;
+			return (display_error("exit", "too many arguments"), 1);
+		}
 		else
 		{
 			data->exit_code = ft_atol(cmd_node->cmdarg[1]) % 256;
 			if (ft_atol(cmd_node->cmdarg[1]) < 0)
 				data->exit_code = 256 + data->exit_code;
 		}
-	}
-	else if (arr_length(cmd_node->cmdarg) > 2)
-	{
-		data->exit_code = 1;
-		return (display_error("exit", "too many arguments"), 1);
 	}
 	ft_clean_data_done(&data, 1);
 	exit(data->exit_code);

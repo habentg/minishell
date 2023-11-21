@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/20 20:23:49 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/21 14:51:13 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,7 @@ int					start_execution(t_data *data);
 char				*get_path(char **envp, char *key);
 int					create_pipes(t_data *data, t_cmd *cmd);
 bool				is_builtin_cmd(t_cmd *cmd_node);
-void				exec_builtin_cmd(t_cmd *cmd_node, t_data *data);
+int					exec_builtin_cmd(t_cmd *cmd_node, t_data *data);
 int					pre_exec_checks(t_data *data, t_cmd *cmd_node);
 char				**ft_split_custom(char *str);
 int					fork_wait(t_data *data);
@@ -256,8 +256,8 @@ int					is_operator(char c);
 int					is_qoute(char c);
 int					ft_whitespaces(char *str, int *index, char c);
 char				**splitter(char *str);
-void				print_token(t_token *token);
-void				print_cmd(t_cmd *cmd);
+void				print_token_lst(t_token *token);
+void				print_cmd_lst(t_cmd *cmd);
 int					ft_strncmp_custom(const char *str1, \
 	const char *str2, size_t n);
 void				print_arr(char **arr);
@@ -286,4 +286,7 @@ char				**sorted_envi(char **envi);
 void				sig_handler(void);
 void				child_signals(t_cmd *cmd);
 char				**ft_split_custom(char *str);
+
+void				set_iofds(t_data *data, t_iofds *iofds);
+
 #endif
