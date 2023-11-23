@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:15:11 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/21 11:23:37 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/23 14:19:56 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	close_open_fds(t_cmd *cmd_lst, int exc_ended)
 
 void	exitshell(t_data *data, t_cmd *cmdnode, int excode)
 {
-	(void)excode;
+	data->exit_code = excode;
 	if (cmdnode && cmdnode->iofd)
 		close_open_fds(data->cmd_lst, 1);
 	ft_clean_data_done(&data, 1);

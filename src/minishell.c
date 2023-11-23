@@ -6,11 +6,43 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:57:10 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/20 19:35:36 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/23 14:41:08 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+// increment/decrement shlvl
+/*
+	&& get the current shlvl value
+	&& create a new env node with the new shlvl value
+	&& add it to the env_lst
+	&& update the envi
+*/
+void	shlvl_increment(t_data *data, int inc_dec)
+{
+	char	*curr_shlvl;
+	char	**arr;
+
+	arr = NULL;
+	curr_shlvl = get_path(data->envi, "SHLVL");
+	arr = (char **)malloc(sizeof(char *) * 3);
+	arr[0] = ft_strdup("SHLVL");
+	if (!curr_shlvl)
+		arr[1] = ft_strdup("1");
+	else if (inc_dec == 1)
+		arr[1] = ft_itoa(ft_atoi(curr_shlvl) + 1);
+	else if (inc_dec == 0)
+	{
+		ft_putendl_fd("exit", 1);
+		arr[1] = ft_itoa(ft_atoi(curr_shlvl) - 1);
+	}
+	arr[2] = NULL;
+	add_env_back(data, arr);
+	update_envi(data);
+	ft_clean_arr(arr);
+	free(curr_shlvl);
+}
 
 // initialize my data struct
 /*
@@ -62,11 +94,13 @@ int	launch_minishell(t_data *data)
 	{
 		sig_handler();
 		input_res = readline(PROMPT);
-		if (!input_res)
+		if (g_exit_status == 130)
 		{
-			printf("exit\n");
-			ft_clean_data_done(&data, 0);
+			data->exit_code = g_exit_status;
+			g_exit_status = 0;
 		}
+		if (!input_res)
+			ft_clean_data_done(&data, 2);
 		if (ft_strlen(input_res) == 0)
 			continue ;
 		data->input = input_res;
@@ -77,38 +111,6 @@ int	launch_minishell(t_data *data)
 		ft_clean_data(&data);
 	}
 	return (0);
-}
-
-// increment/decrement shlvl
-/*
-	&& get the current shlvl value
-	&& create a new env node with the new shlvl value
-	&& add it to the env_lst
-	&& update the envi
-*/
-void	shlvl_increment(t_data *data, int inc_dec)
-{
-	char	*curr_shlvl;
-	char	**arr;
-
-	arr = NULL;
-	curr_shlvl = get_path(data->envi, "SHLVL");
-	arr = (char **)malloc(sizeof(char *) * 3);
-	arr[0] = ft_strdup("SHLVL");
-	if (!curr_shlvl)
-		arr[1] = ft_strdup("1");
-	else if (inc_dec == 1)
-		arr[1] = ft_itoa(ft_atoi(curr_shlvl) + 1);
-	else if (inc_dec == 0)
-	{
-		ft_putendl_fd("exit", 1);
-		arr[1] = ft_itoa(ft_atoi(curr_shlvl) - 1);
-	}
-	arr[2] = NULL;
-	add_env_back(data, arr);
-	update_envi(data);
-	ft_clean_arr(arr);
-	free(curr_shlvl);
 }
 
 // program entry
