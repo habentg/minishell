@@ -6,12 +6,15 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 21:17:17 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/19 16:05:08 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/23 19:12:25 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+/*
+	@ updating PWD && OLDPWD after cd
+*/
 void	edit_env_lst(t_data *data, char *abs_path)
 {
 	t_env	*tmp;
@@ -39,6 +42,10 @@ void	edit_env_lst(t_data *data, char *abs_path)
 	}
 }
 
+/*
+	% since we are using our linked list to add/delete/update our env values,
+		we need to convert it to an array every time we update it.
+*/
 void	update_envi(t_data *data)
 {
 	char	**tmp_arr;
@@ -65,6 +72,12 @@ void	update_envi(t_data *data)
 	}
 }
 
+/*
+	this fuc is used to handle the a/b/c/.. case
+	# every time we change dir, we check if we can access the cwd.
+		* if we cant we use the one we saved in the data struct to avoid segfault
+	we need to update the env_lst for PWD & OLDPWD as well
+*/
 int	change_dir_updata_envi(t_data *data, char *path)
 {
 	char	*ret;
@@ -92,8 +105,12 @@ int	change_dir_updata_envi(t_data *data, char *path)
 	return (0);
 }
 
-/*if only cd is given, find 'HOME' in the path and chdir to there*/
-/*else, change to the path given give after 'cd', idk what comes after that*/
+/*
+	$ if only cd is given or cd ~, find 'HOME' in the path and chdir to there.
+	$ there shouldnt be more than two arguments for cd
+	$ if cd - is given, find 'OLDPWD' in the path and chdir to there.
+	$ if cd is given with a path, chdir to that path.
+*/
 int	handle_cd(t_cmd *cmd_node, t_data *data)
 {
 	char	*path;

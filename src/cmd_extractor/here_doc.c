@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:54:44 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/20 19:36:13 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/23 18:40:20 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,9 @@ void	expand_heredoc_line(t_data *data, char *content, int tmp_fd)
 		else if (content[i] == '$' && (content[i + 1] && (content[i + 1] == '$' \
 			|| (content[i + 1] == ' '))))
 		{
-			ft_putchar_fd(content[i++], tmp_fd);
-			ft_putchar_fd(content[i], tmp_fd);
+			ft_putstr_fd("{PID}", tmp_fd);
+			i++;
+			i++;
 		}
 		else if (content[i] == '$' && (content[i + 1]))
 		{

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 19:50:12 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/19 11:09:01 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/23 15:44:09 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_env	*env_node_template(void)
 {
 	t_env	*env_node;
 
-	env_node = (t_env *)malloc(sizeof(t_env));
+	env_node = (t_env *)ft_calloc(sizeof(t_env), 1);
 	if (!env_node)
 		return (NULL);
 	env_node->key = NULL;
@@ -43,10 +43,10 @@ t_env	*new_env_node(char *key, char *value)
 	new_node = env_node_template();
 	if (!new_node)
 		return (NULL);
-	new_node->key = ft_strdup(key);
+	if (key)
+		new_node->key = ft_strdup(key);
 	if (value)
 		new_node->value = ft_strdup(value);
-	new_node->next = NULL;
 	return (new_node);
 }
 

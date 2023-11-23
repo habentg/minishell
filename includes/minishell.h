@@ -6,141 +6,21 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/21 14:51:13 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/23 18:51:09 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <stdbool.h>
-# include <limits.h>
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <fcntl.h>
-# include <unistd.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <sys/wait.h>
-# include <errno.h>
-# include <signal.h>
-
 # include "libft/libft.h"
+# include "minishell_structs.h"
+# include "minishell_error.h"
 
 # define PROMPT "\e[1;32mሚ  ኒ ሸ ል $▸ \e[0m"
 
-//allocation error messages
-# define ONESPACE_ALLOC_FAIL "Error: One space allocation failed"
-# define TOKENDL_ALLOC_FAIL "Error: Token DL allocation failed"
-# define CMD_ALLOC_FAIL "Error: CMD allocation failed"
-# define FAILED_TO_DUPLICATE "Error: duplication failed in extract_cmdargs"
-# define PIPE_MALLOC_ERROR "Error: PIPE allocation failed"
-# define PIPE_FUNC_ERROR "Error: PIPE creation failed"
-# define FD_DUP_FAILED "Error: Duplication of file descriptor failed"
-# define EXECVE_FAIL "Error: execve failed"
-# define NO_FILE_DIR "No such file or directory"
-# define PERMISSION_DENY "Permission denied"
-# define CMD_NOT_FOUND "command not found"
-# define IS_DIRCTRY "is a directory"
-
-// error messages
-# define TOKENIZE_FAIL "Error: Tokenization failure"
-# define PIPE_AT_END "Error: pipe at the end"
-# define REDIR_AT_END "Error: syntax error near unexpected token `newline'"
-# define UNCLOSED_QOUTE "Error: unclosed quote"
-# define OPERATOR_PIPE_ERROR "Error: syntax error near unexpected token '|'"
-# define OPERATOR_ERROR_TRU "Error: syntax error near unexpected token '>'"
-# define OPERATOR_ERROR_INP "Error: syntax error near unexpected token '<'"
-# define OPERATOR_ERROR_APP "Error: syntax error near unexpected token '>>'"
-# define OPERATOR_ERROR_HD "Error: syntax error near unexpected token '<<'"
-
-// FILE DESCRIPTORS & FILE ACCESS ERRORS
-# define FAILED_TO_OPEN_INPUT_FILE "Error: failed to find/open input file"
-
 // exit status
 int	g_exit_status;
-
-// qoute state struct
-typedef enum e_quoteType
-{
-	NONE,
-	SINGLE,
-	DOUBLE
-}			t_quoteType;
-
-// token type struct
-typedef enum e_tokenType
-{
-	WORD,
-	PIPE,
-	APPEND,
-	TRUNC,
-	INPUT_REDIR,
-	HERE_DOC,
-	VAR,
-	END
-}			t_tokenType;
-
-// token node struct
-typedef struct s_token
-{
-	char			*str;
-	t_tokenType		type;
-	struct s_token	*prev;
-	struct s_token	*next;
-}				t_token;
-
-typedef struct s_iofds
-{
-	char			*infile;
-	char			*outfile;
-	char			*here_delemiter;
-	int				fdin;
-	int				fdout;
-	int				stdin_backup;
-	int				stdout_backup;
-}					t_iofds;
-
-typedef struct s_args
-{
-	char			*arg;
-	struct s_args	*next;
-}					t_args;
-
-typedef struct s_cmd
-{
-	char			*cmd;
-	char			**cmdarg;
-	t_args			*arg_lst;
-	int				pipeout;
-	t_iofds			*iofd;
-	int				*pipe_fd;
-	struct s_cmd	*next;
-	struct s_cmd	*prev;
-}					t_cmd;
-
-typedef struct s_env
-{
-	char			*key;
-	char			*value;
-	struct s_env	*next;
-}					t_env;
-
-typedef struct s_data
-{
-	char			*input;
-	t_cmd			*cmd_lst;
-	t_token			*token;
-	char			**envi;
-	char			**path;
-	t_env			*env_lst;
-	char			*cwd;
-	int				exit_code;
-	pid_t			ch_pid;
-}					t_data;
 
 // launch funcs
 int					launch_minishell(t_data *data);
@@ -218,8 +98,7 @@ int					exec_builtin_cmd(t_cmd *cmd_node, t_data *data);
 int					pre_exec_checks(t_data *data, t_cmd *cmd_node);
 char				**ft_split_custom(char *str);
 int					fork_wait(t_data *data);
-// void 				run_extract_here_doc(t_data *data, 
-	// t_token **token, t_cmd **cmd_node);
+
 			// builtins
 int					handle_pwd(t_data *data);
 int					handle_echo(t_cmd *cmd_node);
@@ -286,7 +165,6 @@ char				**sorted_envi(char **envi);
 void				sig_handler(void);
 void				child_signals(t_cmd *cmd);
 char				**ft_split_custom(char *str);
-
 void				set_iofds(t_data *data, t_iofds *iofds);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 10:37:24 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/23 14:22:37 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/23 18:25:23 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,24 @@ int	exec_multiple_cmds(t_data *data)
 	return (fork_wait(data));
 }
 
+/*
+	case 1: if there is only one command and it is a builtin
+		# set the iofds:
+			if the command has redirections, it will point the STDIN/STDOUT to the fds of the file
+		# execute the builtin command
+			since builtin commands don't "execute" in execve, we have to manually tell the program what to do
+			and collect the exit code,
+		# reset the iofds
+			finally, we have to reset the STDIN/STDOUT to the original fds.
+case 2: if there are multiple commands
+		# create pipes
+			we have to create pipes for every command that has a pipeout flag
+			we have to create pipes for every command that has a pipein flag
+		# execute the commands
+			we have to execute the commands one by one
+			we have to wait for the child process to finish
+			we have to collect the exit code
+*/
 int	start_execution(t_data *data)
 {
 	if (!data || !data->cmd_lst)
