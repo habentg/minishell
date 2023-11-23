@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/23 18:51:09 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/23 19:49:03 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void				expand_variable(t_data *data, t_token *token);
 int					count_len_unqouted(char *str);
 char				*ft_remove_quotes(char *str, int len);
 int					replace_var(t_data *data, t_token \
-	*token, char *var_name, int *index);
-char				*var_not_found(char *b_var, char *a_var);
+	**token, char *var_name, int *index);
+char				*var_not_found(t_token **token, char *b_var, char *a_var);
 
 // cmd extraction funcs
 int					start_cmd_extraction(t_data *data);

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 18:42:43 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/23 18:58:58 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/23 20:07:16 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_token
 {
 	char			*str;
 	t_tokenType		type;
+	int				was_mpty_before;
 	struct s_token	*prev;
 	struct s_token	*next;
 }				t_token;

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 19:05:20 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/23 18:35:23 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/23 19:19:16 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	sig_p_process(int sig)
 {
 	if (sig == SIGINT)
 	{
-		if (waitpid(-1, &g_exit_status, WNOHANG) == -1)
-		{
+		// if (waitpid(-1, &g_exit_status, WNOHANG) == -1)
+		// {
 			g_exit_status = 130;
 			rl_redisplay();
 			rl_replace_line("", 0);
@@ -40,7 +40,7 @@ void	sig_p_process(int sig)
 			rl_redisplay();
 			rl_on_new_line();
 			rl_redisplay();
-		}
+		// }
 	}
 }
 

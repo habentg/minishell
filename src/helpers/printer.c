@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 19:45:08 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/21 14:51:13 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/23 19:37:00 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	print_token_lst(t_token *token)
 	tmp = token;
 	while (tmp)
 	{
-		printf("token->str: %s, token->type: %u\n", tmp->str, tmp->type);
+		printf("token->str: %s, token->type: %u, was_mty: %d\n", \
+			tmp->str, tmp->type, tmp->was_mpty_before);
 		tmp = tmp->next;
 	}
 }

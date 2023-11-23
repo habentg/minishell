@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 02:34:15 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/21 08:09:33 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/23 20:13:26 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int	valid_e_status(char *str)
 	sign = set_sign(str[i]);
 	if (sign != 0)
 		i++;
+	if (!str[i])
+		return (0);
 	while (str[i] && i <= j)
 	{
 		if (!ft_isdigit(str[i]))

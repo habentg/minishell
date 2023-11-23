@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:12:27 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/21 08:02:03 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/23 20:10:00 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static void	remove_empty_tokens(t_token **token_lst)
 	curr_token = *token_lst;
 	while (curr_token)
 	{
-		if (ft_strncmp_custom(curr_token->str, "", 1) == 0)
+		if (ft_strncmp_custom(curr_token->str, "", 1) == 0 \
+			&& curr_token->was_mpty_before == 0)
 		{
 			next_token = curr_token->next;
 			if (curr_token->prev == NULL)

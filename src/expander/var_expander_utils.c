@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 23:51:27 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/20 12:01:16 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/23 19:47:58 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	remove_var_sign(t_token *token, int i)
 	after_var = ft_substr(token->str, i, ft_strlen(token->str));
 	if (!after_var)
 		after_var = NULL;
-	final_value = var_not_found(before_var, after_var);
+	final_value = var_not_found(&token, before_var, after_var);
 	free(token->str);
 	token->str = final_value;
 }
@@ -82,7 +82,7 @@ int	expande_variable_utils(t_data *data, t_token *token, char *str, int *i)
 	var_name = ft_substr(token->str, k, *i - k);
 	if (!var_name)
 		return (-1);
-	*i = replace_var(data, token, var_name, &k);
+	*i = replace_var(data, &token, var_name, &k);
 	free(var_name);
 	return (*i);
 }
