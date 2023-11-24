@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:09:52 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/21 13:59:05 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/24 20:12:17 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ int	handle_pwd(t_data *data)
 
 	if (getcwd(path, sizeof(path)) != NULL)
 	{
-		printf("%s\n", path);
+		ft_putendl_fd(path, STDOUT_FILENO);
 		return (0);
 	}
 	if (data->cwd)
 	{
-		printf("%s\n", data->cwd);
+		ft_putendl_fd(data->cwd, STDOUT_FILENO);
 		return (0);
 	}
 	display_error_2("pwd", "getcwd", "error retrieving current directory");
@@ -70,7 +70,7 @@ int	handle_env(t_data *data, t_cmd *cmd_node)
 	while (data->envi[i])
 	{
 		if (ft_strchr(data->envi[i], '=') != NULL)
-			printf("%s\n", data->envi[i]);
+			ft_putendl_fd(data->envi[i], STDOUT_FILENO);
 		i++;
 	}
 	return (0);

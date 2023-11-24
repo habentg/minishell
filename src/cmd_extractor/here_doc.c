@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:54:44 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/23 18:40:20 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/24 19:13:05 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,10 @@ int	check_and_expand(t_data *data, t_cmd **cmd_node, \
 		count_len_unqouted((*cmd_node)->iofd->here_delemiter));
 	if (!content_line || ft_strncmp_custom(trimmed_deli, content_line, \
 		ft_strlen((*cmd_node)->iofd->here_delemiter)) == 0)
+	{
+		free(trimmed_deli);
 		return (1);
+	}
 	if (is_heredoc_expandable(content_line) && \
 		!ft_strchr((*cmd_node)->iofd->here_delemiter, '\"') && \
 			!ft_strchr((*cmd_node)->iofd->here_delemiter, '\''))
@@ -90,7 +93,10 @@ void	extract_here_doc(t_data *data, t_token **token, t_cmd **cmd_node)
 	tmp_fd = open(temp_file, O_CREAT | O_TRUNC | O_RDWR, S_IRUSR | S_IWUSR);
 	while (1)
 	{
+		init_signals();
 		content_line = readline("heredoc> ");
+		if (g_exit_status == OFF_HERE_DOC)
+			break ;
 		if (check_and_expand(data, cmd_node, content_line, tmp_fd))
 			break ;
 		free(content_line);
@@ -98,5 +104,17 @@ void	extract_here_doc(t_data *data, t_token **token, t_cmd **cmd_node)
 	close(tmp_fd);
 	(*cmd_node)->iofd->infile = (temp_file);
 	(*cmd_node)->iofd->fdin = open((*cmd_node)->iofd->infile, O_RDONLY);
-	(*token) = (*token)->next->next;
+}
+
+void	ft_here_doc(t_data *data, t_token **token, t_cmd **cmd_node)
+{
+	g_exit_status = IN_HERE_DOC;
+	extract_here_doc(data, token, cmd_node);
+	if (g_exit_status == OFF_HERE_DOC)
+	{
+		while ((*token)->type != END)
+			(*token) = (*token)->next;
+	}
+	else
+		(*token) = (*token)->next->next;
 }

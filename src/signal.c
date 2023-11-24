@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 19:05:20 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/23 19:19:16 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/24 19:37:30 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,36 +16,51 @@ void	child_signal_handler(int num)
 {
 	if (num == SIGINT)
 		write(1, "\n", 1);
-	else if (num == SIGQUIT)
+	else if (num == SIGQUIT && g_exit_status == IN_MINI)
+		signal(SIGQUIT, SIG_IGN);
+	else if (num == SIGQUIT && g_exit_status == IN_CMD)
 		ft_putstr_fd("Quit: 3\n", 2);
 }
 
-void	child_signals(t_cmd *cmd)
+void	child_signals(void)
 {
-	(void)cmd;
 	signal(SIGINT, child_signal_handler);
 	signal(SIGQUIT, child_signal_handler);
 }
 
-void	sig_p_process(int sig)
+int	event(void)
 {
-	if (sig == SIGINT)
+	return (0);
+}
+
+void	sigint_handler(int sig)
+{
+	(void) sig;
+	if (g_exit_status == IN_MINI || g_exit_status == IN_CMD)
 	{
-		// if (waitpid(-1, &g_exit_status, WNOHANG) == -1)
-		// {
-			g_exit_status = 130;
-			rl_redisplay();
-			rl_replace_line("", 0);
-			write(1, "\n", 1);
-			rl_redisplay();
-			rl_on_new_line();
-			rl_redisplay();
-		// }
+		if (g_exit_status == IN_MINI)
+			g_exit_status = OFF_HERE_DOC;
+		else if (g_exit_status == IN_CMD)
+			g_exit_status = CTRL_C;
+		rl_replace_line("", 0);
+		rl_redisplay();
+		rl_done = 1;
+	}
+	else if (g_exit_status == IN_HERE_DOC)
+	{
+		g_exit_status = OFF_HERE_DOC;
+		write(1, "\n", 2);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_done = 1;
 	}
 }
 
-void	sig_handler(void)
+int	init_signals(void)
 {
-	signal(SIGINT, sig_p_process);
+	rl_catch_signals = 0;
+	rl_event_hook = event;
+	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
+	return (g_exit_status);
 }

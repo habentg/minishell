@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 18:42:43 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/23 20:07:16 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/24 18:27:35 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,16 @@
 # include <sys/wait.h>
 # include <errno.h>
 # include <signal.h>
+
+// where am I enumuration
+typedef enum e_whereAmI
+{
+	IN_MINI = 10,
+	IN_CMD = 20,
+	IN_HERE_DOC = 30,
+	OFF_HERE_DOC = 1,
+	CTRL_C = 130,
+}			t_whereAmI;
 
 // qoute state enumuration for lexical analysis
 typedef enum e_quoteType

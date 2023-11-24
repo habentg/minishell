@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/23 19:49:03 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/24 17:39:52 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ int					extract_word(t_data *data, \
 void				extract_pipe(t_token **token, t_cmd **cmd_lst);
 void				extract_trunc(t_token **token, t_cmd **cmd_node);
 int					extract_input_redir(t_token **token, t_cmd **cmd_node);
+void				ft_here_doc(t_data *data, t_token **token, \
+	t_cmd **cmd_node);
 void				extract_here_doc(t_data *data, t_token **token, \
 	t_cmd **cmd_node);
 int					is_heredoc_expandable(char *str);
@@ -120,7 +122,7 @@ void				backup_std_fds(t_cmd **cmd_node);
 void				close_cmd_fds(t_cmd **cmd_node);
 void				close_used_pipe_fds(t_cmd **cmd_lst, t_cmd **cmd_node);
 void				close_unused_pipe_fds(t_cmd **cmd_lst, t_cmd *cmd_node);
-int					set_redirections(t_data *data, t_iofds *iofd);
+void				set_iofds(t_data *data, t_iofds *iofds);
 void				reset_stdio(t_iofds *iofds);
 void				exitshell(t_data *data, t_cmd *cmdnode, int excode);
 void				close_open_fds(t_cmd *cmd_lst, int exc_ended);
@@ -160,11 +162,9 @@ void				free_env_lst(t_data *data);
 char				*get_env_value(t_data *data, char *var_name);
 t_env				*last_env_node(t_env *lst);
 char				**sorted_envi(char **envi);
+char				**ft_split_custom(char *str);
 
 // signal handler
-void				sig_handler(void);
-void				child_signals(t_cmd *cmd);
-char				**ft_split_custom(char *str);
-void				set_iofds(t_data *data, t_iofds *iofds);
-
+int					init_signals(void);
+void				child_signals(void);
 #endif

@@ -6,34 +6,11 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 19:26:46 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/21 11:46:12 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/24 16:50:56 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	set_redirections(t_data *data, t_iofds *iofd)
-{
-	if (!iofd)
-		return (1);
-	iofd->stdin_backup = dup(STDIN_FILENO);
-	if (iofd->stdin_backup == -1)
-		return (1);
-	iofd->stdout_backup = dup(STDOUT_FILENO);
-	if (iofd->stdout_backup == -1)
-		return (1);
-	if (iofd->fdin != -1)
-	{
-		if (dup2(iofd->fdin, STDIN_FILENO) == -1)
-			return (ft_error(data, FD_DUP_FAILED, errno), 1);
-	}
-	if (iofd->fdout != -1)
-	{
-		if (dup2(iofd->fdout, STDOUT_FILENO) == -1)
-			return (ft_error(data, FD_DUP_FAILED, errno), 1);
-	}
-	return (0);
-}
 
 void	set_iofds(t_data *data, t_iofds *iofds)
 {

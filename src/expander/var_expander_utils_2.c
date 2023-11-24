@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 06:53:39 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/23 20:06:23 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/24 15:08:23 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,6 @@ int	replace_var(t_data *data, t_token **token, char *var_name, int *index)
 	else
 		after_var = ft_substr((*token)->str, *index + \
 			ft_strlen(var_name), ft_strlen((*token)->str));
-	// if (!before_var && !after_var && get_env_value(data, var_name) == NULL)
-	// 	final_join = ft_calloc(sizeof(char), 1);
-	// else if (!before_var && !after_var)
-	// 	final_join = ft_strdup(get_env_value(data, var_name));
 	if (get_env_value(data, var_name) == NULL)
 		final_join = var_not_found((token), before_var, after_var);
 	else

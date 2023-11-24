@@ -6,43 +6,11 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:57:10 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/23 14:41:08 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/24 20:14:02 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-// increment/decrement shlvl
-/*
-	&& get the current shlvl value
-	&& create a new env node with the new shlvl value
-	&& add it to the env_lst
-	&& update the envi
-*/
-void	shlvl_increment(t_data *data, int inc_dec)
-{
-	char	*curr_shlvl;
-	char	**arr;
-
-	arr = NULL;
-	curr_shlvl = get_path(data->envi, "SHLVL");
-	arr = (char **)malloc(sizeof(char *) * 3);
-	arr[0] = ft_strdup("SHLVL");
-	if (!curr_shlvl)
-		arr[1] = ft_strdup("1");
-	else if (inc_dec == 1)
-		arr[1] = ft_itoa(ft_atoi(curr_shlvl) + 1);
-	else if (inc_dec == 0)
-	{
-		ft_putendl_fd("exit", 1);
-		arr[1] = ft_itoa(ft_atoi(curr_shlvl) - 1);
-	}
-	arr[2] = NULL;
-	add_env_back(data, arr);
-	update_envi(data);
-	ft_clean_arr(arr);
-	free(curr_shlvl);
-}
 
 // initialize my data struct
 /*
@@ -92,12 +60,12 @@ int	launch_minishell(t_data *data)
 	input_res = NULL;
 	while (1)
 	{
-		sig_handler();
+		init_signals();
 		input_res = readline(PROMPT);
-		if (g_exit_status == 130)
+		if (g_exit_status == CTRL_C || g_exit_status == OFF_HERE_DOC)
 		{
 			data->exit_code = g_exit_status;
-			g_exit_status = 0;
+			g_exit_status = IN_MINI;
 		}
 		if (!input_res)
 			ft_clean_data_done(&data, 2);
@@ -129,6 +97,7 @@ int	main(int ac, char **av, char **envp)
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
 		return (1);
+	g_exit_status = IN_MINI;
 	if (init_data(&data, envp))
 		return (ft_clean_data_done(&data, 0), 1);
 	shlvl_increment(data, 1);
