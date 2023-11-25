@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-void	cmd_arr_creator(char ***arr, char *str)
+/* void	cmd_arr_creator(char ***arr, char *str)
 {
 	int			i = 0;
 	int			k = 0;
@@ -64,6 +64,81 @@ void	cmd_arr_creator(char ***arr, char *str)
 			}
 			(*arr)[arr_i++] = ft_substr(str, k, i - k);
 		}
+	}
+	(*arr)[arr_i] = NULL;
+} */
+
+static void process_quotes(char ***arr, char *str, int *i, int *arr_i)
+{
+    int	k;
+
+	k = *i;
+    while (1)
+	{
+        if (is_qoute(str[*i]))
+		{
+            if (str[*i + 1] && is_qoute(str[*i + 1]))
+			{
+                (*i)++;
+                continue;
+            }
+            if (!str[*i + 1] || (str[*i + 1] && ((is_whitespace(str[*i + 1]) || is_operator(str[*i + 1]))
+					&& get_q_state(str, *i + 1) == NONE)))
+			{
+                (*i)++;
+                break;
+            }
+        }
+        (*i)++;
+    }
+    (*arr)[(*arr_i)++] = ft_substr(str, k, *i - k);
+}
+
+static void process_operator(char ***arr, char *str, int *i, int *arr_i)
+{
+	int	k;
+
+	k = *i;
+    if (str[*i] && is_operator(str[*i]))
+	{
+        if (str[*i] && str[*i] == '>' && str[*i + 1] == '>')
+            (*i)++;
+        else if (str[*i] && str[*i] == '<' && str[*i + 1] == '<')
+            (*i)++;
+        (*i)++;
+        (*arr)[(*arr_i)++] = ft_substr(str, k, *i - k);
+    }
+}
+
+static void process_default(char ***arr, char *str, int *i, int *arr_i)
+{
+    int	k;
+
+	k = *i;
+    while (1)
+	{
+        if (!str[*i] || (str[*i] && (is_operator(str[*i]) || is_whitespace(str[*i])) && get_q_state(str, *i) == NONE))
+            break;
+        (*i)++;
+    }
+    (*arr)[(*arr_i)++] = ft_substr(str, k, *i - k);
+}
+
+void	cmd_arr_creator(char ***arr, char *str)
+{
+	int			i = 0;
+	int			arr_i = 0;
+
+	while (str[i])
+	{
+		while (is_whitespace(str[i]))
+			i++;
+		if (is_qoute(str[i]))
+            process_quotes(arr, str, &i, &arr_i);
+		else if (str[i] && is_operator(str[i]))
+            process_operator(arr, str, &i, &arr_i);
+		else
+            process_default(arr, str, &i, &arr_i);
 	}
 	(*arr)[arr_i] = NULL;
 }

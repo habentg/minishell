@@ -60,7 +60,7 @@ int	launch_minishell(t_data *data)
 	input_res = NULL;
 	while (1)
 	{
-		init_signals();
+		// init_signals();
 		input_res = readline(PROMPT);
 		if (g_exit_status == CTRL_C || g_exit_status == OFF_HERE_DOC)
 		{
