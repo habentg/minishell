@@ -115,7 +115,13 @@ static void helper_default(char ***arr, char *str, int *i, int *arr_i)
     int	k;
 
 	k = *i;
-   
+    while (1)
+	{
+		if (!str[*i] || (str[*i] && (is_operator(str[*i]) || \
+			is_whitespace(str[*i])) && get_q_state(str, *i) == NONE))
+			break ;
+		(*i)++;
+	}
     (*arr)[(*arr_i)++] = ft_substr(str, k, *i - k);
 }
 
