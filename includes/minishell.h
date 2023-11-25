@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/25 20:25:01 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/25 23:33:18 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,4 +168,5 @@ char				**ft_split_custom(char *str);
 int					init_signals(void);
 void				child_signals(void);
 int					one_space_counter(char *str);
+void				helper_quotes(char ***arr, char *str, int *i, int *arr_i);
 #endif

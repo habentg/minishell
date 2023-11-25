@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 19:02:57 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/23 14:41:56 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/25 23:17:53 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,10 @@ void	ft_clean_data_done(t_data **data, int code)
 	if (code == 1)
 		ft_clean_data(data);
 	if (code == 2)
+	{
+		g_exit_status = 0;
 		ft_putendl_fd("exit", 1);
+	}
 	if ((*data)->envi)
 		ft_clean_arr((*data)->envi);
 	if ((*data)->path)

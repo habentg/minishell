@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 19:05:20 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/25 10:20:15 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/25 23:16:49 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ void	child_signal_handler(int num)
 {
 	if (num == SIGINT)
 		write(1, "\n", 1);
-	else if (num == SIGQUIT && g_exit_status == IN_MINI)
-		signal(SIGQUIT, SIG_IGN);
-	else if (num == SIGQUIT && g_exit_status == IN_CMD)
+	else if (num == SIGQUIT)
 		ft_putstr_fd("Quit: 3\n", 2);
 }
 
@@ -38,13 +36,11 @@ void	sigint_handler(int sig)
 	(void) sig;
 	if (g_exit_status == IN_MINI || g_exit_status == IN_CMD)
 	{
-		if (g_exit_status == IN_MINI)
-			g_exit_status = OFF_HERE_DOC;
-		else if (g_exit_status == IN_CMD)
-			g_exit_status = CTRL_C;
+		g_exit_status = 130;
 		write(1, "^C", 2);
+		write(1, "\n", 1);
+		rl_on_new_line();
 		rl_replace_line("", 0);
-		rl_redisplay();
 		rl_done = 1;
 	}
 	else if (g_exit_status == IN_HERE_DOC)
