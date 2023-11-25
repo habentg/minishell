@@ -68,7 +68,7 @@
 	(*arr)[arr_i] = NULL;
 } */
 
-static void process_quotes(char ***arr, char *str, int *i, int *arr_i)
+static void helper_quotes(char ***arr, char *str, int *i, int *arr_i)
 {
     int	k;
 
@@ -94,7 +94,7 @@ static void process_quotes(char ***arr, char *str, int *i, int *arr_i)
     (*arr)[(*arr_i)++] = ft_substr(str, k, *i - k);
 }
 
-static void process_operator(char ***arr, char *str, int *i, int *arr_i)
+static void helper_operator(char ***arr, char *str, int *i, int *arr_i)
 {
 	int	k;
 
@@ -110,17 +110,12 @@ static void process_operator(char ***arr, char *str, int *i, int *arr_i)
     }
 }
 
-static void process_default(char ***arr, char *str, int *i, int *arr_i)
+static void helper_default(char ***arr, char *str, int *i, int *arr_i)
 {
     int	k;
 
 	k = *i;
-    while (1)
-	{
-        if (!str[*i] || (str[*i] && (is_operator(str[*i]) || is_whitespace(str[*i])) && get_q_state(str, *i) == NONE))
-            break;
-        (*i)++;
-    }
+   
     (*arr)[(*arr_i)++] = ft_substr(str, k, *i - k);
 }
 
@@ -134,11 +129,11 @@ void	cmd_arr_creator(char ***arr, char *str)
 		while (is_whitespace(str[i]))
 			i++;
 		if (is_qoute(str[i]))
-            process_quotes(arr, str, &i, &arr_i);
+            helper_quotes(arr, str, &i, &arr_i);
 		else if (str[i] && is_operator(str[i]))
-            process_operator(arr, str, &i, &arr_i);
+            helper_operator(arr, str, &i, &arr_i);
 		else
-            process_default(arr, str, &i, &arr_i);
+            helper_default(arr, str, &i, &arr_i);
 	}
 	(*arr)[arr_i] = NULL;
 }
