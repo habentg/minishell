@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 09:02:58 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/06 16:46:51 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/25 11:11:10 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_whitespaces(char *str, int *index, char c)
 	i = *index;
 	if (c == 'f')
 	{
-		while (str[++i])
+		while (str && str[++i])
 		{
 			if (!is_whitespace(str[i]))
 				break ;
@@ -37,7 +37,7 @@ int	ft_whitespaces(char *str, int *index, char c)
 	{
 		while (--i >= 0)
 		{
-			if (!is_whitespace(str[i]))
+			if (str && str[i] && !is_whitespace(str[i]))
 				break ;
 		}
 	}

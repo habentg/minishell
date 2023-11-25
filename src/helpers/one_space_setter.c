@@ -6,81 +6,62 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 11:57:18 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/22 12:52:03 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/25 20:23:25 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	handle_qouted(char *str, int *j, char **res, int *res_i)
+int	one_space_counter(char *str)
 {
-	int	qoute_type;
+	int	res = 0;
+	int	i = 0;
 
-	qoute_type = str[*j];
-	(*res)[(*res_i)++] = str[*j];
-	(*j)++;
-	while (str[*j] && str[*j] != qoute_type)
-		(*res)[(*res_i)++] = str[(*j)++];
-	if (str[*j])
-		(*res)[(*res_i)++] = str[(*j)++];
-}
-
-void	handle_operator(char *str, int *j, char **res, int *res_i)
-{
-	char	operator_type;
-
-	operator_type = str[*j];
-	(*res)[(*res_i)++] = ' ';
-	(*res)[(*res_i)++] = str[*j];
-	(*j)++;
-	if (operator_type == '|')
-		(*res)[(*res_i)++] = ' ';
-	else if (operator_type == str[*j])
-		(*res)[(*res_i)++] = str[(*j)++];
-	(*res)[(*res_i)++] = ' ';
-}
-
-static void	sett(char *str, char **res, int j, int k)
-{
-	int	res_i;
-
-	res_i = 0;
-	while (j < (k + 1))
+	while (str[i])
 	{
-		if (is_whitespace(str[j]))
+		while (is_whitespace(str[i]))
+			i++;
+		if (is_qoute(str[i]))
 		{
-			(*res)[res_i++] = ' ';
-			while (is_whitespace(str[j]))
-				j++;
+			res++;
+			while (1)
+			{
+				if (is_qoute(str[i]))
+				{
+					if (str[i + 1] && is_qoute(str[i + 1]))
+					{
+						i++;
+						continue ;
+					}
+					if (!str[i + 1] || (str[i + 1] && ((is_whitespace(str[i + 1]) || is_operator(str[i+1])) && get_q_state(str, i+1) == NONE)))
+					{
+						i++;
+						break ;
+					}
+				}
+				i++;
+			}
 		}
-		if (is_qoute(str[j]))
-			handle_qouted(str, &j, res, &res_i);
-		if (is_operator(str[j]))
-			handle_operator(str, &j, res, &res_i);
+		else if (str[i] && is_operator(str[i]))
+		{
+			res++;
+			if (str[i] && str[i] == '>' && str[i + 1] == '>')
+				i++;
+			else if (str[i] && str[i] == '<' && str[i + 1] == '<')
+				i++;
+			i++;
+		}
 		else
-			(*res)[res_i++] = str[j++];
+		{
+			res++;
+			while (1)
+			{
+				if (!str[i] || (str[i] && (is_operator(str[i]) || \
+					is_whitespace(str[i])) && get_q_state(str, i) == NONE))
+					break ;
+				i++;
+			}
+		}
 	}
-	(*res)[res_i] = '\0';
-}
-
-char	*one_space_setter(char *str)
-{
-	int		i;
-	int		start;
-	int		end;
-	int		str_size;
-	char	*res;
-
-	i = -1;
-	str_size = (int)ft_strlen(str);
-	start = ft_whitespaces(str, &i, 'f');
-	end = ft_whitespaces(str, &str_size, 'b');
-	res = NULL;
-	if (!str)
-		return (NULL);
-	res = (char *)malloc(sizeof(char) * ft_strlen(str) * 2);
-	if (!res)
-		return (NULL);
-	sett(str, &res, start, end);
 	return (res);
 }

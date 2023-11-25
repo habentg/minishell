@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 01:30:41 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/20 20:09:52 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/25 12:45:45 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	operator_end_err(t_data **data)
 	if (i <= 0)
 		return (0);
 	i = ft_whitespaces((*data)->input, &i, 'b');
-	if (i <= 0)
+	if (i <= 0 && isspace((*data)->input[i]))
 		return (0);
 	if ((*data)->input[i] == '|')
 		return (ft_error(*data, PIPE_AT_END, 258), 1);

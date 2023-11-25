@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 19:05:20 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/24 19:37:30 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/25 10:20:15 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	sigint_handler(int sig)
 			g_exit_status = OFF_HERE_DOC;
 		else if (g_exit_status == IN_CMD)
 			g_exit_status = CTRL_C;
+		write(1, "^C", 2);
 		rl_replace_line("", 0);
 		rl_redisplay();
 		rl_done = 1;

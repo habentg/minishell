@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 02:34:15 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/24 20:14:13 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/25 12:48:43 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,6 @@ int	handle_exit(t_data *data, t_cmd *cmd_node)
 				data->exit_code = 256 + data->exit_code;
 		}
 	}
-	ft_clean_data_done(&data, 1);
-	exit(data->exit_code);
+	reset_stdio(cmd_node->iofd);
+	return (ft_clean_data_done(&data, 1), 0);
 }

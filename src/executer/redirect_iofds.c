@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 19:26:46 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/24 16:50:56 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/25 12:56:39 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	set_iofds(t_data *data, t_iofds *iofds)
 {
-	if (!iofds)
+	if (!iofds || (iofds->fdin == -1 && iofds->fdout == -1))
 		return ;
 	iofds->stdin_backup = dup(STDIN_FILENO);
 	if (iofds->stdin_backup == -1)

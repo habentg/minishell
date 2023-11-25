@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 21:17:17 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/24 20:06:11 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/25 13:32:24 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,6 @@ int	handle_cd(t_cmd *cmd_node, t_data *data)
 	}
 	else
 		path = cmd_node->cmdarg[1];
-	if (arr_length(cmd_node->cmdarg) > 2)
-		return (display_error("cd", "to many arguments"), 1);
 	if (ft_strncmp_custom(path, "-", 2) == 0)
 	{
 		path = get_env_value(data, "OLDPWD");
