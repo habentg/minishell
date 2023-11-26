@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 03:13:51 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/19 10:43:04 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/26 17:50:25 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,32 @@ int	valid_key_check(char *key, int unset_flag)
 	return (1);
 }
 
+int	handle_export_util(t_data *data, t_cmd *cmd_node, int i, char **arr)
+{
+	t_env	*tmp;
+
+	tmp = NULL;
+	while (cmd_node->cmdarg[++i])
+	{
+		arr = ft_split_custom(cmd_node->cmdarg[i]);
+		if (!valid_key_check(arr[0], 0))
+			return (display_error_2("export", cmd_node->cmdarg[i], \
+				"not a valid identifier"), 1);
+		tmp = env_node_ptr(data->env_lst, arr[0]);
+		if (!tmp)
+			add_env_back(data, arr);
+		else
+		{
+			if (!arr[1])
+				continue ;
+			free(tmp->value);
+			tmp->value = ft_strdup(arr[1]);
+		}
+		ft_clean_arr(arr);
+	}
+	return (0);
+}
+
 // key should be alpha-numerical only -> otheriwse error
 int	handle_export(t_data *data, t_cmd *cmd_node)
 {
@@ -96,19 +122,8 @@ int	handle_export(t_data *data, t_cmd *cmd_node)
 	i = 0;
 	if (cmd_node->cmdarg[1] == NULL)
 		return (print_export(data, data->envi));
-	while (cmd_node->cmdarg[++i])
-	{
-		if (ft_strlen(cmd_node->cmdarg[i]) == 0 || (ft_strlen \
-			(cmd_node->cmdarg[i]) == 1 && cmd_node->cmdarg[i][0] == '='))
-			return (display_error_2("export", cmd_node->cmdarg[i], \
-				"not a valid identifier"), 1);
-		arr = ft_split_custom(cmd_node->cmdarg[i]);
-		if (!valid_key_check(arr[0], 0))
-			return (display_error_2("export", cmd_node->cmdarg[i], \
-				"not a valid identifier"), 1);
-		add_env_back(data, arr);
-		ft_clean_arr(arr);
-	}
+	if (handle_export_util(data, cmd_node, i, arr))
+		return (1);
 	update_envi(data);
 	return (0);
 }

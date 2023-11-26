@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 21:17:17 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/25 13:32:24 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/26 15:38:41 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	edit_env_lst(t_data *data, char *abs_path)
 		else if (ft_strncmp_custom(tmp->key, "PWD", 3) == 0)
 		{
 			update_oldpwd(data->env_lst, tmp->value);
+			if (tmp->value)
+				free(tmp->value);
 			tmp->value = ft_strdup(abs_path);
 			break ;
 		}
@@ -81,11 +83,11 @@ void	update_envi(t_data *data)
 int	change_dir_updata_envi(t_data *data, char *path)
 {
 	char	*ret;
-	char	*tmp;
 	char	cwd[PATH_MAX];
+	char	*tmp_ret;
 
 	ret = NULL;
-	tmp = NULL;
+	tmp_ret = NULL;
 	if (chdir(path) != 0)
 		return (display_error_2("cd", path, NO_FILE_DIR), 1);
 	ret = getcwd(cwd, PATH_MAX);
@@ -93,13 +95,12 @@ int	change_dir_updata_envi(t_data *data, char *path)
 	{
 		display_error_2("cd", "error retrieving current directory", \
 			"getcwd: cannot access parent directories");
-		ret = ft_strjoin(data->cwd, "/");
-		tmp = ret;
-		ret = ft_strjoin(tmp, path);
-		free(tmp);
+		tmp_ret = ft_strjoin(data->cwd, "/");
+		ret = ft_strjoin(tmp_ret, path);
+		free(tmp_ret);
 	}
 	else
-		ret = ft_strdup(cwd);
+		ret = (cwd);
 	edit_env_lst(data, ret);
 	update_envi(data);
 	return (0);

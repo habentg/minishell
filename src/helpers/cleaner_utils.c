@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 05:08:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/05 22:12:54 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/26 16:05:58 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ void	ft_free_iofile(t_iofds *iofiles)
 		return ;
 	if (iofiles->infile)
 	{
-		if (iofiles->fdin != -1)
+		if (iofiles->fdin >= -1)
 			close(iofiles->fdin);
 		free(iofiles->infile);
 	}
 	if (iofiles->outfile)
 	{
-		if (iofiles->fdout != -1)
+		if (iofiles->fdout >= -1)
 			close(iofiles->fdout);
 		free(iofiles->outfile);
 	}

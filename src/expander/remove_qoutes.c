@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 21:04:14 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/10 08:10:03 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/26 16:33:22 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ int	count_len_unqouted(char *str)
 	quote = NONE;
 	while (str && str[i])
 	{
-		while (!check_quote(str[i]) && str[i] && \
-			quote == NONE)
+		while (!check_quote(str[i]) && str[i] && quote == NONE)
 		{
 			len++;
 			i++;
@@ -45,8 +44,11 @@ int	count_len_unqouted(char *str)
 			quote = check_quote(str[i++]);
 		while (str[i] && check_quote(str[i++]) != quote)
 			len++;
-		if (str[i] && check_quote(str[i++]) == quote)
+		if (str[i] && check_quote(str[i]) == quote)
+		{
+			i++;
 			quote = NONE;
+		}
 	}
 	return (len);
 }
