@@ -6,7 +6,7 @@
 #    By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/03 01:59:13 by hatesfam          #+#    #+#              #
-#    Updated: 2023/11/26 17:58:54 by hatesfam         ###   ########.fr        #
+#    Updated: 2023/11/26 19:35:03 by hatesfam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,9 +86,9 @@ re: fclean all
 	clear
 
 # Rule to run and check for memory leaks (inside docker only)
-leaks:
-	@make all
-	valgrind --suppressions=readleak.txt --leak-check=full --trace-children=yes \
-	--show-leak-kinds=all --track-origins=yes --track-fds=yes ./minishell
+# leaks:
+# 	@make all
+# 	valgrind --suppressions=readleak.txt --leak-check=full --trace-children=yes \
+# 	--show-leak-kinds=all --track-origins=yes --track-fds=yes ./minishell
 # Phony targets:
 .PHONY: all clean fclean re

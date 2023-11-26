@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:25:31 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/26 16:51:24 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/26 18:13:41 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_env	*env_node_ptr(t_env *env_lst, char *key)
 	tmp = env_lst;
 	while (tmp)
 	{
-		if (!ft_strncmp(tmp->key, key, ft_strlen(key)))
+		if (!ft_strncmp_custom(tmp->key, key, ft_strlen(key)))
 			return (tmp);
 		tmp = tmp->next;
 	}

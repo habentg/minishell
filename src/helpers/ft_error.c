@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 01:30:41 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/25 12:45:45 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/26 18:56:56 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,14 @@ static int	open_qoute_err(t_data **data)
 */
 int	possible_error(t_data **data)
 {
+	int	i;
+
+	i = -1;
 	if (!data || !(*data)->input)
-		return (0);
+		return (1);
+	i = ft_whitespaces((*data)->input, &i, 'f');
+	if (!(*data)->input[i] || isspace((*data)->input[i]))
+		return (1);
 	if (operator_end_err(data))
 		return (1);
 	if (open_qoute_err(data))
