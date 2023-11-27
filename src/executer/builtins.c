@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:09:52 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/24 20:12:17 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/28 01:53:40 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /*the functio is pretty much self-descriptive*/
 bool	is_builtin_cmd(t_cmd *cmd_node)
 {
-	if (cmd_node->cmd == NULL)
+	if (!cmd_node->cmd || cmd_node->cmd[0] == '\0' || cmd_node->cmd[0] == ' ')
 		return (false);
 	if (ft_strncmp_custom(cmd_node->cmd, "echo", 4) == 0)
 		return (true);
@@ -79,7 +79,7 @@ int	handle_env(t_data *data, t_cmd *cmd_node)
 /*this is where each of the builtins run*/
 int	exec_builtin_cmd(t_cmd *cmd_node, t_data *data)
 {
-	data->exit_code = iofd_validity(cmd_node, cmd_node->iofd);
+	data->exit_code = iofd_validity(cmd_node);
 	if (data->exit_code)
 		return (data->exit_code);
 	if (ft_strncmp_custom(cmd_node->cmd, "cd", 2) == 0)
