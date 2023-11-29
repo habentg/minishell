@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 16:53:51 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/07 18:03:37 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/29 16:38:53 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ char	*get_var_name(char *content, int *i)
 	int	k;
 
 	k = *i;
-	while (content[*i] && (content[*i] != '$' && content[*i] != ' '))
+	while (content[*i] && (content[*i] != '$' && content[*i] != ' ' \
+		&& !is_qoute(content[*i]) && !is_operator(content[*i])))
 		(*i)++;
 	return (ft_substr(content, k, *i - k));
 }
