@@ -59,6 +59,8 @@ void	update_envi(t_data *data)
 	if (!tmp_path || !ft_strlen(tmp_path) \
 		|| !ft_strncmp_custom(tmp_path, "", 1))
 	{
+		if (data->path)
+			ft_clean_arr(data->path);
 		data->path = (char **)malloc(sizeof(char *) * 1);
 		data->path[0] = NULL;
 	}

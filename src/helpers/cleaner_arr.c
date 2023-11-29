@@ -17,8 +17,8 @@ void	ft_clean_arr(char **argv)
 	int	i;
 
 	i = 0;
-	if (!argv || arr_length(argv) == 0)
-		return ;
+	// if (!argv || arr_length(argv) == 0)
+	// 	return ;
 	while (i < arr_length(argv))
 	{
 		if (argv[i] != NULL)
