@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 16:53:51 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/29 16:38:53 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/29 16:51:56 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	for_real_expand(t_data *data, char *content, int *i, int tmp_fd)
 	var_name = get_var_name(content, i);
 	exp_var = get_env_value(data, var_name);
 	if (!exp_var)
-		exp_var = ft_strdup("");
+		exp_var = NULL;
 	ft_putstr_fd(exp_var, tmp_fd);
 	free(var_name);
 	return (*i--);

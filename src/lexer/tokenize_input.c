@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 02:05:18 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/29 16:06:46 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/29 16:58:00 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,6 @@ int	tokenize_cmd(t_token **token_lst, char *cmd)
 	cmd_arr_creator(&mem_arr, cmd);
 	while (mem_arr[++i] != NULL)
 	{
-		if (!ft_strlen(mem_arr[i]))
-			continue ;
 		token = tokenize_mem(mem_arr[i]);
 		if (!token)
 			return (ft_error(NULL, TOKENIZE_FAIL, 255), 1);

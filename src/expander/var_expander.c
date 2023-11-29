@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:12:27 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/23 20:10:00 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/29 17:45:51 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 	after var expansion, remove any empty tokens
 	they are useless
 */
-static void	remove_empty_tokens(t_token **token_lst)
+void	remove_empty_tokens(t_token **token_lst)
 {
 	t_token	*curr_token;
 	t_token	*next_token;
@@ -24,8 +24,7 @@ static void	remove_empty_tokens(t_token **token_lst)
 	curr_token = *token_lst;
 	while (curr_token)
 	{
-		if (ft_strncmp_custom(curr_token->str, "", 1) == 0 \
-			&& curr_token->was_mpty_before == 0)
+		if (curr_token->was_mpty_before == 0)
 		{
 			next_token = curr_token->next;
 			if (curr_token->prev == NULL)
@@ -33,6 +32,8 @@ static void	remove_empty_tokens(t_token **token_lst)
 			else
 				curr_token->prev->next = next_token;
 			ft_delone_token(curr_token);
+			if (curr_token)
+				free(curr_token);
 			curr_token = next_token;
 		}
 		else

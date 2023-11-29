@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 23:51:27 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/23 19:47:58 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/29 17:30:57 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ int	expande_variable_utils(t_data *data, t_token *token, char *str, int *i)
 	if (!var_name)
 		return (-1);
 	*i = replace_var(data, &token, var_name, &k);
-	free(var_name);
+	if (var_name)
+		free(var_name);
 	return (*i);
 }
 
@@ -116,7 +117,7 @@ void	expand_variable(t_data *data, t_token *token)
 			else
 			{
 				i = expande_variable_utils(data, token, token->str, &i);
-				if (i == -1)
+				if (!token->str || i == -1)
 					break ;
 			}
 			i = -1;

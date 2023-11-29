@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 06:53:39 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/24 15:08:23 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/29 17:32:48 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,10 @@ char	*var_not_found(t_token **token, char *b_var, char *a_var)
 	char	*final_join;
 
 	final_join = NULL;
+	(void)token;
 	if (!b_var && !a_var)
 	{
-		final_join = (char *)ft_calloc(sizeof(char), 1);
+		final_join = NULL;
 		(*token)->was_mpty_before = 0;
 	}
 	else if (!b_var)
@@ -97,7 +98,10 @@ int	replace_var(t_data *data, t_token **token, char *var_name, int *index)
 	else
 		final_join = var_found(data, before_var, after_var, var_name);
 	free((*token)->str);
-	(*token)->str = final_join;
+	if (!final_join)
+		(*token)->str = NULL;
+	else
+		(*token)->str = final_join;
 	free_allocs(before_var, after_var);
 	return (0);
 }

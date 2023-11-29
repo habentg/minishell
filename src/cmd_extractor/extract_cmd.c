@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 16:49:08 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/24 16:31:23 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/29 17:54:38 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	extract_one_cmd(t_data *data, t_token **token, t_cmd **cmd_lst)
 
 void	update_cmd_args(t_cmd *cmd_node)
 {
-	if (arr_length(cmd_node->cmdarg) <= ft_arglstsize(&cmd_node->arg_lst))
+	if (arr_length(cmd_node->cmdarg) < ft_arglstsize(&cmd_node->arg_lst))
 	{
 		if (cmd_node->cmdarg)
 			ft_clean_arr(cmd_node->cmdarg);
