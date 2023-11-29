@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 11:57:18 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/25 23:33:45 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/29 16:07:06 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,12 @@
 static void	osc_helper_quotes(char *str, int *i, int *res)
 {
 	(*res)++;
+	(*i)++;
 	while (1)
 	{
-		if (is_qoute(str[*i]))
-		{
-			if (str[*i + 1] && is_qoute(str[*i + 1]))
-			{
-				(*i)++;
-				continue ;
-			}
-			if (!str[*i + 1] || (str[*i + 1] && ((is_whitespace(str[*i + 1]) || \
-				is_operator(str[*i + 1])) && get_q_state(str, *i + 1) == NONE)))
-			{
-				(*i)++;
-				break ;
-			}
-		}
+		if (!str[*i] || (str[*i] && (is_operator(str[*i]) || \
+			is_whitespace(str[*i])) && get_q_state(str, *i) == NONE))
+			break ;
 		(*i)++;
 	}
 }
@@ -85,23 +75,12 @@ void	helper_quotes(char ***arr, char *str, int *i, int *arr_i)
 {
 	int	k;
 
-	k = *i;
+	k = (*i)++;
 	while (1)
 	{
-		if (is_qoute(str[*i]))
-		{
-			if (str[*i + 1] && is_qoute(str[*i + 1]))
-			{
-				(*i)++;
-				continue ;
-			}
-			if (!str[*i + 1] || (str[*i + 1] && ((is_whitespace(str[*i + 1]) || \
-				is_operator(str[*i + 1])) && get_q_state(str, *i + 1) == NONE)))
-			{
-				(*i)++;
-				break ;
-			}
-		}
+		if (!str[*i] || (str[*i] && (is_operator(str[*i]) || \
+			is_whitespace(str[*i])) && get_q_state(str, *i) == NONE))
+			break ;
 		(*i)++;
 	}
 	(*arr)[(*arr_i)++] = ft_substr(str, k, *i - k);
