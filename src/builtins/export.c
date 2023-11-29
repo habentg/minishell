@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 03:13:51 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/26 17:50:25 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/29 19:06:30 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,11 @@ int	handle_export_util(t_data *data, t_cmd *cmd_node, int i, char **arr)
 	{
 		arr = ft_split_custom(cmd_node->cmdarg[i]);
 		if (!valid_key_check(arr[0], 0))
+		{
+			ft_clean_arr(arr);
 			return (display_error_2("export", cmd_node->cmdarg[i], \
 				"not a valid identifier"), 1);
+		}
 		tmp = env_node_ptr(data->env_lst, arr[0]);
 		if (!tmp)
 			add_env_back(data, arr);

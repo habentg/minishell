@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:57:10 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/29 16:48:10 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/29 18:00:00 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	launch_minishell(t_data *data)
 	input_res = NULL;
 	while (1)
 	{
-		init_signals();
+		// init_signals();
 		input_res = readline(PROMPT);
 		if (g_exit_status == 130 || g_exit_status == 131)
 		{

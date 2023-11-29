@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 21:17:17 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/26 15:38:41 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/29 19:59:49 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,12 @@ void	update_envi(t_data *data)
 {
 	char	**tmp_arr;
 	char	*tmp_path;
-	char	*path_to_split;
 
 	tmp_arr = NULL;
-	path_to_split = NULL;
 	env_lst_to_arr(data);
 	tmp_path = get_path(data->envi, "PATH");
-	if (tmp_path == NULL)
+	if (!tmp_path || !ft_strlen(tmp_path) \
+		|| !ft_strncmp_custom(tmp_path, "", 1))
 	{
 		data->path = (char **)malloc(sizeof(char *) * 1);
 		data->path[0] = NULL;
@@ -66,12 +65,11 @@ void	update_envi(t_data *data)
 	else
 	{
 		ft_clean_arr(data->path);
-		free(tmp_path);
-		path_to_split = get_path(data->envi, "PATH");
-		tmp_arr = ft_split(path_to_split, ':');
-		free(path_to_split);
+		tmp_arr = ft_split(tmp_path, ':');
 		data->path = tmp_arr;
 	}
+	if (tmp_path)
+		free(tmp_path);
 }
 
 /*

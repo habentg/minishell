@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 16:05:43 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/29 17:40:48 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/29 19:36:36 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*get_path(char **envp, char *key)
 	path = NULL;
 	while (envp[++i])
 	{
-		if (ft_strncmp(envp[i], key, ft_strlen(key)) == 0)
+		if (!ft_strncmp(envp[i], key, ft_strlen(key)))
 		{
 			path = ft_strdup(envp[i] + ft_strlen(key) + 1);
 			if (!path)
