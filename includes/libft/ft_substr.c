@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 03:56:05 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/10/25 21:07:08 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/30 18:23:34 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	unsigned int	i;
 
 	if (!s || len == 0)
-		return (0);
+		return (NULL);
 	i = start;
 	while (s[i] != '\0' && (i - start) < len)
 		i++;
 	substring = (char *)malloc((i + 1 - start) * sizeof(char));
 	if (!substring)
-		return (0);
+		return (NULL);
 	i = 0;
 	while (s[start] != '\0' && start < ft_strlen(s) && i < len)
 	{

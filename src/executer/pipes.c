@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:15:11 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/24 16:51:31 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/30 18:55:12 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,15 @@ void	dup_pipe_fds(t_cmd **cmd_lst, t_cmd **cmd_node)
 	if (!*cmd_node)
 		return ;
 	if ((*cmd_node)->pipeout == 1)
+	{
 		dup2((*cmd_node)->pipe_fd[1], STDOUT_FILENO);
+		close((*cmd_node)->pipe_fd[1]);
+	}
 	if ((*cmd_node)->prev && (*cmd_node)->prev->pipeout == 1)
+	{
 		dup2((*cmd_node)->prev->pipe_fd[0], STDIN_FILENO);
+		close((*cmd_node)->pipe_fd[0]);
+	}
 	close_unused_pipe_fds(cmd_lst, *cmd_node);
 }
 
@@ -50,9 +56,9 @@ void	close_open_fds(t_cmd *cmd_lst, int exc_ended)
 {
 	if (cmd_lst->iofd)
 	{
-		if (cmd_lst->iofd->fdin != -1)
+		if (cmd_lst->iofd->fdin > -1)
 			close(cmd_lst->iofd->fdin);
-		if (cmd_lst->iofd->fdout != -1)
+		if (cmd_lst->iofd->fdout > -1)
 			close (cmd_lst->iofd->fdout);
 		if (exc_ended == 1)
 		{

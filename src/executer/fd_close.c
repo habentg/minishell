@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 08:00:53 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/08 02:19:53 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/30 18:26:04 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ void	close_unused_pipe_fds(t_cmd **cmd_lst, t_cmd *cmd_node)
 			close(tmp->pipe_fd[1]);
 			if (tmp->iofd)
 			{
-				if (tmp->iofd->fdin != -1)
+				if (tmp->iofd->fdin > -1)
 					close(tmp->iofd->fdin);
-				if (tmp->iofd->fdout != -1)
+				if (tmp->iofd->fdout > -1)
 					close (tmp->iofd->fdout);
 			}
 		}
@@ -62,12 +62,12 @@ void	close_unused_pipe_fds(t_cmd **cmd_lst, t_cmd *cmd_node)
 
 void	close_cmd_fds(t_cmd **cmd_node)
 {
-	if ((*cmd_node)->iofd->fdin != -1)
+	if ((*cmd_node)->iofd->fdin > -1)
 		close((*cmd_node)->iofd->fdin);
-	if ((*cmd_node)->iofd->fdout != -1)
+	if ((*cmd_node)->iofd->fdout > -1)
 		close((*cmd_node)->iofd->fdout);
-	if ((*cmd_node)->iofd->stdin_backup != -1)
+	if ((*cmd_node)->iofd->stdin_backup > -1)
 		close((*cmd_node)->iofd->stdin_backup);
-	if ((*cmd_node)->iofd->stdout_backup != -1)
+	if ((*cmd_node)->iofd->stdout_backup > -1)
 		close((*cmd_node)->iofd->stdout_backup);
 }

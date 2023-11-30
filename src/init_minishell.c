@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 16:05:43 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/29 19:36:36 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/30 18:01:47 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,17 +75,16 @@ int	create_env_lst(t_data **data)
 	while ((*data)->envi[++i])
 	{
 		tmp_arr = ft_split_custom((*data)->envi[i]);
-		if (!tmp_arr)
-			return (1);
 		tmp = env_node_ptr((*data)->env_lst, tmp_arr[0]);
 		if (!tmp)
 			add_env_back_start(*data, tmp_arr);
 		else
 		{
-			if (!tmp_arr[1])
-				continue ;
-			free(tmp->value);
-			tmp->value = ft_strdup(tmp_arr[1]);
+			if (tmp_arr[1])
+			{
+				free(tmp->value);
+				tmp->value = ft_strdup(tmp_arr[1]);
+			}
 		}
 		ft_clean_arr(tmp_arr);
 	}

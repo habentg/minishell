@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 07:18:57 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/19 16:24:50 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/30 16:19:35 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	free_env_node(t_env *env_node)
 		free(env_node->key);
 	if (env_node->value)
 		free(env_node->value);
-	free(env_node);
+	if (env_node)
+		free(env_node);
 }
 
 void	remove_env_node(t_env **env_lst, char *key_re)
@@ -62,8 +63,7 @@ int	handle_unset(t_data *data, t_cmd *cmd_node)
 	while (cmd_node->cmdarg[i])
 	{
 		if (!valid_key_check(cmd_node->cmdarg[i], 1))
-			display_error_2("unset", cmd_node->cmdarg[i], \
-				"not a valid identifier");
+			display_error_2("unset", cmd_node->cmdarg[i], NVI);
 		else
 			remove_env_node(&data->env_lst, cmd_node->cmdarg[i]);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 03:13:51 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/29 19:06:30 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/30 15:50:31 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,53 +66,46 @@ int	print_export(t_data *data, char **envi_arr)
 	return (0);
 }
 
-int	valid_key_check(char *key, int unset_flag)
-{
-	int	i;
-
-	i = -1;
-	if (!key)
-		return (0);
-	if (!ft_isalpha(key[0]) && key[0] != '_')
-		return (0);
-	while (key[++i])
-	{
-		if (ft_isalnum(key[i]) || key[i] == '_')
-			continue ;
-		if (key[i] == '=' && unset_flag == 0)
-			continue ;
-		return (0);
-	}
-	return (1);
-}
-
-int	handle_export_util(t_data *data, t_cmd *cmd_node, int i, char **arr)
+void	add_or_replace_export(t_data *data, char **arr)
 {
 	t_env	*tmp;
 
 	tmp = NULL;
-	while (cmd_node->cmdarg[++i])
+	tmp = env_node_ptr(data->env_lst, arr[0]);
+	if (!tmp)
+		add_env_back(data, arr);
+	else
 	{
-		arr = ft_split_custom(cmd_node->cmdarg[i]);
-		if (!valid_key_check(arr[0], 0))
+		if (arr[1])
 		{
-			ft_clean_arr(arr);
-			return (display_error_2("export", cmd_node->cmdarg[i], \
-				"not a valid identifier"), 1);
-		}
-		tmp = env_node_ptr(data->env_lst, arr[0]);
-		if (!tmp)
-			add_env_back(data, arr);
-		else
-		{
-			if (!arr[1])
-				continue ;
 			free(tmp->value);
 			tmp->value = ft_strdup(arr[1]);
 		}
+	}
+}
+
+int	handle_export_util(t_data *data, t_cmd *cmd_node, int i, char **arr)
+{
+	int		ret;
+
+	ret = 0;
+	while (cmd_node->cmdarg[++i])
+	{
+		arr = ft_split_custom(cmd_node->cmdarg[i]);
+		if (!arr)
+			continue ;
+		if (!valid_key_check(arr[0], 0))
+		{
+			ft_clean_arr(arr);
+			display_error_2("export", cmd_node->cmdarg[i], NVI);
+			ret = 1;
+			continue ;
+		}
+		ret = 0;
+		add_or_replace_export(data, arr);
 		ft_clean_arr(arr);
 	}
-	return (0);
+	return (ret);
 }
 
 // key should be alpha-numerical only -> otheriwse error

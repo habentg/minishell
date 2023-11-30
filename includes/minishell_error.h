@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 18:50:22 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/23 18:55:28 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/29 21:37:04 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,6 @@
 # define CMD_NOT_FOUND "command not found"
 
 # define IS_DIRCTRY "is a directory"
+
+# define NVI "not a valid identifier"
 #endif

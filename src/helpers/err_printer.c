@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 02:52:48 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/26 14:48:21 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/30 18:43:55 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	**ft_split_custom(char *str)
 	if (!str)
 		return (NULL);
 	i = 0;
-	res = ft_calloc(3, sizeof(char *));
+	res = malloc(3 * sizeof(char *));
 	if (!res)
 		return (NULL);
 	if (ft_strchr(str, '=') == NULL)

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 18:16:16 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/08 16:45:35 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/30 15:25:15 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ void	ft_clean_arr(char **argv)
 	int	i;
 
 	i = 0;
-	// if (!argv || arr_length(argv) == 0)
-	// 	return ;
 	while (i < arr_length(argv))
 	{
 		if (argv[i] != NULL)
@@ -36,7 +34,7 @@ int	arr_length(char **arr)
 	i = 0;
 	if (!arr)
 		return (0);
-	while (arr && arr[i])
+	while (arr[i])
 		i++;
 	return (i);
 }
