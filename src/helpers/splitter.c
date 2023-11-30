@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 02:30:24 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/30 16:19:46 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/30 20:00:26 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,31 @@ int	valid_key_check(char *key, int unset_flag)
 		return (0);
 	}
 	return (1);
+}
+
+char	*ft_substr_exp(char const *s, unsigned int start, size_t len)
+{
+	char	*substring;
+	size_t	i;
+	size_t	str_len;
+
+	if (!s || len == 0)
+		return (NULL);
+	str_len = ft_strlen(s);
+	if (start >= str_len)
+		return (NULL);
+	i = 0;
+	while (s[start + i] != '\0' && i < len)
+		i++;
+	substring = (char *)malloc((i + 1) * sizeof(char));
+	if (!substring)
+		return (NULL);
+	i = 0;
+	while (s[start + i] != '\0' && i < len)
+	{
+		substring[i] = s[start + i];
+		i++;
+	}
+	substring[i] = '\0';
+	return (substring);
 }

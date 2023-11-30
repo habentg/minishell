@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/30 16:21:38 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/11/30 20:00:47 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,5 +171,5 @@ int					one_space_counter(char *str);
 void				helper_quotes(char ***arr, char *str, int *i, int *arr_i);
 t_env				*env_node_ptr(t_env *env_lst, char *key);
 void				free_env_node(t_env *env_node);
-
+char				*ft_substr_exp(char const *s, unsigned int start, size_t len);
 #endif
