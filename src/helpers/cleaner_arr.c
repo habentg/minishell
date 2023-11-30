@@ -17,11 +17,8 @@ void	ft_clean_arr(char **argv)
 	int	i;
 
 	i = 0;
-	// if (!argv || arr_length(argv) == 0)
-	// 	return ;
 	while (i < arr_length(argv))
 	{
-		if (argv[i] != NULL)
 			free(argv[i]);
 		i++;
 	}
@@ -36,7 +33,7 @@ int	arr_length(char **arr)
 	i = 0;
 	if (!arr)
 		return (0);
-	while (arr && arr[i])
+	while (arr[i])
 		i++;
 	return (i);
 }

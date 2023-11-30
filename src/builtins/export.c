@@ -88,31 +88,31 @@ int	valid_key_check(char *key, int unset_flag)
 
 int	handle_export_util(t_data *data, t_cmd *cmd_node, int i, char **arr)
 {
-	t_env	*tmp;
+    t_env   *tmp;
 
-	tmp = NULL;
-	while (cmd_node->cmdarg[++i])
-	{
-		arr = ft_split_custom(cmd_node->cmdarg[i]);
-		if (!valid_key_check(arr[0], 0))
-		{
-			ft_clean_arr(arr);
-			return (display_error_2("export", cmd_node->cmdarg[i], \
-				"not a valid identifier"), 1);
-		}
-		tmp = env_node_ptr(data->env_lst, arr[0]);
-		if (!tmp)
-			add_env_back(data, arr);
-		else
-		{
-			if (!arr[1])
-				continue ;
-			free(tmp->value);
-			tmp->value = ft_strdup(arr[1]);
-		}
-		ft_clean_arr(arr);
-	}
-	return (0);
+    tmp = NULL;
+    while (cmd_node->cmdarg[++i])
+    {
+        arr = ft_split_custom(cmd_node->cmdarg[i]);
+        if (!valid_key_check(arr[0], 0))
+        {
+            ft_clean_arr(arr);
+            return (display_error_2("export", cmd_node->cmdarg[i], "not a valid identifier"), 1);
+        }
+        tmp = env_node_ptr(data->env_lst, arr[0]);
+        if (!tmp)
+            add_env_back(data, arr);
+        else
+        {
+            if (arr[1])
+            {
+                free(tmp->value);
+                tmp->value = ft_strdup(arr[1]);
+            }
+        }
+        ft_clean_arr(arr);
+    }
+    return (0);
 }
 
 // key should be alpha-numerical only -> otheriwse error

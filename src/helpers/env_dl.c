@@ -47,9 +47,11 @@ t_env	*new_env_node(char *key, char *value)
 		new_node->key = ft_strdup(key);
 	if (value)
 		new_node->value = ft_strdup(value);
+	else
+		new_node->value = ft_strdup("");
 	return (new_node);
 }
-
+/* 
 static void	replace_value(t_env **current_node, t_env *new_node)
 {
 	if (!new_node->value)
@@ -58,6 +60,16 @@ static void	replace_value(t_env **current_node, t_env *new_node)
 		free((*current_node)->value);
 	if (new_node->value)
 		(*current_node)->value = ft_strdup(new_node->value);
+} */
+
+static void free_env_node(t_env *env_node)
+{
+    if (env_node)
+    {
+        free(env_node->key);
+        free(env_node->value);
+        free(env_node);
+    }
 }
 
 void	add_env_back(t_data *data, char **env_node_arr)
@@ -80,7 +92,8 @@ void	add_env_back(t_data *data, char **env_node_arr)
 			if (ft_strncmp(tmp->key, env_node->key, \
 				ft_strlen(env_node->key)) == 0)
 			{
-				replace_value(&tmp, env_node);
+			//	replace_value(&tmp, env_node);
+				free_env_node(env_node);
 				return ;
 			}
 			tmp = tmp->next;
