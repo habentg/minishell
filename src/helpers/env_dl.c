@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/05 19:50:12 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/30 18:44:37 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/12/01 22:16:57 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ t_env	*new_env_node(char *key, char *value)
 		new_node->key = ft_strdup(key);
 	if (value)
 		new_node->value = ft_strdup(value);
-	else
-		new_node->value = ft_strdup("");
 	return (new_node);
 }
 

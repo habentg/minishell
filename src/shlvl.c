@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:25:31 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/12/01 19:28:23 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/12/01 22:18:20 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	update_shlvl(t_data *data, int inc_dec)
 		upd_shlvl_value = ft_itoa(ft_atoi(shlvl_value) + 1);
 	else if (inc_dec == 0)
 	{
-		ft_putendl_fd("exit", 1);
+		ft_putendl_fd("exit", 2);
 		upd_shlvl_value = ft_itoa(ft_atoi(shlvl_value) - 1);
 	}
 	if (upd_shlvl_value)
