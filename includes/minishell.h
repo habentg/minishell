@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/30 20:00:47 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:23:00 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,28 +115,25 @@ int					valid_key_check(char *key, int unset_flag);
 void				remove_env_node(t_env **env_lst, char *key_re);
 void				update_oldpwd(t_env *env_lst, char *oldpwd);
 void				empty_oldpwd(t_env *env_lst);
+
 			// fd related
 void				dup_pipe_fds(t_cmd **cmd_lst, t_cmd **cmd_node);
-void				reset_std_fds(t_cmd **cmd_node);
-void				backup_std_fds(t_cmd **cmd_node);
-void				close_cmd_fds(t_cmd **cmd_node);
 void				close_used_pipe_fds(t_cmd **cmd_lst, t_cmd **cmd_node);
 void				close_unused_pipe_fds(t_cmd **cmd_lst, t_cmd *cmd_node);
 void				set_iofds(t_data *data, t_iofds *iofds);
 void				reset_stdio(t_iofds *iofds);
 void				exitshell(t_data *data, t_cmd *cmdnode, int excode);
 void				close_open_fds(t_cmd *cmd_lst, int exc_ended);
+int					fork_and_run(t_data *data, t_cmd *cmd_node, pid_t *ch_pid);
 // Error && other helper funcs
 int					possible_error(t_data **data);
 int					operator_pipe_error(t_data *data);
 void				ft_error(t_data *data, char *err_msg, int exit_status);
-char				*one_space_setter(char *str);
 int					is_heredoc_append(char *str, int i, char c);
 int					is_whitespace(char c);
 int					is_operator(char c);
 int					is_qoute(char c);
 int					ft_whitespaces(char *str, int *index, char c);
-char				**splitter(char *str);
 void				print_token_lst(t_token *token);
 void				print_cmd_lst(t_cmd *cmd);
 int					ft_strncmp_custom(const char *str1, \
@@ -171,5 +168,6 @@ int					one_space_counter(char *str);
 void				helper_quotes(char ***arr, char *str, int *i, int *arr_i);
 t_env				*env_node_ptr(t_env *env_lst, char *key);
 void				free_env_node(t_env *env_node);
-char				*ft_substr_exp(char const *s, unsigned int start, size_t len);
+char				*ft_substr_exp(char const *s, \
+	unsigned int start, size_t len);
 #endif

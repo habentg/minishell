@@ -6,7 +6,7 @@
 #    By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/03 01:59:13 by hatesfam          #+#    #+#              #
-#    Updated: 2023/11/29 16:49:25 by hatesfam         ###   ########.fr        #
+#    Updated: 2023/12/01 19:22:24 by hatesfam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,6 @@ RESET		=	\e[0m
 CURSIVE		=	\e[33;3m
 
 CC = cc -g3
-sanitizer = -fsanitize=address -fno-omit-frame-pointer
 INC = ./includes
 RDLINE_L = -L/Users/$(USER)/.brew/opt/readline/lib -lreadline
 LIBFT = ./includes/libft/libft.a
@@ -85,10 +84,5 @@ re: fclean all
 	@printf "$(CURSIVE)$(GRAY)	- Remaking $(NAME)... $(RESET)\n"
 	clear
 
-# Rule to run and check for memory leaks (inside docker only)
-leaks:
-	@make all
-	valgrind --suppressions=readleak.txt --leak-check=full --trace-children=yes \
-	--show-leak-kinds=all --track-origins=yes --track-fds=yes ./minishell
 # Phony targets:
 .PHONY: all clean fclean re

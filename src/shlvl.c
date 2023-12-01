@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:25:31 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/30 16:44:09 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:28:23 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,6 @@
 	&& add it to the env_lst
 	&& update the envi
 */
-bool	shlvl_present(t_env *env_lst)
-{
-	t_env	*tmp;
-
-	tmp = env_lst;
-	while (tmp)
-	{
-		if (!ft_strncmp(tmp->key, "SHLVL", 5))
-			return (true);
-		tmp = tmp->next;
-	}
-	return (false);
-}
-
 t_env	*env_node_ptr(t_env *env_lst, char *key)
 {
 	t_env	*tmp;
@@ -77,7 +63,7 @@ void	update_shlvl(t_data *data, int inc_dec)
 
 void	shlvl_increment(t_data *data, int inc_dec)
 {
-	if (shlvl_present(data->env_lst))
+	if (env_node_ptr(data->env_lst, "SHLVL"))
 		update_shlvl(data, inc_dec);
 	else
 	{
