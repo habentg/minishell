@@ -1,0 +1,46 @@
+
+sleep 0.1
+echo $PWD
+sleep 0.1
+
+sleep 0.1
+test
+sleep 0.1
+| test
+sleep 0.1
+echo > <
+sleep 0.1
+echo | |
+EechoE
+sleep 0.1
+.echo.
+sleep 0.1
+>echo>
+sleep 0.1
+<echo<
+sleep 0.1
+>>echo>>
+sleep 0.1
+echo
+sleep 0.1
+|echo|
+sleep 0.1
+echo
+sleep 0.1
+echo something
+sleep 0.1
+rm -f something
+sleep 0.1
+cat something
+sleep 0.1
+| echo -n oui
+sleep 0.1
+echo -n oui
+echo oui | cat -e
+sleep 0.1
+echo oui | echo non | echo something | grep oui
+sleep 0.1
+echo oui | echo non | echo something | grep non
+sleep 0.1
+echo oui | echo non | echo something | grep something
+sleep 0.1

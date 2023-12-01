@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:15:11 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/30 20:12:39 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:02:12 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,10 @@ void	dup_pipe_fds(t_cmd **cmd_lst, t_cmd **cmd_node)
 	if ((*cmd_node)->pipeout == 1)
 	{
 		dup2((*cmd_node)->pipe_fd[1], STDOUT_FILENO);
-		close((*cmd_node)->pipe_fd[1]);
 	}
 	if ((*cmd_node)->prev && (*cmd_node)->prev->pipeout == 1)
 	{
 		dup2((*cmd_node)->prev->pipe_fd[0], STDIN_FILENO);
-		close((*cmd_node)->pipe_fd[0]);
 	}
 	close_unused_pipe_fds(cmd_lst, *cmd_node);
 }
@@ -74,6 +72,9 @@ void	exitshell(t_data *data, t_cmd *cmdnode, int excode)
 {
 	data->exit_code = excode;
 	if (cmdnode && cmdnode->iofd)
+	{
+		close_cmd_fds(&cmdnode);
 		close_open_fds(data->cmd_lst, 1);
+	}
 	ft_clean_data_done(&data, 1);
 }
