@@ -74,6 +74,7 @@ int	extract_input_redir(t_token **token, t_cmd **cmd_node)
 	{
 		display_error((*cmd_node)->iofd->infile, strerror(errno));
 		(*cmd_node)->iofd->fdin = -2;
+		free((*cmd_node)->iofd->infile);
 	}
 	(*token) = (*token)->next->next;
 	return (0);
