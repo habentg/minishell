@@ -46,10 +46,27 @@ void	ft_clean_tok_dl(t_token **lst)
 	}
 }
 
+//Used for closing file_descriptors after every run
+static void close_all_file_descriptors(t_cmd *cmd_lst) 
+{
+    t_cmd *tmp_cmd = cmd_lst;
+
+    while (tmp_cmd)
+	{
+        if (tmp_cmd->pipe_fd)
+		{
+            close(tmp_cmd->pipe_fd[0]);
+            close(tmp_cmd->pipe_fd[1]);
+        }
+        tmp_cmd = tmp_cmd->next;
+    }
+}
+
 // cleaner funcs
 /* at every run*/
 void	ft_clean_data(t_data **data)
 {
+	close_all_file_descriptors((*data)->cmd_lst);
 	if ((*data)->input != NULL)
 		free((*data)->input);
 	if ((*data)->cmd_lst != NULL)
@@ -57,6 +74,7 @@ void	ft_clean_data(t_data **data)
 	if ((*data)->token != NULL)
 		ft_clean_tok_dl(&(*data)->token);
 }
+
 
 /* at anytime when we are finishing up with minishell*/
 void	ft_clean_data_done(t_data **data, int code)
@@ -81,3 +99,4 @@ void	ft_clean_data_done(t_data **data, int code)
 		free(*data);
 	exit (g_exit_status);
 }
+

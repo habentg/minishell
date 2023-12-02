@@ -16,10 +16,13 @@
 void	close_used_pipe_fds(t_cmd **cmd_lst, t_cmd **cmd_node)
 {
 	(void)cmd_lst;
-	if ((*cmd_node)->pipe_fd != NULL && (*cmd_node)->pipe_fd[1])
-		close((*cmd_node)->pipe_fd[1]);
-	if ((*cmd_node)->pipe_fd != NULL && (*cmd_node)->pipe_fd[0])
-		close((*cmd_node)->pipe_fd[0]);
+	if ((*cmd_node)->pipe_fd != NULL)
+	{
+		if ((*cmd_node)->pipe_fd[0] >= 0)
+			close((*cmd_node)->pipe_fd[0]);
+		if ((*cmd_node)->pipe_fd[1] >= 0)
+			close((*cmd_node)->pipe_fd[1]);
+	}
 }
 
 void	close_unused_pipe_fds(t_cmd **cmd_lst, t_cmd *cmd_node)
