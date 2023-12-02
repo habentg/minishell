@@ -6,13 +6,13 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 18:41:16 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/21 13:02:29 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/12/01 22:59:29 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	remove_prev_iofdins(t_cmd **cmd_node, t_token **token)
+int	remove_prev_iofds(t_cmd **cmd_node, t_token **token)
 {
 	if ((*cmd_node)->iofd->fdout == -2 || (*cmd_node)->iofd->fdin == -2)
 	{
@@ -27,15 +27,17 @@ int	remove_prev_iofdins(t_cmd **cmd_node, t_token **token)
 	if ((*cmd_node)->iofd->here_delemiter != NULL)
 	{
 		free((*cmd_node)->iofd->here_delemiter);
-		(*cmd_node)->iofd->here_delemiter = NULL;
-		unlink((*cmd_node)->iofd->infile);
+		// unlink((*cmd_node)->iofd->infile);
+		(*cmd_node)->iofd->infile = NULL;
 	}
 	if ((*cmd_node)->iofd->infile)
 	{
 		free((*cmd_node)->iofd->infile);
+		// unlink((*cmd_node)->iofd->infile);
 		(*cmd_node)->iofd->infile = NULL;
-		unlink((*cmd_node)->iofd->infile);
 	}
+	if (remove_prev_iofdouts(cmd_node, token))
+		return (1);
 	return (0);
 }
 
@@ -54,8 +56,8 @@ int	remove_prev_iofdouts(t_cmd **cmd_node, t_token **token)
 	if ((*cmd_node)->iofd->outfile)
 	{
 		free((*cmd_node)->iofd->outfile);
+		// unlink((*cmd_node)->iofd->outfile);
 		(*cmd_node)->iofd->outfile = NULL;
-		unlink((*cmd_node)->iofd->outfile);
 	}
 	return (0);
 }

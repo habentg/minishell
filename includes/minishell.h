@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/12/01 19:23:00 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/12/01 22:46:20 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int					ft_dlsize(t_cmd *lst);
 t_iofds				*new_iofds(void);
 int					iofd_validity(t_cmd *cmd_node);
 int					check_cmd_validity(t_data *data, t_cmd **cmd_node);
-int					remove_prev_iofdins(t_cmd **cmd_node, t_token **token);
+int					remove_prev_iofds(t_cmd **cmd_node, t_token **token);
 int					remove_prev_iofdouts(t_cmd **cmd_node, t_token **token);
 int					is_token_operator(t_token *token);
 int					check_after_del(t_data *data, t_token *token);
