@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 19:02:57 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/25 23:17:53 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/12/03 05:10:38 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,22 +46,6 @@ void	ft_clean_tok_dl(t_token **lst)
 	}
 }
 
-//Used for closing file_descriptors after every run
-static void close_all_file_descriptors(t_cmd *cmd_lst) 
-{
-    t_cmd *tmp_cmd = cmd_lst;
-
-    while (tmp_cmd)
-	{
-        if (tmp_cmd->pipe_fd)
-		{
-            close(tmp_cmd->pipe_fd[0]);
-            close(tmp_cmd->pipe_fd[1]);
-        }
-        tmp_cmd = tmp_cmd->next;
-    }
-}
-
 // cleaner funcs
 /* at every run*/
 void	ft_clean_data(t_data **data)
@@ -74,7 +58,6 @@ void	ft_clean_data(t_data **data)
 	if ((*data)->token != NULL)
 		ft_clean_tok_dl(&(*data)->token);
 }
-
 
 /* at anytime when we are finishing up with minishell*/
 void	ft_clean_data_done(t_data **data, int code)
@@ -99,4 +82,3 @@ void	ft_clean_data_done(t_data **data, int code)
 		free(*data);
 	exit (g_exit_status);
 }
-

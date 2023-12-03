@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:54:44 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/12/01 23:02:00 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/12/02 20:16:31 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,12 @@ void	extract_here_doc(t_data *data, t_token **token, t_cmd **cmd_node)
 		free(content_line);
 	}
 	close(tmp_fd);
+	if ((*cmd_node)->iofd->infile)
+	{
+		if ((*cmd_node)->iofd->fdin != -2)
+			close((*cmd_node)->iofd->fdin);
+		free((*cmd_node)->iofd->infile);
+	}
 	(*cmd_node)->iofd->infile = (temp_file);
 	(*cmd_node)->iofd->fdin = open((*cmd_node)->iofd->infile, O_RDONLY);
 }
@@ -111,8 +117,6 @@ void	extract_here_doc(t_data *data, t_token **token, t_cmd **cmd_node)
 void	ft_here_doc(t_data *data, t_token **token, t_cmd **cmd_node)
 {
 	g_exit_status = IN_HERE_DOC;
-	// if (remove_prev_iofds(cmd_node, token))
-	// 	return ;
 	extract_here_doc(data, token, cmd_node);
 	if (g_exit_status == OFF_HERE_DOC)
 	{

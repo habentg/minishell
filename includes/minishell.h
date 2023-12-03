@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/12/01 22:46:20 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/12/03 05:12:20 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int					ft_dlsize(t_cmd *lst);
 t_iofds				*new_iofds(void);
 int					iofd_validity(t_cmd *cmd_node);
 int					check_cmd_validity(t_data *data, t_cmd **cmd_node);
-int					remove_prev_iofds(t_cmd **cmd_node, t_token **token);
+int					remove_prev_iofdins(t_cmd **cmd_node, t_token **token);
 int					remove_prev_iofdouts(t_cmd **cmd_node, t_token **token);
 int					is_token_operator(t_token *token);
 int					check_after_del(t_data *data, t_token *token);
@@ -118,7 +118,6 @@ void				empty_oldpwd(t_env *env_lst);
 
 			// fd related
 void				dup_pipe_fds(t_cmd **cmd_lst, t_cmd **cmd_node);
-void				close_used_pipe_fds(t_cmd **cmd_lst, t_cmd **cmd_node);
 void				close_unused_pipe_fds(t_cmd **cmd_lst, t_cmd *cmd_node);
 void				set_iofds(t_data *data, t_iofds *iofds);
 void				reset_stdio(t_iofds *iofds);
@@ -170,4 +169,5 @@ t_env				*env_node_ptr(t_env *env_lst, char *key);
 void				free_env_node(t_env *env_node);
 char				*ft_substr_exp(char const *s, \
 	unsigned int start, size_t len);
+void				close_all_file_descriptors(t_cmd *cmd_lst);
 #endif

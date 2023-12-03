@@ -35,3 +35,10 @@ whereis grep > tmp/file
 sleep 0.1
 ls -la > tmp/file
 sleep 0.1
+
+
+echo ahsdkaskf | echo akdslasd |echo ahsdkaskf | echo akdslasd | echo ahsdkaskf | echo akdslasd |echo ahsdkaskf | echo akdslasd |echo ahsdkaskf | echo akdslasd |echo ahsdkaskf | echo akdslasd
+echo ahsdkaskf | echo akdslasd |echo ahsdkaskf | echo akdslasd | echo ahsdkaskf | echo akdslasd |echo ahsdkaskf | echo akdslasd |echo ahsdkaskf | echo akdslasd |echo ahsdkaskf | echo akdslasd | cat -e
+echo ahsdkaskf | echo akdslasd |echo ahsdkaskf | echo akdslasd | echo ahsdkaskf | echo akdslasd |echo ahsdkaskf | echo akdslasd |echo ahsdkaskf | echo akdslasd |echo ahsdkaskf | echo akdslasd | cat -e | ""
+
+

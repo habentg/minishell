@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 10:37:24 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/12/01 18:38:16 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/12/02 19:24:36 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,28 +40,28 @@ int	fork_wait(t_data *data)
 
 int	fork_and_run(t_data *data, t_cmd *tmp_cmd, pid_t *id)
 {
-	if (tmp_cmd->iofd->fdout != -2 && tmp_cmd->iofd->fdin != -2)
+	child_signals();
+	*id = fork();
+	if (*id == -1)
+		return (ft_error(data, "Error: failed to fork!", 255), 1);
+	if (*id == 0)
 	{
-		child_signals();
-		*id = fork();
-		if (*id == -1)
-			return (ft_error(data, "Error: failed to fork!", 255), 1);
-		if (*id == 0)
+		g_exit_status = IN_CMD;
+		if (pre_exec_checks(data, tmp_cmd))
+			return (exitshell(data, tmp_cmd, data->exit_code), \
+				data->exit_code);
+		dup_pipe_fds(&data->cmd_lst, &tmp_cmd);
+		set_iofds(data, tmp_cmd->iofd);
+		close_open_fds(data->cmd_lst, 0);
+		if (is_builtin_cmd(tmp_cmd))
 		{
-			g_exit_status = IN_CMD;
-			dup_pipe_fds(&data->cmd_lst, &tmp_cmd);
-			set_iofds(data, tmp_cmd->iofd);
-			close_open_fds(data->cmd_lst, 0);
-			if (is_builtin_cmd(tmp_cmd))
-			{
-				data->exit_code = exec_builtin_cmd(tmp_cmd, data);
-				return (exitshell(data, tmp_cmd, data->exit_code), \
-					data->exit_code);
-			}
-			else
-				execve(tmp_cmd->cmd, tmp_cmd->cmdarg, data->envi);
-			exitshell(data, tmp_cmd, errno);
+			data->exit_code = exec_builtin_cmd(tmp_cmd, data);
+			return (exitshell(data, tmp_cmd, data->exit_code), \
+				data->exit_code);
 		}
+		else
+			execve(tmp_cmd->cmd, tmp_cmd->cmdarg, data->envi);
+		exitshell(data, tmp_cmd, errno);
 	}
 	return (0);
 }
@@ -73,12 +73,7 @@ int	exec_multiple_cmds(t_data *data)
 	tmp_cmd = data->cmd_lst;
 	while (tmp_cmd && data->ch_pid != 0)
 	{
-		if (pre_exec_checks(data, tmp_cmd))
-		{
-			if (!tmp_cmd->next)
-				return (data->exit_code);
-		}
-		else if (fork_and_run(data, tmp_cmd, &data->ch_pid))
+		if (fork_and_run(data, tmp_cmd, &data->ch_pid))
 			return (ft_error(data, "Error: failed to fork!", 255), 1);
 		tmp_cmd = tmp_cmd->next;
 	}

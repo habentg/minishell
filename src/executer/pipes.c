@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 15:15:11 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/12/01 19:21:01 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/12/02 18:51:45 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,7 @@ int	create_pipes(t_data *data, t_cmd *cmd)
 			if (!tmp_pipe)
 				return (ft_error(data, PIPE_MALLOC_ERROR, 255), 1);
 			if (pipe(tmp_pipe) == -1)
-			{
-				free(tmp_pipe);
 				return (ft_error(data, PIPE_FUNC_ERROR, 255), 1);
-			}
 			tmp_cmd->pipe_fd = tmp_pipe;
 		}
 		tmp_cmd = tmp_cmd->next;
@@ -45,14 +42,12 @@ void	dup_pipe_fds(t_cmd **cmd_lst, t_cmd **cmd_node)
 	if ((*cmd_node)->pipeout == 1)
 	{
 		dup2((*cmd_node)->pipe_fd[1], STDOUT_FILENO);
-		close((*cmd_node)->pipe_fd[0]);
 		close((*cmd_node)->pipe_fd[1]);
 	}
 	if ((*cmd_node)->prev && (*cmd_node)->prev->pipeout == 1)
 	{
 		dup2((*cmd_node)->prev->pipe_fd[0], STDIN_FILENO);
 		close((*cmd_node)->prev->pipe_fd[0]);
-		close((*cmd_node)->prev->pipe_fd[1]);
 	}
 	close_unused_pipe_fds(cmd_lst, *cmd_node);
 }

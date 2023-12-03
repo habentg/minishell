@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 20:20:44 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/12/01 22:47:19 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/12/03 05:02:13 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	extract_pipe(t_token **token, t_cmd **cmd_lst)
 */
 void	extract_trunc(t_token **token, t_cmd **cmd_node)
 {
-	if (remove_prev_iofds(cmd_node, token))
+	if (remove_prev_iofdouts(cmd_node, token))
 		return ;
 	(*cmd_node)->iofd->outfile = ft_strdup((*token)->next->str);
 	(*cmd_node)->iofd->fdout = open((*cmd_node)->iofd->outfile, O_CREAT | \
@@ -37,6 +37,8 @@ void	extract_trunc(t_token **token, t_cmd **cmd_node)
 	{
 		display_error((*cmd_node)->iofd->outfile, strerror(errno));
 		(*cmd_node)->iofd->fdout = -2;
+		free((*cmd_node)->iofd->outfile);
+		(*cmd_node)->iofd->outfile = NULL;
 	}
 	(*token) = (*token)->next->next;
 }
@@ -50,7 +52,7 @@ void	extract_trunc(t_token **token, t_cmd **cmd_node)
 */
 void	extract_append(t_token **token, t_cmd **cmd_node)
 {
-	if (remove_prev_iofds(cmd_node, token))
+	if (remove_prev_iofdouts(cmd_node, token))
 		return ;
 	(*cmd_node)->iofd->outfile = ft_strdup((*token)->next->str);
 	(*cmd_node)->iofd->fdout = open((*cmd_node)->iofd->outfile, O_CREAT | \
@@ -59,6 +61,8 @@ void	extract_append(t_token **token, t_cmd **cmd_node)
 	{
 		display_error((*cmd_node)->iofd->outfile, strerror(errno));
 		(*cmd_node)->iofd->fdout = -2;
+		free((*cmd_node)->iofd->outfile);
+		(*cmd_node)->iofd->outfile = NULL;
 	}
 	(*token) = (*token)->next->next;
 }
@@ -66,7 +70,7 @@ void	extract_append(t_token **token, t_cmd **cmd_node)
 	//content of next token && the fdin to the file descriptor of the infile.
 int	extract_input_redir(t_token **token, t_cmd **cmd_node)
 {
-	if (remove_prev_iofds(cmd_node, token))
+	if (remove_prev_iofdins(cmd_node, token))
 		return (0);
 	(*cmd_node)->iofd->infile = ft_strdup((*token)->next->str);
 	(*cmd_node)->iofd->fdin = open((*cmd_node)->iofd->infile, O_RDONLY);
@@ -75,6 +79,7 @@ int	extract_input_redir(t_token **token, t_cmd **cmd_node)
 		display_error((*cmd_node)->iofd->infile, strerror(errno));
 		(*cmd_node)->iofd->fdin = -2;
 		free((*cmd_node)->iofd->infile);
+		(*cmd_node)->iofd->infile = NULL;
 	}
 	(*token) = (*token)->next->next;
 	return (0);
