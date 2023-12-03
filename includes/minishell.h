@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/12/03 05:12:20 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/12/03 05:47:14 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void				ft_here_doc(t_data *data, t_token **token, \
 void				extract_here_doc(t_data *data, t_token **token, \
 	t_cmd **cmd_node);
 int					is_heredoc_expandable(char *str);
+void				heredoc_filename_fd_assign(t_cmd **cmd_node, \
+	char *temp_file);
 int					for_real_expand(t_data *data, char *content, int *i, \
 	int tmp_fd);
 void				extract_append(t_token **token, t_cmd **cmd_node);

@@ -44,3 +44,4 @@ echo oui | echo non | echo something | grep non
 sleep 0.1
 echo oui | echo non | echo something | grep something
 sleep 0.1
+exit

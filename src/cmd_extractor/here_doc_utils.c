@@ -6,25 +6,11 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 16:53:51 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/29 16:51:56 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/12/03 05:38:33 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-char	*get_env_value(t_data *data, char *var_name)
-{
-	t_env	*tmp;
-
-	tmp = data->env_lst;
-	while (tmp)
-	{
-		if (ft_strncmp(tmp->key, var_name, ft_strlen(var_name)) == 0)
-			return (tmp->value);
-		tmp = tmp->next;
-	}
-	return (NULL);
-}
 
 int	is_heredoc_expandable(char *str)
 {
@@ -69,4 +55,16 @@ int	for_real_expand(t_data *data, char *content, int *i, int tmp_fd)
 	ft_putstr_fd(exp_var, tmp_fd);
 	free(var_name);
 	return (*i--);
+}
+
+void	heredoc_filename_fd_assign(t_cmd **cmd_node, char *temp_file)
+{
+	if ((*cmd_node)->iofd->infile)
+	{
+		if ((*cmd_node)->iofd->fdin != -2)
+			close((*cmd_node)->iofd->fdin);
+		free((*cmd_node)->iofd->infile);
+	}
+	(*cmd_node)->iofd->infile = (temp_file);
+	(*cmd_node)->iofd->fdin = open((*cmd_node)->iofd->infile, O_RDONLY);
 }

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 20:20:44 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/12/03 05:02:13 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/12/03 07:14:49 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	extract_pipe(t_token **token, t_cmd **cmd_lst)
 	//content of next token && the fdout to the file descriptor of the outfile.
 /*
 	If the specified file doesn't exist, it will be created.
-	If it does exist, its contents will be replaced with the output of the command.
+	If it does exist, its contents will be replaced with 
+	the output of the command.
 */
 void	extract_trunc(t_token **token, t_cmd **cmd_node)
 {

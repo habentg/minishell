@@ -1,157 +1,158 @@
 <
-sleep 0.6
+sleep 0.1
 |
-sleep 0.6
+sleep 0.1
 | | |
-sleep 0.6
+sleep 0.1
 hello world
-sleep 0.6
+sleep 0.1
 ||||||||
-sleep 0.6
+sleep 0.1
             
-sleep 0.6
+sleep 0.1
 cat wouaf wouaf
-sleep 0.6
+sleep 0.1
 >
-sleep 0.6
+sleep 0.1
 >>>>>>>>
-sleep 0.6
+sleep 0.1
 <<<<<<<<<
-sleep 0.6
+sleep 0.1
 > > > >
-sleep 0.6
+sleep 0.1
 >> >> >> >>
-sleep 0.6
+sleep 0.1
 ~
-sleep 0.6
+sleep 0.1
 <<
-sleep 0.6
+sleep 0.1
 /Users
-sleep 0.6
+sleep 0.1
  
-sleep 0.6
+sleep 0.1
 .
-sleep 0.6
+sleep 0.1
 ..
-sleep 0.6
+sleep 0.1
 /
-sleep 0.6
+sleep 0.1
 \\\
 trying to destroy your minishell
-sleep 0.6
+sleep 0.1
 qewew
-sleep 0.6
+sleep 0.1
 wtf
-sleep 0.6
+sleep 0.1
 hi im thallard
-sleep 0.6
+sleep 0.1
 nice to meet you if these tests are green
-sleep 0.6
+sleep 0.1
 your minishell is perfect
-sleep 0.6
+sleep 0.1
 0 0
-sleep 0.6
+sleep 0.1
 
-sleep 0.6
+sleep 0.1
 42 42
-sleep 0.6
+sleep 0.1
 -42 -24
-sleep 0.6
+sleep 0.1
 42
-sleep 0.6
+sleep 0.1
 42 53 68
-sleep 0.6
+sleep 0.1
 259
-sleep 0.6
+sleep 0.1
 -12030
-sleep 0.6
+sleep 0.1
 --1239312
-sleep 0.6
+sleep 0.1
 ++++1203020103
-sleep 0.6
+sleep 0.1
 +0
-sleep 0.6
+sleep 0.1
 ++++++0
-sleep 0.6
+sleep 0.1
 -----0
-sleep 0.6
+sleep 0.1
 azerty
-sleep 0.6
+sleep 0.1
 kewkwqke
-sleep 0.6
+sleep 0.1
 a
-sleep 0.6
+sleep 0.1
 z
-sleep 0.6
+sleep 0.1
 "1"
-sleep 0.6
+sleep 0.1
 "2"
-sleep 0.6
+sleep 0.1
 "+102"
-sleep 0.6
+sleep 0.1
 "1230"
-sleep 0.6
+sleep 0.1
 "+++1230"
-sleep 0.6
+sleep 0.1
 "1"23
-sleep 0.6
+sleep 0.1
 "2"32"32"
-sleep 0.6
+sleep 0.1
 "'42'"
-sleep 0.6
+sleep 0.1
 '42'"42"42
-sleep 0.6
+sleep 0.1
 +'42'"42"42
-sleep 0.6
+sleep 0.1
 -'42'"42"42
-sleep 0.6
+sleep 0.1
 9223372036854775807
-sleep 0.6
+sleep 0.1
 9223372036854775808
-sleep 0.6
+sleep 0.1
 -4
-sleep 0.6
+sleep 0.1
 wrong
-sleep 0.6
+sleep 0.1
 wrong_command 
-sleep 0.6
+sleep 0.1
 something
-sleep 0.6
+sleep 0.1
 1 
-sleep 0.6
+sleep 0.1
 -1 
-sleep 0.6
+sleep 0.1
 42 
-sleep 0.6
+sleep 0.1
 0 
-sleep 0.6
+sleep 0.1
 --000 
-sleep 0.6
+sleep 0.1
 +++++++000 
-sleep 0.6
+sleep 0.1
 ++++3193912939 
-sleep 0.6
+sleep 0.1
 ---31232103012 
-sleep 0.6
+sleep 0.1
 "something" 
-sleep 0.6
+sleep 0.1
 q 
-sleep 0.6
+sleep 0.1
 help 
-sleep 0.6
+sleep 0.1
 export 
-sleep 0.6
+sleep 0.1
 echo 
-sleep 0.6
+sleep 0.1
 cd .. 
-sleep 0.6
+sleep 0.1
 0 0 
-sleep 0.6
+sleep 0.1
 something somethingv2 
-sleep 0.6
+sleep 0.1
 42 42 42 42 42 
-sleep 0.6
+sleep 0.1
 echo something 
-sleep 0.6
+sleep 0.1
 env | grep "_="
-sleep 0.6
+sleep 0.1
+exit

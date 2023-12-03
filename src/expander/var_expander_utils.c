@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 23:51:27 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/29 17:30:57 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/12/03 07:15:17 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	expande_variable_utils(t_data *data, t_token *token, char *str, int *i)
 	k = (*i);
 	while (str[*i] && !is_whitespace(str[*i]) && str[*i] != '$' \
 		&& !is_operator(str[*i]) && !is_qoute(str[*i]) && str[*i] != '{')
-				(*i)++;
+		(*i)++;
 	if (*i == k)
 		return (-1);
 	var_name = ft_substr(token->str, k, *i - k);

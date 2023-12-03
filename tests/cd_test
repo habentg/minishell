@@ -58,3 +58,4 @@ sleep .1
 cd / | echo "something"
 sleep .1
 cd .. | pwd
+exit

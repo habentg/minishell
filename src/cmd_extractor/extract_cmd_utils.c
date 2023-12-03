@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 17:51:34 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/20 18:03:28 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/12/03 07:14:03 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	extract_cmdargs(t_data *data, t_token **token, t_cmd **cmd_node)
 {
 	(void)data;
 	if (!(*cmd_node)->cmd)
-			(*cmd_node)->cmd = ft_strdup((*token)->str);
+		(*cmd_node)->cmd = ft_strdup((*token)->str);
 	while ((*token)->type != END && (*token)->type == WORD)
 	{
 		add_arglst_back(&(*cmd_node)->arg_lst, (*token)->str);

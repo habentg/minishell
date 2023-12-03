@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 16:49:08 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/29 17:54:38 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/12/03 07:13:32 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 /*
 	ONE CMD Extractor
-	% all the "word" types unitl redirection with be considered as cmd and its args
+	% all the "word" types unitl redirection with be considered as
+		cmd and its args
 	% then handle the redirections
-		* token after file is the file name except in here_doc (its exit delimeter)
+		* token after file is the file name except in here_doc 
+			(its exit delimeter)
 	% we finally add the cmd node to the cmd_lst
 	DONE
 */
