@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:55 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/12/03 05:47:14 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/12/06 09:00:45 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 # define PROMPT "\e[1;32mሚ  ኒ ሸ ል $▸ \e[0m"
 
-// exit status
+// exit status global variable
 int	g_exit_status;
 
 // launch funcs

@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 02:34:15 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/11/25 12:48:43 by hatesfam         ###   ########.fr       */
+/*   Updated: 2023/12/04 23:43:31 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ int	valid_e_status(char *str)
 
 int	handle_exit(t_data *data, t_cmd *cmd_node)
 {
-	shlvl_increment(data, 0);
+	if ((!cmd_node->pipeout && !(cmd_node->prev && cmd_node->prev->pipeout)))
+		shlvl_increment(data, 0);
 	if (arr_length(cmd_node->cmdarg) == 1)
 		data->exit_code = 0;
 	else if (arr_length(cmd_node->cmdarg) >= 2)
@@ -97,6 +98,5 @@ int	handle_exit(t_data *data, t_cmd *cmd_node)
 				data->exit_code = 256 + data->exit_code;
 		}
 	}
-	reset_stdio(cmd_node->iofd);
-	return (ft_clean_data_done(&data, 1), 0);
+	return (reset_stdio(cmd_node->iofd), ft_clean_data_done(&data, 1), 0);
 }
