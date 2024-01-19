@@ -6,11 +6,11 @@
 #    By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/03 01:59:13 by hatesfam          #+#    #+#              #
-#    Updated: 2023/12/01 19:22:24 by hatesfam         ###   ########.fr        #
+#    Updated: 2024/01/19 16:08:00 by hatesfam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minishell
+NAME = minishell # executable name
 
 # Colors:
 GREEN		=	\e[92;5;118m
