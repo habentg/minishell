@@ -6,7 +6,7 @@
 #    By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/03 01:59:13 by hatesfam          #+#    #+#              #
-#    Updated: 2023/12/01 19:22:24 by hatesfam         ###   ########.fr        #
+#    Updated: 2024/03/23 08:44:16 by hatesfam         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,6 +83,12 @@ fclean: clean
 re: fclean all
 	@printf "$(CURSIVE)$(GRAY)	- Remaking $(NAME)... $(RESET)\n"
 	clear
+
+# Rule to run and check for memory leaks (inside docker only)
+leaks:
+	@make all
+	valgrind --suppressions=readlineleak.txt --leak-check=full --trace-children=yes \
+	--show-leak-kinds=all --track-origins=yes --track-fds=yes ./minishell
 
 # Phony targets:
 .PHONY: all clean fclean re
