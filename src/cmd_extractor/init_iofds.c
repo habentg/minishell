@@ -6,7 +6,7 @@
 /*   By: hatesfam <hatesfam@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 17:45:43 by hatesfam          #+#    #+#             */
-/*   Updated: 2023/12/03 05:40:19 by hatesfam         ###   ########.fr       */
+/*   Updated: 2024/04/02 01:05:59 by hatesfam         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*get_env_value(t_data *data, char *var_name)
 	tmp = data->env_lst;
 	while (tmp)
 	{
-		if (ft_strncmp(tmp->key, var_name, ft_strlen(var_name)) == 0)
+		if (ft_strncmp_custom(tmp->key, var_name, ft_strlen(var_name)) == 0)
 			return (tmp->value);
 		tmp = tmp->next;
 	}
